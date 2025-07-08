@@ -9,7 +9,7 @@ Installation
 
 ### Navigate into the project directory:
 
-    cd travel-trucks-prj
+    cd goit-foodies-front
 
 ### Install the dependencies using npm or yarn:
 
@@ -35,6 +35,7 @@ This will start a local development server, usually available at http://localhos
       npm run build
 
 The built files will be located in the dist directory.
+
 ## Preview the Build
 
 ### Once the build is complete, you can preview it locally by running:
