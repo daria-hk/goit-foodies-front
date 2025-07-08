@@ -1,0 +1,4 @@
+.linksWrapper {
+  display: flex;
+  flex-direction: column;
+}
