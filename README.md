@@ -1,4 +1,8 @@
-# Travel Trucks Project
+http://localhost:5173/recipe/1
+http://localhost:5173/recipe/add
+
+
+# Foodies Project
 
 This is a project built with React, Redux, and other modern tools for web development.
 Installation

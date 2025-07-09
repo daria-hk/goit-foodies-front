@@ -27,10 +27,10 @@ export default function RecipePage() {
   const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
   return (
-    <div>
+    <>
       <PathInfo currentPageName={recipeData.title} />
       <RecipeInfo data={recipeData} />
       <PopularRecipes recipes={popularRecipes} />
-    </div>
+    </>
   );
 }
