@@ -1,3 +1,4 @@
+http://localhost:5173/user/1
 http://localhost:5173/recipe/1
 http://localhost:5173/recipe/add
 

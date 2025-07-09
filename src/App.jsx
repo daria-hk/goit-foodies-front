@@ -8,6 +8,7 @@ const RecipePage = lazy(() => import("./pages/RecipePage/RecipePage.jsx"));
 const AddRecipePage = lazy(() =>
   import("./pages/AddRecipePage/AddRecipePage.jsx")
 );
+const UserPage = lazy(() => import("./pages/UserPage/UserPage.jsx"));
 
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
@@ -19,6 +20,7 @@ export function App() {
           <Route index element={<Home />} />
           <Route path="/recipe/:id" element={<RecipePage />} />
           <Route path="/recipe/add" element={<AddRecipePage />} />
+          <Route path="/user/:id" element={<UserPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
