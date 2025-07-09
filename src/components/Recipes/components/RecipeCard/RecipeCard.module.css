@@ -1,0 +1,47 @@
+.card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 250px;
+  max-width: 300px;
+}
+.image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.authorBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.authorAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+}
+.favoriteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.detailsBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.favoriteIcon {
+  color: #aaa;
+}
+.favoriteIconActive {
+  color: red;
+}
