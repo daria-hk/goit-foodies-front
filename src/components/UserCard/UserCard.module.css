@@ -1,0 +1,76 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+}
+.avatarLink {
+  display: block;
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+.info {
+  flex: 1;
+}
+.nameLink {
+  text-decoration: none;
+  color: #222;
+}
+.name {
+  margin: 0 0 4px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.recipesCount {
+  margin: 0 0 8px 0;
+  color: #888;
+  font-size: 0.95rem;
+}
+.recipesList {
+  display: none;
+  margin: 0 0 12px 0;
+  padding-left: 18px;
+  color: #444;
+  font-size: 0.98rem;
+}
+@media (min-width: 768px) {
+  .recipesList {
+    display: block;
+  }
+}
+.followBtn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.followBtn:hover {
+  background: #388e3c;
+}
+.followingBtn {
+  background: #fff;
+  color: #4caf50;
+  border: 1.5px solid #4caf50;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.followingBtn:hover {
+  background: #e8f5e9;
+  color: #388e3c;
+}
