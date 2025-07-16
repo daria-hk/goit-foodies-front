@@ -14,7 +14,7 @@
 .modal {
   background: #fff;
   border-radius: 12px;
-  padding: 32px 24px 24px 24px;
+  padding: 80px;
   min-width: 320px;
   max-width: 90vw;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
@@ -23,14 +23,21 @@
 
 .closeBtn {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 0px;
+  right: 0px;
   background: transparent;
   border: none;
   font-size: 2rem;
   cursor: pointer;
   color: #888;
   transition: color 0.2s;
+  padding: 0.6em 0.8em;
+  line-height: 1;
+}
+
+.closeBtn:focus,
+.closeBtn:focus-visible {
+  outline: none;
 }
 
 .closeBtn:hover {
