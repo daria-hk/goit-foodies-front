@@ -1,4 +1,3 @@
-// components/AuthBar.jsx
 import React, { useState } from "react";
 import Modal from "../Modal/Modal";
 import SignInForm from "../Modal/SignInForm";
