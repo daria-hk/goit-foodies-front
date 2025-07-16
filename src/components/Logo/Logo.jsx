@@ -1,8 +1,15 @@
 import React from "react";
+import sprite from "../../assets/img/sprite.svg";
+import styles from "./Logo.module.css";
 
 const Logo = () => (
   <div>
-    <img src={""} alt="Foodies Logo" style={{ height: 40, color: "black" }} />
+    <svg
+      className={styles.logoIcon}
+      aria-hidden="true"
+    >
+      <use href={`${sprite}#icon-logo`} />
+    </svg>
   </div>
 );
 

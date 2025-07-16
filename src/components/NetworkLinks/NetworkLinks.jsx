@@ -1,18 +1,41 @@
 import React from "react";
-import css from "./NetworkLinks.module.css";
+import sprite from "../../assets/img/sprite.svg";
 
-const NetworkLinks = () => (
-  <div className={css.linksWrapper}>
-    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-      Facebook
-    </a>
-    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-      Instagram
-    </a>
-    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-      YouTube
-    </a>
-  </div>
+const social = [
+  {
+    href: "https://www.facebook.com/yourpage",
+    iconId: "icon-facebook",
+    label: "Facebook",
+  },
+  {
+    href: "https://www.instagram.com/yourpage",
+    iconId: "icon-instagram",
+    label: "Instagram",
+  },
+  {
+    href: "https://www.youtube.com/yourpage",
+    iconId: "icon-youtube",
+    label: "YouTube",
+  },
+];
+
+const NetworkLinks = ({ className = "" }) => (
+  <ul className={className}>
+    {social.map(({ href, iconId, label }) => (
+      <li key={iconId}>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+        >
+          <svg aria-hidden="true">
+            <use href={`${sprite}#${iconId}`} />
+          </svg>
+        </a>
+      </li>
+    ))}
+  </ul>
 );
 
 export default NetworkLinks;
