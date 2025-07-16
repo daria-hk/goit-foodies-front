@@ -34,7 +34,7 @@ export const categoriesSlice = createSlice({
       .addCase(fetchCategories.pending, handlePending)
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload.data;
+        state.items = action.payload;
         state.pagination = action.payload.pagination;
       })
       .addCase(fetchCategories.rejected, handleRejected);
