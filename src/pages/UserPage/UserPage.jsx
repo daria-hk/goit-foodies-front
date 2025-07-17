@@ -7,23 +7,30 @@ import ListItems from "../../components/UserPage/ListItems/ListItems";
 import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
 
 const UserPage = () => {
-  // Mock data
   const userData = {
     id: 1,
     name: "John Doe",
-    avatar: "https://via.placeholder.com/100",
+    email: "john@example.com",
+    avatar: "", 
     isCurrentUser: true,
     isFollowing: false,
+    recipesCount: 5,
+    favoritesCount: 12,
+    followersCount: 20,
+    followingCount: 10,
   };
 
   const handleLogOut = () => {
-    // TODO: Open Modal with LogOutModal
     alert("Log out clicked");
   };
 
   const handleFollowToggle = () => {
-    // TODO: Send request to backend
     alert("Follow/Unfollow clicked");
+  };
+
+  const handleAvatarChange = (file) => {
+    alert("Avatar selected: " + file.name);
+    // Send file to server
   };
 
   return (
@@ -32,7 +39,11 @@ const UserPage = () => {
       <MainTitle>User Profile</MainTitle>
       <Subtitle>Manage your account and recipes</Subtitle>
 
-      <UserInfo data={userData} />
+      <UserInfo
+        user={userData}
+        isOwnProfile={userData.isCurrentUser}
+        onAvatarChange={handleAvatarChange}
+      />
 
       {userData.isCurrentUser ? (
         <button type="button" onClick={handleLogOut}>
