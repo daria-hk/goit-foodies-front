@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { selectUser, selectUserId, selectUserFollowees, selectUserFollowers } from "../../../redux/slices/usersSlice.js";
+import { selectUser, selectUserId, selectUserFollowees, selectUserFollowers, selectUserFollowersLoading, selectUserFollowersError, selectUserFolloweesLoading, selectUserFolloweesError } from "../../../redux/slices/usersSlice.js";
 import UserCard from "../UserCard/UserCard.jsx";
 import ItemsListContainer from "../ItemsListContainer/ItemsListContainer.jsx";
 import { useDispatch } from "react-redux";
@@ -9,12 +9,11 @@ import { useEffect } from "react";
 
 export default function UsersList({ isFollowers = true }) {
     let items = useSelector(isFollowers ? selectUserFollowers : selectUserFollowees);
-    const userId = useSelector(selectUserId);
-    const user = useSelector(selectUser);
-    const dispatch = useDispatch();
+    const isLoading = useSelector(isFollowers ? selectUserFollowersLoading : selectUserFolloweesLoading);
+    const error = useSelector(isFollowers ? selectUserFollowersError : selectUserFolloweesError);
 
-    console.log('USER ID', items);
-    console.log('USER', user);
+    const userId = useSelector(selectUserId);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (items.length > 0 || !userId) return;

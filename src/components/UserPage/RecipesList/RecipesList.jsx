@@ -5,9 +5,14 @@ import ItemsListContainer from "../ItemsListContainer/ItemsListContainer.jsx";
 import RecipePreview from "../../Recipes/components/RecipePreview/RecipePreview.jsx";
 import { removeRecipeFromFavorites, removeMyRecipe } from "../../../redux/ops/recipesOps.js";
 import { useDispatch } from "react-redux";
+import { selectFavoritesLoading, selectFavoritesError, selectRecipesIsLoading, selectRecipesError } from "../../../redux/slices/recipesSlice.js";
 
 export default function RecipesList({ isFavorite = false }) {
     const items = useSelector(isFavorite ? selectFavorites : selectRecipes);
+    const isLoading = useSelector(isFavorite ? selectFavoritesLoading : selectRecipesIsLoading);
+    const error = useSelector(isFavorite ? selectFavoritesError : selectRecipesError);
+
+    console.log(isLoading, error)
     const dispatch = useDispatch();
     const handleDelete = (recipeId) => {
         const fn = isFavorite ? removeRecipeFromFavorites : removeMyRecipe;

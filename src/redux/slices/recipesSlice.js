@@ -116,11 +116,13 @@ export const recipesReducer = recipesSlice.reducer;
 // Selectors
 export const selectRecipes = (state) => state.recipes.items;
 export const selectCurrentRecipe = (state) => state.recipes.currentRecipe;
-export const selectRecipesIsLoading = (state) => state.recipes.isLoading;
-export const selectRecipesError = (state) => state.recipes.error;
+export const selectRecipesIsLoading = (state) => state.recipes.isLoading ?? false;
+export const selectRecipesError = (state) => state.recipes.error ?? null;
 export const selectFavorites = (state) => state.recipes.favorites.recipes;
 export const selectFavoritesPage = (state) => state.recipes.favorites.page;
 export const selectFavoritesTotalPages = (state) => state.recipes.favorites.totalPages;
+export const selectFavoritesLoading = (state) => state.recipes.favorites.isLoading ?? false;
+export const selectFavoritesError = (state) => state.recipes.favorites.error ?? null;
 export const selectRecipesPage = (state) => state.recipes.page;
 export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
 export const selectRecipesLimit = (state) => state.recipes.limit;
