@@ -32,7 +32,7 @@ export const ingredientsSlice = createSlice({
       .addCase(fetchIngredients.pending, handlePending)
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload;
+        state.items = action.payload.data;
       })
       .addCase(fetchIngredients.rejected, handleRejected);
   },

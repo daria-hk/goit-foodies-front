@@ -8,6 +8,7 @@
   border-radius: 4px;
   border: 1px solid #ccc;
   background: #fff;
+  color: var(--main);
   font-weight: 400;
   cursor: pointer;
 }

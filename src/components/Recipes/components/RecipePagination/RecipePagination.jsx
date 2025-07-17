@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
+import { selectRecipesPage, selectRecipesTotalPages } from '@/redux/slices/recipesSlice.js'
 import css from "./RecipePagination.module.css";
 
-const RecipePagination = ({ page, totalPages, onPageChange }) => {
+const RecipePagination = ({ onPageChange }) => {
+  const page = useSelector(selectRecipesPage);
+  const totalPages = useSelector(selectRecipesTotalPages);
   if (totalPages <= 1) return null;
   return (
     <div className={css.pagination}>

@@ -1,12 +1,11 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../services/api";
 
 export const fetchCategories = createAsyncThunk(
   "categories/fetchAll",
   async (_, thunkAPI) => {
     try {
-      const url = `https://test-xe0u.onrender.com/api/categories`;
-      const response = await axios.get(url);
+      const response = await api.get("categories");
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

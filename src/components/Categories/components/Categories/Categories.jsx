@@ -1,7 +1,7 @@
 import CategoryList from '../CategoryList/CategoryList';
 import styles from './Categories.module.css';
 
-const Categories = () => (
+const Categories = ({ error, onCategorySelect }) => (
   <section className={styles['categories-section']}>
     <div className={styles['categories-wrapper']}>
       <h2 className={styles['categories-title']}>Categories</h2>
@@ -10,8 +10,9 @@ const Categories = () => (
         recipes that combine taste, style and the warm atmosphere of the
         kitchen.
       </p>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
-    <CategoryList />
+    <CategoryList onCategorySelect={onCategorySelect} />
   </section>
 );
 
