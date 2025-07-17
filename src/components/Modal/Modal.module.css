@@ -24,17 +24,21 @@
 
 .closeBtn {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 20px;
+  top: 0px;
+  right: 0px;
   background: transparent;
   border: none;
   font-size: 2rem;
   cursor: pointer;
   color: #888;
   transition: color 0.2s;
-  padding: 0;
-  line-height: 20px;
+  padding: 0.6em 0.8em;
+  line-height: 1;
+}
+
+.closeBtn:focus,
+.closeBtn:focus-visible {
+  outline: none;
 }
 
 .closeBtn:hover {

@@ -1,6 +1,4 @@
 // import { useNavigate } from 'react-router-dom';
-// import MainTitle from '../MainTitle/MainTitle';
-// import Subtitle from '../Subtitle/Subtitle';
 
 import styles from './Hero.module.css';
 import img from '../../assets/img/hero';

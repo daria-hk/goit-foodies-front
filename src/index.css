@@ -1,4 +1,4 @@
-@import "modern-css-reset";
+@import 'modern-css-reset';
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -8,6 +8,12 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #fff;
+  
+   /* кольорова схема з Figma */
+  --main: rgba(5, 5, 5, 1);
+  --black-light: rgba(26, 26, 26, 1);
+  --gray: rgba(191, 190, 190, 1);
+  --white: rgba(255, 255, 255, 1);
 }
 
 a {
