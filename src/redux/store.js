@@ -13,6 +13,6 @@ export const store = configureStore({
     areas: areasReducer,
     ingredients: ingredientsReducer,
     testimonials: testimonialsReducer,
-    user: usersReducer,
+    users: usersReducer,
   },
 });
