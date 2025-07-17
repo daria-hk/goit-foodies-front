@@ -1,22 +1,36 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../utils/api";
+import {selectRecipesLimit} from "@/redux/slices/recipesSlice.js";
+import api from "../../services/api";
 
 export const fetchRecipes = createAsyncThunk(
-  "recipes/fetchAll",
-  async ({ category, ingredient, region, page } = {}, thunkAPI) => {
-    try {
-      const params = {};
-      if (category) params.category = category;
-      if (ingredient) params.ingredient = ingredient;
-      if (region) params.region = region;
-      if (page) params.page = page;
-      const response = await api.get("recipes", { params });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+    "recipes/fetchAll",
+    async (
+        { page = 1, category = null, area = null, ingredients = [] },
+        { rejectWithValue, getState }
+    ) => {
+        try {
+            const state = getState();
+            const limit = selectRecipesLimit(state); // використовуємо селектор з slices
+
+            const queryParams = new URLSearchParams();
+
+            queryParams.append("limit", limit);
+            if (page) queryParams.append("page", page);
+            if (category && category !== "all") queryParams.append("category", category);
+            if (area) queryParams.append("area", area);
+            if (ingredients && ingredients.length > 0) {
+                queryParams.append("ingredients", ingredients.join(","));
+            }
+
+            const response = await api.get(`recipes?${queryParams.toString()}`);
+
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
     }
-  }
 );
+
 
 export const fetchRecipeById = createAsyncThunk(
   "recipes/fetchById",

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../utils/api";
+import api from "../../services/api";
 
 export const fetchAreas = createAsyncThunk(
   "areas/fetchAll",

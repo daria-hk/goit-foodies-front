@@ -14,7 +14,7 @@ const Recipes = ({ category, onBack }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ingredients = useSelector(selectIngredients);
-  const areas = useSelector(selectAreas);
+  const regions = useSelector(selectAreas);
 
   const recipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectRecipesIsLoading);
@@ -27,16 +27,17 @@ const Recipes = ({ category, onBack }) => {
 
   useEffect(() => {
     dispatch(fetchRecipes({
-      category: category ? category.id : null,
-      ingredient: selectedIngredient ? selectedIngredient.id : null,
-      region: selectedRegion ? selectedRegion.id : null,
-      page
+      page,
+      category: category?.id,
+      area: selectedRegion,
+      ingredients: selectedIngredient ? [selectedIngredient] : null,
     }));
-  }, [category, selectedIngredient, selectedRegion, page, dispatch]);
+  }, [page, category, selectedIngredient, selectedRegion, dispatch]);
 
   const handleFiltersChange = ({ ingredient, region }) => {
     setSelectedIngredient(ingredient);
     setSelectedRegion(region);
+    setPage(1);
   };
 
   const handlePageChange = (newPage) => {
@@ -74,7 +75,7 @@ const Recipes = ({ category, onBack }) => {
       <div className={css.recipesWrapper}>
         <RecipeFilters
           ingredients={ingredients}
-          regions={areas}
+          regions={regions}
           selectedIngredient={selectedIngredient}
           selectedRegion={selectedRegion}
           onChange={handleFiltersChange}

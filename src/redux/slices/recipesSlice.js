@@ -1,13 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRecipes } from "../ops/recipesOps";
+import {
+  fetchRecipes,
+  fetchRecipeById,
+  addRecipeToFavorites,
+  removeRecipeFromFavorites,
+  fetchFavoriteRecipes,
+} from "../ops/recipesOps";
 
 const initialState = {
   items: [],
-  page: 1,
-  pages: 1,
-  total: 0,
+  currentRecipe: null,
+  favorites: { recipes: [] },
   isLoading: false,
   error: null,
+  page: 1,
+  totalPages: 1,
+  limit: 8,
+  selectedCategory: null,
+  selectedArea: null,
+  selectedIngredients: [],
 };
 
 const handlePending = (state) => {
@@ -31,6 +42,29 @@ export const recipesSlice = createSlice({
       state.total = 0;
       state.isLoading = false;
       state.error = null;
+      state.currentRecipe = null;
+      state.favorites.recipes = [];
+      state.page = 1;
+      state.totalPages = 1;
+      state.limit = 8;
+      state.selectedCategory = null;
+      state.selectedArea = null;
+      state.selectedIngredients = [];
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setLimit: (state, action) => {
+      state.limit = action.payload;
+    },
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
+    setSelectedArea: (state, action) => {
+      state.selectedArea = action.payload;
+    },
+    setSelectedIngredients: (state, action) => {
+      state.selectedIngredients = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -38,20 +72,51 @@ export const recipesSlice = createSlice({
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload.items;
-        state.page = action.payload.page;
-        state.pages = action.payload.pages;
-        state.total = action.payload.total;
+        state.items = action.payload.items || action.payload;
+        state.page = action.payload.page || 1;
+        state.totalPages = action.payload.pages || 1;
+        state.currentRecipe = action.payload;
       })
-      .addCase(fetchRecipes.rejected, handleRejected);
+      .addCase(fetchRecipes.rejected, handleRejected)
+      .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
+        state.favorites.recipes.push(action.payload);
+      })
+      .addCase(removeRecipeFromFavorites.fulfilled, (state, action) => {
+        // state.favorites.recipes.filter(
+        //   (recipe) => recipe.id !== action.meta.arg
+        state.favorites.recipes = state.favorites.recipes.filter(
+          (recipe) => recipe.id !== action.meta.arg
+        );
+      })
+      .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
+        console.log("Look at this favorites list");
+        state.favorites = action.payload;
+      });
   },
 });
 
-export const { resetRecipesState } = recipesSlice.actions;
+export const {
+  resetRecipesState,
+  setPage,
+  setLimit,
+  setSelectedCategory,
+  setSelectedArea,
+  setSelectedIngredients,
+} = recipesSlice.actions;
+
 export const recipesReducer = recipesSlice.reducer;
+
+// Selectors
 export const selectRecipes = (state) => state.recipes.items;
-export const selectRecipesPage = (state) => state.recipes.page;
-export const selectRecipesPages = (state) => state.recipes.pages;
-export const selectRecipesTotal = (state) => state.recipes.total;
+export const selectCurrentRecipe = (state) => state.recipes.currentRecipe;
 export const selectRecipesIsLoading = (state) => state.recipes.isLoading;
 export const selectRecipesError = (state) => state.recipes.error;
+export const selectFavorites = (state) => state.recipes.favorites.recipes;
+export const selectRecipesPage = (state) => state.recipes.page;
+export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
+export const selectRecipesLimit = (state) => state.recipes.limit;
+
+export const selectSelectedCategory = (state) => state.recipes.selectedCategory;
+export const selectSelectedArea = (state) => state.recipes.selectedArea;
+export const selectSelectedIngredients = (state) =>
+  state.recipes.selectedIngredients;

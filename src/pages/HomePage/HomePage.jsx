@@ -9,6 +9,7 @@ import { fetchCategories } from "../../redux/ops/categoriesOps";
 import { fetchAreas } from "../../redux/ops/areasOps";
 import { fetchIngredients } from "../../redux/ops/ingredientsOps";
 import { fetchTestimonials } from "../../redux/ops/testimonialsOps";
+import Testimonials from "../../components/Testimonials/Testimonials";
 
 export default function Home() {
   const isAuth = useSelector((state) => state.auth?.isAuth);
@@ -45,6 +46,7 @@ export default function Home() {
           onBack={() => setSelectedCategory(null)}
         />
       )}
+      <Testimonials />
     </div>
   );
 }
