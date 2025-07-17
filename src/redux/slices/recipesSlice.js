@@ -5,12 +5,17 @@ import {
   addRecipeToFavorites,
   removeRecipeFromFavorites,
   fetchFavoriteRecipes,
+  removeMyRecipe,
 } from "../ops/recipesOps";
 
 const initialState = {
   items: [],
   currentRecipe: null,
-  favorites: { recipes: [] },
+  favorites: {
+    recipes: [],
+    page: 1,
+    totalPages: 1,
+  },
   isLoading: false,
   error: null,
   page: 1,
@@ -41,6 +46,8 @@ export const recipesSlice = createSlice({
       state.error = null;
       state.currentRecipe = null;
       state.favorites.recipes = [];
+      state.favorites.page = 1;
+      state.favorites.totalPages = 1;
       state.page = 1;
       state.totalPages = 1;
       state.limit = 8;
@@ -88,7 +95,10 @@ export const recipesSlice = createSlice({
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
         console.log("Look at this favorites list");
         state.favorites = action.payload;
-      });
+      })
+      .addCase(removeMyRecipe.fulfilled, (state, action) => {
+        state.items = state.items.filter((recipe) => recipe.id !== action.meta.arg);
+      })
   },
 });
 
@@ -109,6 +119,8 @@ export const selectCurrentRecipe = (state) => state.recipes.currentRecipe;
 export const selectRecipesIsLoading = (state) => state.recipes.isLoading;
 export const selectRecipesError = (state) => state.recipes.error;
 export const selectFavorites = (state) => state.recipes.favorites.recipes;
+export const selectFavoritesPage = (state) => state.recipes.favorites.page;
+export const selectFavoritesTotalPages = (state) => state.recipes.favorites.totalPages;
 export const selectRecipesPage = (state) => state.recipes.page;
 export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
 export const selectRecipesLimit = (state) => state.recipes.limit;

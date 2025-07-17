@@ -2,13 +2,17 @@ import PathInfo from "../../components/UserPage/PathInfo/PathInfo";
 import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
-import TabsList from "../../components/UserPage/TabsList/TabsList";
-import ListItems from "../../components/UserPage/ListItems/ListItems";
-import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
-import {useSelector} from "react-redux";
-import {selectRecipes, selectRecipesTotalPages} from "@/redux/slices/recipesSlice.js";
+import ItemTabs from "../../components/UserPage/ItemTabs/ItemTabs";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchMe } from "../../redux/ops/usersOps";
 
 const UserPage = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchMe());
+    }, []);
+
     // Mock data
     const userData = {
         id: 1,
@@ -17,10 +21,6 @@ const UserPage = () => {
         isCurrentUser: true,
         isFollowing: false,
     };
-
-    const recipes = useSelector(selectRecipes); // Отримуємо список рецептів з Redux
-
-    console.log('[UserPage] recipes:', recipes, Array.isArray(recipes));
 
     const handleLogOut = () => {
         // TODO: Open Modal with LogOutModal
@@ -32,16 +32,13 @@ const UserPage = () => {
         alert("Follow/Unfollow clicked");
     };
 
-    const totalPages = useSelector(selectRecipesTotalPages);
-    console.log('TOTAL PAGES IN PAGE:', totalPages);
-
     return (
         <div>
-            <PathInfo currentPageName="User Profile"/>
+            <PathInfo currentPageName="User Profile" />
             <MainTitle>User Profile</MainTitle>
             <Subtitle>Manage your account and recipes</Subtitle>
 
-            <UserInfo data={userData}/>
+            <UserInfo data={userData} />
 
             {userData.isCurrentUser ? (
                 <button type="button" onClick={handleLogOut}>
@@ -53,9 +50,7 @@ const UserPage = () => {
                 </button>
             )}
 
-            <TabsList/>
-            <ListItems variant={'Recipes'} items={recipes}/>
-            <ListPagination variant={"all"}/>
+            <ItemTabs />
         </div>
     );
 };

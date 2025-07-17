@@ -1,35 +1,35 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {selectRecipesLimit} from "@/redux/slices/recipesSlice.js";
+import { selectRecipesLimit } from "@/redux/slices/recipesSlice.js";
 
 export const fetchRecipes = createAsyncThunk(
-    "recipes/fetchAll",
-    async (
-        { page = 1, category = null, area = null, ingredients = [] },
-        { rejectWithValue, getState }
-    ) => {
-        try {
-            const state = getState();
-            const limit = selectRecipesLimit(state); // використовуємо селектор з slices
+  "recipes/fetchAll",
+  async (
+    { page = 1, category = null, area = null, ingredients = [] },
+    { rejectWithValue, getState }
+  ) => {
+    try {
+      const state = getState();
+      const limit = selectRecipesLimit(state); // використовуємо селектор з slices
 
-            const queryParams = new URLSearchParams();
+      const queryParams = new URLSearchParams();
 
-            queryParams.append("limit", limit);
-            if (page) queryParams.append("page", page);
-            if (category && category !== "all") queryParams.append("category", category);
-            if (area) queryParams.append("area", area);
-            if (ingredients && ingredients.length > 0) {
-                queryParams.append("ingredients", ingredients.join(","));
-            }
+      queryParams.append("limit", limit);
+      if (page) queryParams.append("page", page);
+      if (category && category !== "all") queryParams.append("category", category);
+      if (area) queryParams.append("area", area);
+      if (ingredients && ingredients.length > 0) {
+        queryParams.append("ingredients", ingredients.join(","));
+      }
 
-            const url = `https://test-xe0u.onrender.com/api/recipes?${queryParams.toString()}`;
-            const response = await axios.get(url);
+      const url = `https://test-xe0u.onrender.com/api/recipes?${queryParams.toString()}`;
+      const response = await axios.get(url);
 
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+  }
 );
 
 
@@ -141,4 +141,20 @@ export const removeRecipeFromFavorites = createAsyncThunk(
     }
   }
 );
+
+
+export const removeMyRecipe = createAsyncThunk(
+  "recipes/removeMyRecipe",
+  async (id, thunkAPI) => {
+    try {
+      const url = `https://test-xe0u.onrender.com/api/recipes/${id}`;
+      const response = await axios.delete(url);
+      return response.data;
+    } catch (e) {
+      const message = e.response?.data?.message || e.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 

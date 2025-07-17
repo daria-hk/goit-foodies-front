@@ -109,14 +109,14 @@ export const usersSlice = createSlice({
       .addCase(fetchUserFollowers.pending, handlePending)
       .addCase(fetchUserFollowers.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.followers = action.payload;
+        state.followers = action.payload?.items ?? [];
       })
       .addCase(fetchUserFollowers.rejected, handleRejected)
 
       .addCase(fetchUserFollowees.pending, handlePending)
       .addCase(fetchUserFollowees.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.followees = action.payload;
+        state.followers = action.payload?.items ?? [];
       })
       .addCase(fetchUserFollowees.rejected, handleRejected)
 
@@ -140,6 +140,7 @@ export const { resetUsersState, clearUsersError } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
 
 export const selectUser = (state) => state.users.user;
+export const selectUserId = (state) => state.users.user.id;
 export const selectUserToken = (state) => state.users.token;
 export const selectUserFollowers = (state) => state.users.followers;
 export const selectUserFollowees = (state) => state.users.followees;
