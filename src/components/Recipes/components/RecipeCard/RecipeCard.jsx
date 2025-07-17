@@ -8,16 +8,16 @@ const RecipeCard = ({
   onDetailsClick,
 }) => (
   <div className={css.card}>
-    <img src={recipe.image} alt={recipe.title} className={css.image} />
+    <img src={recipe.thumb} alt={recipe.title} className={css.image} />
     <h3>{recipe.title}</h3>
     <p>{recipe.description}</p>
     <button type="button" onClick={onAuthorClick} className={css.authorBtn}>
       <img
-        src={recipe.author.avatar}
-        alt={recipe.author.name}
+        src={recipe.owner.avatar}
+        alt={recipe.owner.name}
         className={css.authorAvatar}
       />
-      <span>{recipe.author.name}</span>
+      <span>{recipe.owner.name}</span>
     </button>
     <div className={css.actions}>
       <button

@@ -3,9 +3,14 @@ import api from "../../utils/api";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchAll",
-  async (_, thunkAPI) => {
+  async ({ category, ingredient, region, page } = {}, thunkAPI) => {
     try {
-      const response = await api.get("recipes");
+      const params = {};
+      if (category) params.category = category;
+      if (ingredient) params.ingredient = ingredient;
+      if (region) params.region = region;
+      if (page) params.page = page;
+      const response = await api.get("recipes", { params });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -111,4 +116,3 @@ export const removeRecipeFromFavorites = createAsyncThunk(
     }
   }
 );
-

@@ -56,7 +56,7 @@ const CATEGORY_IMAGES = {
 }; //консстанта для того щоб зробити правильний мепінг в комбінації з тим що отримали з беку і що маємо у фронті
 const NUMBER_CAT_ELEMENTS = 11;
 
-const CategoryList = () => {
+const CategoryList = ({ onCategorySelect }) => {
   const categories = useSelector(selectCategories);
 
   const mappedCategories = categories.map((cat) => {
@@ -103,6 +103,7 @@ const CategoryList = () => {
               url={cat.url}
               imgUrl={cat.imgUrl}
               imgUrl2x={cat.imgUrl2x}
+              onClick={() => onCategorySelect(cat)}
             >
               ➡️
             </ListBtn>
