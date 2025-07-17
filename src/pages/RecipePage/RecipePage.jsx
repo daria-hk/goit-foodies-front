@@ -2,35 +2,38 @@ import PathInfo from "../../components/Recipes/components/PathInfo/PathInfo";
 import RecipeInfo from "../../components/Recipes/components/RecipeInfo/RecipeInfo";
 import PopularRecipes from "../../components/Recipes/components/PopularRecipes/PopularRecipes";
 
-export default function RecipePage() {
-  // Mock data for demonstration
-  const recipeData = {
-    image: "https://via.placeholder.com/300x200?text=Recipe",
-    title: "Borscht",
-    category: "Soups",
-    description: "Traditional Ukrainian borscht with beetroot and meat.",
-    author: { id: 1, name: "Olena" },
-    ingredients: [
-      {
-        image: "https://via.placeholder.com/40",
-        name: "Beetroot",
-        amount: "2 pcs",
-      },
-      {
-        image: "https://via.placeholder.com/40",
-        name: "Potato",
-        amount: "3 pcs",
-      },
-    ],
-    preparation: { description: "Boil, mix, serve." },
-  };
-  const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+// import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
+import { fetchRecipeById } from "../../redux/ops/recipesOps";
+import {
+  selectCurrentRecipe,
+  selectRecipesIsLoading,
+  // selectRecipesError
+} from "../../redux/slices/recipesSlice";
+
+
+
+export default function RecipePage() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectRecipesIsLoading);
+  const recipe = useSelector(selectCurrentRecipe);
+  
+  useEffect(() => {
+    dispatch(fetchRecipeById(id));
+  }, [dispatch, id]);
+ 
+ const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
   return (
+     !isLoading && recipe && (
     <>
-      <PathInfo currentPageName={recipeData.title} />
-      <RecipeInfo data={recipeData} />
+      <PathInfo currentPageName={recipe.title}  />
+      <RecipeInfo data={recipe} />
       <PopularRecipes recipes={popularRecipes} />
-    </>
+      </>
+    )
   );
 }
