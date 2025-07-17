@@ -10,7 +10,7 @@ const RecipeCard = ({
   <div className={css.card}>
     <img src={recipe.thumb} alt={recipe.title} className={css.image} />
     <h3 className={css.title}>{recipe.title}</h3>
-    <p>{recipe.description}</p>
+    <p className={css.description}>{recipe.description}</p>
     <div className={css.footer}>
       <button type="button" onClick={onAuthorClick} className={css.authorBtn}>
         <img
