@@ -1,37 +1,49 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Modal from "../Modal/Modal";
 import SignInForm from "../Modal/SignInForm";
 import SignUpForm from "../Modal/SignUpForm";
-import { useAuth } from "../../context/AuthContext";
+import { clearUsersError } from "../../redux/slices/usersSlice";
 
 const AuthBar = () => {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const dispatch = useDispatch();
+
+  const openSignIn = () => {
+    dispatch(clearUsersError());
+    setIsSignInOpen(true);
+  };
+
+  const openSignUp = () => {
+    dispatch(clearUsersError());
+    setIsSignUpOpen(true);
+  };
+
+  const closeSignIn = () => setIsSignInOpen(false);
+  const closeSignUp = () => setIsSignUpOpen(false);
+
+  const switchToSignUp = () => {
+    closeSignIn();
+    openSignUp();
+  };
+
+  const switchToSignIn = () => {
+    closeSignUp();
+    openSignIn();
+  };
 
   return (
     <div>
-      {!user ? (
-        <>
-          <button onClick={() => setIsSignInOpen(true)}>Sign in</button>
-          <button onClick={() => setIsSignUpOpen(true)}>Sign up</button>
-        </>
-      ) : (
-        <>
-          <span style={{ marginRight: "10px" }}>
-            👋 Welcome, {user.username || user.email}
-          </span>
-          <button onClick={() => setIsLogoutOpen(true)}>Logout</button>
-          <LogoutModal isOpen={isLogoutOpen} onClose={() => setIsLogoutOpen(false)} />
-        </>
-      )}
+      <button onClick={openSignIn}>Sign in</button>
+      <button onClick={openSignUp}>Sign up</button>
 
-      <Modal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)}>
-        <SignInForm onClose={() => setIsSignInOpen(false)} />
+      <Modal isOpen={isSignInOpen} onClose={closeSignIn}>
+        <SignInForm onClose={closeSignIn} onSwitchToSignUp={switchToSignUp} />
       </Modal>
 
-      <Modal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)}>
-        <SignUpForm onClose={() => setIsSignUpOpen(false)} />
+      <Modal isOpen={isSignUpOpen} onClose={closeSignUp}>
+        <SignUpForm onClose={closeSignUp} onSwitchToSignIn={switchToSignIn} />
       </Modal>
     </div>
   );

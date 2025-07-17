@@ -1,48 +1,69 @@
-import { useState } from "react";
-import { useAuth } from "../../context/AuthContext.jsx";
-import { registerRequest } from "../../services/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/ops/usersOps";
+import {
+  selectUsersIsLoading,
+  selectUsersError,
+  clearUsersError,
+} from "../../redux/slices/usersSlice";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import styles from "./Modal.module.css";
 import PasswordInput from "../PasswordInput/PasswordInput.jsx";
 
+const schema = Yup.object().shape({
+  name: Yup.string().required("Username is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+});
 
-const SignUpForm = ({ onClose }) => {
-    console.log("SignUpForm mounted");
-    
-  const { login } = useAuth();
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+const SignUpForm = ({ onClose, onSwitchToSignIn }) => {
+  const dispatch = useDispatch();
+  const loading = useSelector(selectUsersIsLoading);
+  const error = useSelector(selectUsersError);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const username = e.target.username.value.trim();
-    const email = e.target.email.value.trim();
-    const password = e.target.password.value;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-    try {
-      setLoading(true);
-      setError(null);
-      const { user, token } = await registerRequest(username, email, password);
-      login({ ...user, token });
+  const onSubmit = async (data) => {
+    dispatch(clearUsersError());
+    const result = await dispatch(registerUser(data));
+    if (registerUser.fulfilled.match(result)) {
       onClose();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.authorizationModal}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.authorizationModal}>
       <h2>Sign Up</h2>
       <div className={styles.inputWrapper}>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <input name="username" type="text" placeholder="Username*" required />
-        <input name="email" type="email" placeholder="Email*" required />
-        <PasswordInput name="password" placeholder="Password" />
-    </div>
+        <input {...register("name")} placeholder="Username*" />
+        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
+
+        <input {...register("email")} placeholder="Email*" />
+        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+
+        <PasswordInput name="password" register={register} />
+        {errors.password && <p className={styles.error}>{errors.password.message}</p>}
+
+        {error && <p className={styles.error}>{error}</p>}
+      </div>
+
       <button type="submit" disabled={loading}>
         {loading ? "Registering..." : "Sign up"}
       </button>
+
+      <div className={styles.switchAuth}>
+        Already have an account?{" "}
+        <button type="button" onClick={onSwitchToSignIn} className={styles.linkButton}>
+          Sign in
+        </button>
+      </div>
     </form>
   );
 };

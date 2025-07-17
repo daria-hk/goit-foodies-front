@@ -3,10 +3,11 @@ import Navigation from "../Navigation/Navigation";
 import AuthBar from "../AuthBar/AuthBar";
 import UserBar from "../UserBar/UserBar";
 import css from "./Header.module.css";
-import { useAuth } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/slices/usersSlice";
 
 const Header = () => {
-  const { user } = useAuth();
+  const user = useSelector(selectUser);
   const isAuthenticated = Boolean(user);
 
   return (

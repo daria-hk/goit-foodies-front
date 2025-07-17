@@ -10,7 +10,6 @@ import { fetchCategories } from "../../redux/ops/categoriesOps";
 import { fetchAreas } from "../../redux/ops/areasOps";
 import { fetchIngredients } from "../../redux/ops/ingredientsOps";
 import { fetchTestimonials } from "../../redux/ops/testimonialsOps";
-import { fetchUserById } from "../../redux/ops/usersOps";
 
 export default function Home() {
   const isAuth = useSelector((state) => state.auth?.isAuth);
@@ -29,7 +28,7 @@ export default function Home() {
     dispatch(fetchAreas());
     dispatch(fetchIngredients());
     dispatch(fetchTestimonials());
-    dispatch(fetchUserById("1")); //test id
+    // dispatch(fetchUserById("1")); //test id
   }, [dispatch]);
 
   const handleAddRecipeClick = () => {

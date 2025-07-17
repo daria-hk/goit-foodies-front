@@ -2,17 +2,22 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import styles from "./PasswordInput.module.css";
 
-const PasswordInput = ({ placeholder = "Password", name = "password" }) => {
+const PasswordInput = ({
+  name = "password",
+  placeholder = "Password",
+  register,
+  error,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className={styles.passwordtWrapper}>
       <input
+        {...register(name)}
         className={styles.input}
         type={showPassword ? "text" : "password"}
         name={name}
         placeholder={placeholder}
-        required
       />
       <button
         type="button"

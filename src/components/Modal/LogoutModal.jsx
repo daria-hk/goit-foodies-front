@@ -1,24 +1,27 @@
-import { useAuth } from "../../context/AuthContext";
-import styles from "./LogoutModal.module.css";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/ops/usersOps";
+import styles from "./Modal.module.css";
 
 const LogoutModal = ({ isOpen, onClose }) => {
-  const { logout } = useAuth();
+  const dispatch = useDispatch();
 
   if (!isOpen) return null;
 
   const handleLogout = () => {
-    logout();
+    dispatch(logoutUser());
     onClose();
   };
 
   return (
-    <div className={styles.backdrop} onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div className={`${styles.backdrop} ${styles.authorizationModal}`} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className={styles.modal}>
         <button className={styles.closeBtn} onClick={onClose}>
           &times;
         </button>
-        <h2 className={styles.title}>ARE YOU LOGGING OUT?</h2>
-        <p className={styles.text}>You can always log back in at my time.</p>
+        <div className={styles.logoutText}>
+          <h2 className={styles.title}>Log out</h2>
+          <p className={styles.text}>You can always log back in at any time.</p>
+        </div>
         <button className={styles.logoutBtn} onClick={handleLogout}>
           LOG OUT
         </button>
