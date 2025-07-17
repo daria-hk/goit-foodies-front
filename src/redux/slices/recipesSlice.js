@@ -37,6 +37,9 @@ export const recipesSlice = createSlice({
   reducers: {
     resetRecipesState: (state) => {
       state.items = [];
+      state.page = 1;
+      state.pages = 1;
+      state.total = 0;
       state.isLoading = false;
       state.error = null;
       state.currentRecipe = null;

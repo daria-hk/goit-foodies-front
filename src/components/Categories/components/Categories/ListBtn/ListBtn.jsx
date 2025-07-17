@@ -1,20 +1,20 @@
-import { NavLink } from 'react-router-dom';
-// import Icon from 'src/components/shared/Icon/Icon.jsx'; 
+// import Icon from 'src/components/shared/Icon/Icon.jsx';
 // Додати іконки і потім цю логіку
 
 import styles from './ListBtn.module.css';
 
-export const ListBtn = ({ category, url, imgUrl, imgUrl2x }) => {
+export const ListBtn = ({ category, imgUrl, imgUrl2x, onClick }) => {
   const isRetina = window.devicePixelRatio > 1;
   const backgroundImage = isRetina && imgUrl2x ? imgUrl2x : imgUrl;
 
   return (
-    <NavLink
+    <button
       className={styles['recipe-list-btn']}
-      to={url}
+      type="button"
       style={{
         backgroundImage: `url(${backgroundImage})`,
       }}
+      onClick={onClick}
     >
       <div className={styles['labels-wrapper']}>
         <p className={styles['category']}>{category}</p>
@@ -27,6 +27,6 @@ export const ListBtn = ({ category, url, imgUrl, imgUrl2x }) => {
           />
         </div> */}
       </div>
-    </NavLink>
+    </button>
   );
 };
