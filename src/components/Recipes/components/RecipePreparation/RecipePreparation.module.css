@@ -1,0 +1,70 @@
+.preparationTitle {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 24px;
+    letter-spacing: -0.36px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: left;
+    color: var(--main);
+}
+
+.preparationDesc {
+    color: var(--black-light);
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.32px;
+    margin-bottom: 32px;
+}
+
+.favoriteButton {
+    padding: 14px 20px;
+    border-radius: 30px;
+    border: 1px solid var(--gray);
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.38px;
+    text-transform: uppercase;
+    /* width: fit-content; */
+    width: 172px;
+    margin-right: auto;
+    background-color: transparent;
+}
+
+@media screen and (min-width: 375px) {
+    .preparationDesc {
+        /* color: var(--black-light); */
+        font-family: Mulish;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: -0.32px;
+        margin-bottom: 40px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .preparationTitle {
+        font-size: 24px;
+        line-height: 28px;
+        letter-spacing: -0.48px;
+        margin-bottom: 20px;
+    }
+
+    .favoriteButton {
+        width: 215px;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.32px;
+    }
+
+    .preparationDesc {
+        margin-bottom: 40px;
+    }
+}
