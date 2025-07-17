@@ -7,7 +7,7 @@ import { removeRecipeFromFavorites, removeMyRecipe } from "../../../redux/ops/re
 import { useDispatch } from "react-redux";
 import { selectFavoritesLoading, selectFavoritesError, selectRecipesIsLoading, selectRecipesError } from "../../../redux/slices/recipesSlice.js";
 
-export default function RecipesList({ isFavorite = false }) {
+export default function RecipesList({ isFavorite = false, userId = { userId } }) {
     const items = useSelector(isFavorite ? selectFavorites : selectRecipes);
     const isLoading = useSelector(isFavorite ? selectFavoritesLoading : selectRecipesIsLoading);
     const error = useSelector(isFavorite ? selectFavoritesError : selectRecipesError);
@@ -30,4 +30,5 @@ export default function RecipesList({ isFavorite = false }) {
 
 RecipesList.propTypes = {
     isFavorite: PropTypes.bool,
+    userId: PropTypes.string,
 };

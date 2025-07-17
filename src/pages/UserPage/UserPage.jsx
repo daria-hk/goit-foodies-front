@@ -6,8 +6,10 @@ import ItemTabs from "../../components/UserPage/ItemTabs/ItemTabs";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchMe } from "../../redux/ops/usersOps";
+import { useParams } from "react-router-dom";
 
 const UserPage = () => {
+    const userId = useParams().id;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchMe());
@@ -50,7 +52,7 @@ const UserPage = () => {
                 </button>
             )}
 
-            <ItemTabs />
+            <ItemTabs userId={userId} />
         </div>
     );
 };

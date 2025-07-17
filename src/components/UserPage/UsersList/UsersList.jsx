@@ -7,12 +7,11 @@ import { useDispatch } from "react-redux";
 import { followUser, unfollowUser, fetchUserFollowers, fetchUserFollowees } from "../../../redux/ops/usersOps.js";
 import { useEffect } from "react";
 
-export default function UsersList({ isFollowers = true }) {
+export default function UsersList({ isFollowers = true, userId, }) {
     let items = useSelector(isFollowers ? selectUserFollowers : selectUserFollowees);
     const isLoading = useSelector(isFollowers ? selectUserFollowersLoading : selectUserFolloweesLoading);
     const error = useSelector(isFollowers ? selectUserFollowersError : selectUserFolloweesError);
 
-    const userId = useSelector(selectUserId);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -77,12 +76,11 @@ export default function UsersList({ isFollowers = true }) {
     //         ]
     //     }
     // ]
-
     return <ItemsListContainer getItemIdByIndex={(index) => items[index].id}>
         {items.map((item) => <UserCard
             key={item.id}
             userId={`${item.id}`}
-            avatarUrl={item.avatarUrl}
+            avatarUrl={item.avatarUrl ?? ''}
             name={item.name}
             recipesCount={item.recipesCount}
             recipesList={item.recipesList}
@@ -99,4 +97,5 @@ export default function UsersList({ isFollowers = true }) {
 
 UsersList.propTypes = {
     isFollowing: PropTypes.bool,
+    userId: PropTypes.string
 };

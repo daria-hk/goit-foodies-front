@@ -4,7 +4,7 @@ import { useState } from "react";
 import { USER_LIST_VARIANTS } from "../TabsList/TabsList";
 import RecipesList from "../RecipesList/RecipesList.jsx";
 import UsersList from "../UsersList/UsersList.jsx";
-
+import PropTypes from "prop-types";
 import css from './ItemTabs.module.css';
 
 
@@ -14,7 +14,7 @@ const RECIPE_VARIANTS = new Set([
     USER_LIST_VARIANTS.my_favorites,
 ]);
 
-const ItemTabs = () => {
+const ItemTabs = ({ userId }) => {
     const [tabType, setTabType] = useState(USER_LIST_VARIANTS.my_recipes);
 
     return (
@@ -22,8 +22,8 @@ const ItemTabs = () => {
             <TabsList variant={tabType} onChange={setTabType} />
             {
                 RECIPE_VARIANTS.has(tabType) ?
-                    <RecipesList isFavorite={tabType === USER_LIST_VARIANTS.my_favorites} /> :
-                    <UsersList isFollowers={tabType === USER_LIST_VARIANTS.followers} />
+                    <RecipesList userId={userId} isFavorite={tabType === USER_LIST_VARIANTS.my_favorites} /> :
+                    <UsersList userId={userId} isFollowers={tabType === USER_LIST_VARIANTS.followers} />
             }
             <ListPagination variant={"all"} />
         </>
@@ -31,7 +31,7 @@ const ItemTabs = () => {
 };
 
 ItemTabs.propTypes = {
-
+    userId: PropTypes.string
 };
 
 export default ItemTabs;
