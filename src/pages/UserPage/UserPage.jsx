@@ -5,8 +5,8 @@ import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
 import TabsList from "../../components/UserPage/TabsList/TabsList";
 import ListItems from "../../components/UserPage/ListItems/ListItems";
 import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
-import {useSelector} from "react-redux";
-import {selectRecipes, selectRecipesTotalPages} from "@/redux/slices/recipesSlice.js";
+import { useSelector } from "react-redux";
+import { selectRecipes, selectRecipesTotalPages } from "@/redux/slices/recipesSlice.js";
 
 const UserPage = () => {
   const userData = {
@@ -22,49 +22,53 @@ const UserPage = () => {
     followingCount: 10,
   };
 
+  const handleAvatarChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // TODO: реалізувати завантаження на сервер
+      console.log("Avatar selected:", file);
+    }
+  };
+
   const handleLogOut = () => {
-      // TODO: Open Modal with LogOutModal
-      alert("Log out clicked");
+    // TODO: Open Modal with LogOutModal
+    alert("Log out clicked");
   };
 
   const handleFollowToggle = () => {
-      // TODO: Send request to backend
-      alert("Follow/Unfollow clicked");
+    // TODO: Send request to backend
+    alert("Follow/Unfollow clicked");
   };
 
   const recipes = useSelector(selectRecipes); // Отримуємо список рецептів з Redux
-
-  console.log('[UserPage] recipes:', recipes, Array.isArray(recipes));
-
   const totalPages = useSelector(selectRecipesTotalPages);
-  console.log('TOTAL PAGES IN PAGE:', totalPages);
 
   return (
-      <div>
-          <PathInfo currentPageName="User Profile"/>
-          <MainTitle>User Profile</MainTitle>
-          <Subtitle>Manage your account and recipes</Subtitle>
+    <div>
+      <PathInfo currentPageName="User Profile" />
+      <MainTitle>User Profile</MainTitle>
+      <Subtitle>Manage your account and recipes</Subtitle>
 
-          <UserInfo
-            user={userData}
-            isOwnProfile={userData.isCurrentUser}
-            onAvatarChange={handleAvatarChange}
-          />
+      <UserInfo
+        user={userData}
+        isOwnProfile={userData.isCurrentUser}
+        onAvatarChange={handleAvatarChange}
+      />
 
-          {userData.isCurrentUser ? (
-              <button type="button" onClick={handleLogOut}>
-                  Log Out
-              </button>
-          ) : (
-              <button type="button" onClick={handleFollowToggle}>
-                  {userData.isFollowing ? "Following" : "Follow"}
-              </button>
-          )}
+      {userData.isCurrentUser ? (
+        <button type="button" onClick={handleLogOut}>
+          Log Out
+        </button>
+      ) : (
+        <button type="button" onClick={handleFollowToggle}>
+          {userData.isFollowing ? "Following" : "Follow"}
+        </button>
+      )}
 
-          <TabsList/>
-          <ListItems variant={'Recipes'} items={recipes}/>
-          <ListPagination variant={"all"}/>
-      </div>
+      <TabsList />
+      <ListItems variant={"Recipes"} items={recipes} />
+      <ListPagination variant={"all"} />
+    </div>
   );
 };
 
