@@ -30,7 +30,7 @@ export default function Home() {
     dispatch(fetchAreas());
     dispatch(fetchIngredients());
     dispatch(fetchTestimonials());
-    dispatch(fetchUserById("1")); //test id
+    // dispatch(fetchUserById("1")); //test id
   }, [dispatch]);
 
   const handleAddRecipeClick = () => {
