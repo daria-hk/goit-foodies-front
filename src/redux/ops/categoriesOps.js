@@ -6,7 +6,10 @@ export const fetchCategories = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await api.get("categories");
-      return response.data;
+      return response.data.map((cat) => ({
+        ...cat,
+        lowerName: cat.name.toLowerCase(),
+      }));
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
