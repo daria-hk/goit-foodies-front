@@ -107,7 +107,8 @@ export const addRecipeToFavorites = createAsyncThunk(
   "recipes/addRecipeToFavorites",
   async (id, thunkAPI) => {
     try {
-      const response = await api.post(`recipe/${id}/favorite`);
+      const response = await api.post(`recipes/${id}/favorite`);
+      await thunkAPI.dispatch(fetchFavoriteRecipes());
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;
@@ -120,7 +121,8 @@ export const removeRecipeFromFavorites = createAsyncThunk(
   "recipes/removeRecipeFromFavorites",
   async (id, thunkAPI) => {
     try {
-      const response = await api.delete(`recipe/${id}/favorite`);
+      const response = await api.delete(`recipes/${id}/favorite`);
+      await thunkAPI.dispatch(fetchFavoriteRecipes());
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;

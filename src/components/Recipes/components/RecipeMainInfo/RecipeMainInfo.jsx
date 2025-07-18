@@ -11,7 +11,10 @@ const RecipeMainInfo = ({ data }) => {
 
 
   const navigate = useNavigate();
+
+
   const isAuthenticated = false; 
+  // Треба isState витягнути  isAuthenticated через useSelector 
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const dispatch = useDispatch();

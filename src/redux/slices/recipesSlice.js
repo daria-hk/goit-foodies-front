@@ -90,11 +90,12 @@ export const recipesSlice = createSlice({
       .addCase(addRecipeToFavorites.pending, handlePending)
 
       .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
-        console.log(action.payload);
+        state.isLoading = false;
       })
       .addCase(addRecipeToFavorites.rejected, handleRejected)
       .addCase(removeRecipeFromFavorites.pending, handlePending)
       .addCase(removeRecipeFromFavorites.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.favorites = state.favorites.filter(
           (recipe) => recipe.id !== action.payload
         );
@@ -102,7 +103,8 @@ export const recipesSlice = createSlice({
       .addCase(removeRecipeFromFavorites.rejected, handleRejected)
       .addCase(fetchFavoriteRecipes.pending, handlePending)
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
-        state.favorites = action.payload;
+        state.isLoading = false;
+        state.favorites = action.payload.items;
       })
       .addCase(fetchFavoriteRecipes.rejected, handleRejected);
   },
@@ -128,7 +130,6 @@ export const selectFavorites = (state) => state.recipes.favorites;
 export const selectRecipesPage = (state) => state.recipes.page;
 export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
 export const selectRecipesLimit = (state) => state.recipes.limit;
-
 export const selectSelectedCategory = (state) => state.recipes.selectedCategory;
 export const selectSelectedArea = (state) => state.recipes.selectedArea;
 export const selectSelectedIngredients = (state) =>
