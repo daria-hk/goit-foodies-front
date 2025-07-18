@@ -7,6 +7,7 @@ import ListItems from "../../components/UserPage/ListItems/ListItems";
 import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
 import { useSelector } from "react-redux";
 import { selectRecipes, selectRecipesTotalPages } from "@/redux/slices/recipesSlice.js";
+import styles from "./UserPage.module.css";
 
 const UserPage = () => {
   const userData = {
@@ -44,30 +45,37 @@ const UserPage = () => {
   const totalPages = useSelector(selectRecipesTotalPages);
 
   return (
-    <div>
+    <div className={styles.container}>
       <PathInfo currentPageName="User Profile" />
       <MainTitle>User Profile</MainTitle>
       <Subtitle>Manage your account and recipes</Subtitle>
 
-      <UserInfo
-        user={userData}
-        isOwnProfile={userData.isCurrentUser}
-        onAvatarChange={handleAvatarChange}
-      />
+      <div className={styles.containerMainArea}>
+        <div className={styles.userInfoWrapper}>
+          <UserInfo
+            user={userData}
+            isOwnProfile={userData.isCurrentUser}
+            onAvatarChange={handleAvatarChange}
+          />
 
-      {userData.isCurrentUser ? (
-        <button type="button" onClick={handleLogOut}>
-          Log Out
-        </button>
-      ) : (
-        <button type="button" onClick={handleFollowToggle}>
-          {userData.isFollowing ? "Following" : "Follow"}
-        </button>
-      )}
+          {userData.isCurrentUser ? (
+            <button type="button" onClick={handleLogOut} className={`${styles.btn} ${styles.btnPrimary}`}>
+              Log Out
+            </button>
+          ) : (
+            <button type="button" onClick={handleFollowToggle} className={`${styles.btn} ${styles.btnPrimary}`}>
+              {userData.isFollowing ? "Following" : "Follow"}
+            </button>
+          )}
+        </div>
 
-      <TabsList />
-      <ListItems variant={"Recipes"} items={recipes} />
-      <ListPagination variant={"all"} />
+        <div>
+          <TabsList />
+          <ListItems variant={"Recipes"} items={recipes} />
+          <ListPagination variant={"all"} />
+        </div>
+
+      </div>
     </div>
   );
 };
