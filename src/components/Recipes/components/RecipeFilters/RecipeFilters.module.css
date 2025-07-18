@@ -4,10 +4,13 @@
   gap: 14px;
 }
 .select {
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 16px 12px;
+  border-radius: 50px;
   border: 1px solid #ccc;
   font-size: 16px;
+  text-transform: none;
+  background: white;
+  color: var(--main);
 }
 
 @media only screen and (min-width: 768px) {

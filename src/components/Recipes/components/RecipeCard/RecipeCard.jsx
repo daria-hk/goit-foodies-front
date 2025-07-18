@@ -1,4 +1,5 @@
 import css from "./RecipeCard.module.css";
+import sprite from '@/assets/img/sprite.svg';
 
 const RecipeCard = ({
   recipe,
@@ -9,7 +10,7 @@ const RecipeCard = ({
 }) => (
   <div className={css.card}>
     <img src={recipe.thumb} alt={recipe.title} className={css.image} />
-    <h3 className={css.title}>{recipe.title}</h3>
+    <h4 className={css.title}>{recipe.title}</h4>
     <p className={css.description}>{recipe.description}</p>
     <div className={css.footer}>
       <button type="button" onClick={onAuthorClick} className={css.authorBtn}>
@@ -25,17 +26,11 @@ const RecipeCard = ({
           type="button"
           onClick={onFavoriteToggle}
           title="Add/remove from favorites"
-          className={css.favoriteBtn}
+          className={isFavorite ? `${css.active}` : ''}
         >
-          <span
-            className={
-              isFavorite
-                ? `${css.favoriteIcon} ${css.favoriteIconActive}`
-                : css.favoriteIcon
-            }
-          >
-            {isFavorite ? "❤️" : "🤍"}
-          </span>
+          <svg>
+            <use className={css.icon} href={`${sprite}#icon-heart-empty`} />
+          </svg>
         </button>
         <button
           type="button"
@@ -43,7 +38,9 @@ const RecipeCard = ({
           title="Recipe details"
           className={css.detailsBtn}
         >
-          ➡️
+          <svg>
+            <use className={css.icon} href={`${sprite}#icon-arrow`} />
+          </svg>
         </button>
       </div>
     </div>
