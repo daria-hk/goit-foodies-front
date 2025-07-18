@@ -1,4 +1,4 @@
-import PathInfo from "../../components/UserPage/PathInfo/PathInfo";
+import PathInfo from "../../components/Common/PathInfo/PathInfo";
 import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
@@ -6,7 +6,10 @@ import TabsList from "../../components/UserPage/TabsList/TabsList";
 import ListItems from "../../components/UserPage/ListItems/ListItems";
 import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
 import { useSelector } from "react-redux";
-import { selectRecipes, selectRecipesTotalPages } from "@/redux/slices/recipesSlice.js";
+import {
+  selectRecipes,
+  selectRecipesTotalPages,
+} from "@/redux/slices/recipesSlice.js";
 import styles from "./UserPage.module.css";
 
 const UserPage = () => {
@@ -14,7 +17,7 @@ const UserPage = () => {
     id: 1,
     name: "John Doe",
     email: "john@example.com",
-    avatar: "", 
+    avatar: "",
     isCurrentUser: true,
     isFollowing: false,
     recipesCount: 5,
@@ -46,7 +49,7 @@ const UserPage = () => {
 
   return (
     <div className={styles.container}>
-      <PathInfo currentPageName="User Profile" />
+      <PathInfo currentPageName="Profile" />
       <MainTitle>User Profile</MainTitle>
       <Subtitle>Manage your account and recipes</Subtitle>
 
@@ -59,11 +62,19 @@ const UserPage = () => {
           />
 
           {userData.isCurrentUser ? (
-            <button type="button" onClick={handleLogOut} className={`${styles.btn} ${styles.btnPrimary}`}>
+            <button
+              type="button"
+              onClick={handleLogOut}
+              className={`${styles.btn} ${styles.btnPrimary}`}
+            >
               Log Out
             </button>
           ) : (
-            <button type="button" onClick={handleFollowToggle} className={`${styles.btn} ${styles.btnPrimary}`}>
+            <button
+              type="button"
+              onClick={handleFollowToggle}
+              className={`${styles.btn} ${styles.btnPrimary}`}
+            >
               {userData.isFollowing ? "Following" : "Follow"}
             </button>
           )}
@@ -74,7 +85,6 @@ const UserPage = () => {
           <ListItems variant={"Recipes"} items={recipes} />
           <ListPagination variant={"all"} />
         </div>
-
       </div>
     </div>
   );

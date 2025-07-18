@@ -1,4 +1,4 @@
-import PathInfo from "../../components/Recipes/components/PathInfo/PathInfo";
+import PathInfo from "../../components/Common/PathInfo/PathInfo";
 import RecipeInfo from "../../components/Recipes/components/RecipeInfo/RecipeInfo";
 import PopularRecipes from "../../components/Recipes/components/PopularRecipes/PopularRecipes";
 
@@ -14,25 +14,24 @@ import {
   // selectRecipesError
 } from "../../redux/slices/recipesSlice";
 
-
-
 export default function RecipePage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const isLoading = useSelector(selectRecipesIsLoading);
   const recipe = useSelector(selectCurrentRecipe);
-  
+
   useEffect(() => {
     dispatch(fetchRecipeById(id));
   }, [dispatch, id]);
- 
- const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
+  const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
   return (
-     !isLoading && recipe && (
-    <>
-      <PathInfo currentPageName={recipe.title}  />
-      <RecipeInfo data={recipe} />
-      <PopularRecipes recipes={popularRecipes} />
+    !isLoading &&
+    recipe && (
+      <>
+        <PathInfo currentPageName={recipe.title} />
+        <RecipeInfo data={recipe} />
+        <PopularRecipes recipes={popularRecipes} />
       </>
     )
   );
