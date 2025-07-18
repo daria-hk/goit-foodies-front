@@ -49,10 +49,12 @@ const UserPage = () => {
 
   return (
     <div className={styles.container}>
-      <PathInfo currentPageName="Profile" />
-      <MainTitle>User Profile</MainTitle>
-      <Subtitle>Manage your account and recipes</Subtitle>
-
+      <PathInfo currentPageName="User Profile" />
+      <MainTitle className={styles.title}>Profile</MainTitle>
+      <Subtitle className={styles.subtitle}>
+        Reveal your culinary art, share your favorite recipe and create
+        gastronomic masterpieces with us.
+      </Subtitle>
       <div className={styles.containerMainArea}>
         <div className={styles.userInfoWrapper}>
           <UserInfo
