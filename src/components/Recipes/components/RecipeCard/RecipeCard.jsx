@@ -3,6 +3,7 @@ import sprite from '@/assets/img/sprite.svg';
 
 const RecipeCard = ({
   recipe,
+  author,
   isFavorite,
   onAuthorClick,
   onFavoriteToggle,
@@ -15,11 +16,11 @@ const RecipeCard = ({
     <div className={css.footer}>
       <button type="button" onClick={onAuthorClick} className={css.authorBtn}>
         <img
-          src={recipe.owner.avatar}
-          alt={recipe.owner.name}
+          src={author.avatar}
+          alt={author.name}
           className={css.authorAvatar}
         />
-        <span>{recipe.owner.name}</span>
+        <span>{author.name}</span>
       </button>
       <div className={css.actions}>
         <button

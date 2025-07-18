@@ -16,6 +16,7 @@ const RecipeList = ({
         <RecipeCard
           key={recipe.id}
           recipe={recipe}
+          author={recipe.owner}
           isFavorite={favorites.includes(recipe.id)}
           onAuthorClick={() => onAuthorClick(recipe.author)}
           onFavoriteToggle={() => onFavoriteToggle(recipe)}

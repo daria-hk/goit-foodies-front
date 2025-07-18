@@ -45,6 +45,7 @@ export const fetchRecipeById = createAsyncThunk(
 );
 
 export const fetchRecipesPopular = createAsyncThunk(
+  "recipes/fetchPopular",
   async (_, thunkAPI) => {
     try {
       const response = await api.get("recipes/popular");
