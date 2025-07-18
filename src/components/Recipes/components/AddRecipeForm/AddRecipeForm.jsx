@@ -88,11 +88,16 @@ const AddRecipeForm = () => {
       formData.append("thumb", data.image[0]);
       formData.append("title", data.title);
       formData.append("description", data.description);
+      formData.append("area", data.area || 4);
       formData.append("category", data.category);
       formData.append("time", data.cookingTime);
-      formData.append("ingredients", JSON.stringify(ingredients));
+      formData.append("ingredients", JSON.stringify(ingredients.map(
+        (itm) => ({
+          id: itm.id,
+          measure: itm.amount
+        })
+      )));
       formData.append("instructions", data.instructions);
-      console.log(JSON.stringify(ingredients));
 
       const result = await dispatch(createRecipe(formData)).unwrap();
       console.log("Recepi created:", result);
