@@ -10,7 +10,7 @@ import {
 const initialState = {
   items: [],
   currentRecipe: null,
-  favorites: { recipes: [] },
+  favorites: [],
   isLoading: false,
   error: null,
   page: 1,
@@ -43,7 +43,7 @@ export const recipesSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.currentRecipe = null;
-      state.favorites.recipes = [];
+      state.favorites = [];
       state.page = 1;
       state.totalPages = 1;
       state.limit = 8;
@@ -71,27 +71,40 @@ export const recipesSlice = createSlice({
     builder
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
+        console.log();
         state.isLoading = false;
         state.items = action.payload.items || action.payload;
         state.page = action.payload.page || 1;
         state.totalPages = action.payload.pages || 1;
-        state.currentRecipe = action.payload;
+        // state.currentRecipe = action.payload; state.сurrenRecipe - зберігає дані одного рецепту з fetchRecipeById
       })
       .addCase(fetchRecipes.rejected, handleRejected)
-      .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
-        state.favorites.recipes.push(action.payload);
+
+      .addCase(fetchRecipeById.pending, handlePending)
+      .addCase(fetchRecipeById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentRecipe = action.payload;
       })
+      .addCase(fetchRecipeById.rejected, handleRejected)
+
+      .addCase(addRecipeToFavorites.pending, handlePending)
+
+      .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
+      .addCase(addRecipeToFavorites.rejected, handleRejected)
+      .addCase(removeRecipeFromFavorites.pending, handlePending)
       .addCase(removeRecipeFromFavorites.fulfilled, (state, action) => {
-        // state.favorites.recipes.filter(
-        //   (recipe) => recipe.id !== action.meta.arg
-        state.favorites.recipes = state.favorites.recipes.filter(
-          (recipe) => recipe.id !== action.meta.arg
+        state.favorites = state.favorites.filter(
+          (recipe) => recipe.id !== action.payload
         );
       })
+      .addCase(removeRecipeFromFavorites.rejected, handleRejected)
+      .addCase(fetchFavoriteRecipes.pending, handlePending)
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
-        console.log("Look at this favorites list");
         state.favorites = action.payload;
-      });
+      })
+      .addCase(fetchFavoriteRecipes.rejected, handleRejected);
   },
 });
 
@@ -111,7 +124,7 @@ export const selectRecipes = (state) => state.recipes.items;
 export const selectCurrentRecipe = (state) => state.recipes.currentRecipe;
 export const selectRecipesIsLoading = (state) => state.recipes.isLoading;
 export const selectRecipesError = (state) => state.recipes.error;
-export const selectFavorites = (state) => state.recipes.favorites.recipes;
+export const selectFavorites = (state) => state.recipes.favorites;
 export const selectRecipesPage = (state) => state.recipes.page;
 export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
 export const selectRecipesLimit = (state) => state.recipes.limit;

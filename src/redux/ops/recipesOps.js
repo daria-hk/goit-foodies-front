@@ -1,36 +1,36 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {selectRecipesLimit} from "@/redux/slices/recipesSlice.js";
+import { selectRecipesLimit } from "@/redux/slices/recipesSlice.js";
 import api from "../../services/api";
 
 export const fetchRecipes = createAsyncThunk(
-    "recipes/fetchAll",
-    async (
-        { page = 1, category = null, area = null, ingredients = [] },
-        { rejectWithValue, getState }
-    ) => {
-        try {
-            const state = getState();
-            const limit = selectRecipesLimit(state); // використовуємо селектор з slices
+  "recipes/fetchAll",
+  async (
+    { page = 1, category = null, area = null, ingredients = [] },
+    { rejectWithValue, getState }
+  ) => {
+    try {
+      const state = getState();
+      const limit = selectRecipesLimit(state); // використовуємо селектор з slices
 
-            const queryParams = new URLSearchParams();
+      const queryParams = new URLSearchParams();
 
-            queryParams.append("limit", limit);
-            if (page) queryParams.append("page", page);
-            if (category && category !== "all") queryParams.append("category", category);
-            if (area) queryParams.append("area", area);
-            if (ingredients && ingredients.length > 0) {
-                queryParams.append("ingredients", ingredients.join(","));
-            }
+      queryParams.append("limit", limit);
+      if (page) queryParams.append("page", page);
+      if (category && category !== "all")
+        queryParams.append("category", category);
+      if (area) queryParams.append("area", area);
+      if (ingredients && ingredients.length > 0) {
+        queryParams.append("ingredients", ingredients.join(","));
+      }
 
-            const response = await api.get(`recipes?${queryParams.toString()}`);
+      const response = await api.get(`recipes?${queryParams.toString()}`);
 
-            return response.data;
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
+  }
 );
-
 
 export const fetchRecipeById = createAsyncThunk(
   "recipes/fetchById",
@@ -44,16 +44,14 @@ export const fetchRecipeById = createAsyncThunk(
   }
 );
 
-export const fetchRecipesPopular = createAsyncThunk(
-  async (_, thunkAPI) => {
-    try {
-      const response = await api.get("recipes/popular");
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
+export const fetchRecipesPopular = createAsyncThunk(async (_, thunkAPI) => {
+  try {
+    const response = await api.get("recipes/popular");
+    return response.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.message);
   }
-);
+});
 
 export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
@@ -83,7 +81,7 @@ export const fetchMyRecipes = createAsyncThunk(
   "recipes/fetchMyRecipes",
   async (_, thunkAPI) => {
     try {
-      const response = await api.get('recipes/my');
+      const response = await api.get("recipes/my");
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;
@@ -96,7 +94,7 @@ export const fetchFavoriteRecipes = createAsyncThunk(
   "recipes/fetchFavoriteRecipes",
   async (_, thunkAPI) => {
     try {
-      const response = await api.get('recipes/favorites');
+      const response = await api.get("recipes/favorites");
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;
@@ -109,7 +107,7 @@ export const addRecipeToFavorites = createAsyncThunk(
   "recipes/addRecipeToFavorites",
   async (id, thunkAPI) => {
     try {
-      const response = await api.post(`recipes/${id}/favorite`);
+      const response = await api.post(`recipe/${id}/favorite`);
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;
@@ -122,7 +120,7 @@ export const removeRecipeFromFavorites = createAsyncThunk(
   "recipes/removeRecipeFromFavorites",
   async (id, thunkAPI) => {
     try {
-      const response = await api.delete(`recipes/${id}/favorite`);
+      const response = await api.delete(`recipe/${id}/favorite`);
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;

@@ -24,12 +24,10 @@ const RecipeInfo = ({ data }) => {
   const recipe = useSelector(selectCurrentRecipe);
   const favoritesList = useSelector(selectFavorites);
   // const isLoading = useSelector(selectRecipesIsLoading);
-  const navigate = useNavigate();
   const isFavoriteById = favoritesList?.some(item => String(item.id) === String(id)) === true;
  
-  // потрібно створити в userSlice властивість isAuthenticated
-   // const isAuthenticated = useSelector(selectIsAuthenticated);
-  const isAuthenticated = true; 
+
+
   
   const onToggleFavorites = () => {
     if (!recipe) return;
@@ -60,15 +58,7 @@ const RecipeInfo = ({ data }) => {
                     });
             }
   };
-   const onAvatarClick = id => {
-        if (isAuthenticated) {
-            navigate(`/user/${id}`);
-        } else {
-          console.log("Open login modal")
-          
-          // dispatch(openModal())
-        }
-  };
+
   
  return (
   <section className={css.sectionWrapper}>
@@ -82,7 +72,7 @@ const RecipeInfo = ({ data }) => {
     />
 
     <div className={css.recipeDetails}>
-      <RecipeMainInfo data={data} onUserClick={onAvatarClick} />
+      <RecipeMainInfo data={data} />
       <RecipeIngredients ingredients={data.ingredients} />
       <RecipePreparation
         preparation={data.instructions}

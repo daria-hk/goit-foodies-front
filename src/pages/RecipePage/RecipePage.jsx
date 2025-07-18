@@ -4,7 +4,6 @@ import PopularRecipes from "../../components/Recipes/components/PopularRecipes/P
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useParams, useLocation } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
 import { fetchRecipeById } from "../../redux/ops/recipesOps";
