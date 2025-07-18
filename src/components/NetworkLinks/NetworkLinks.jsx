@@ -3,17 +3,17 @@ import sprite from "../../assets/img/sprite.svg";
 
 const social = [
   {
-    href: "https://www.facebook.com/yourpage",
+    href: "https://www.facebook.com/goITclub/",
     iconId: "icon-facebook",
     label: "Facebook",
   },
   {
-    href: "https://www.instagram.com/yourpage",
+    href: " https://www.instagram.com/goitclub/",
     iconId: "icon-instagram",
     label: "Instagram",
   },
   {
-    href: "https://www.youtube.com/yourpage",
+    href: "https://www.youtube.com/c/GoIT ",
     iconId: "icon-youtube",
     label: "YouTube",
   },
