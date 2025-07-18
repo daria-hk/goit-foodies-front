@@ -1,4 +1,4 @@
-import PathInfo from "../../components/UserPage/PathInfo/PathInfo";
+import PathInfo from "../../components/Common/PathInfo/PathInfo";
 import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
@@ -55,7 +55,6 @@ const UserPage = () => {
         Reveal your culinary art, share your favorite recipe and create
         gastronomic masterpieces with us.
       </Subtitle>
-
       <div className={styles.containerMainArea}>
         <div className={styles.userInfoWrapper}>
           <UserInfo
