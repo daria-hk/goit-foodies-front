@@ -1,3 +1,23 @@
+.title {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 114%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--main);
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  color: var(--gray);
+  max-width: 343px;
+}
+
 .btn {
   border-radius: 30px;
   display: flex;
@@ -12,8 +32,11 @@
 }
 
 .btnPrimary {
-  background-color: #1A1A1A;
+  background-color: #1a1a1a;
   color: white;
+}
+.btnPrimary:hover {
+  background-color: var(--gray);
 }
 
 .container {
@@ -44,6 +67,19 @@
   .container {
     padding-inline: 32px;
   }
+  .title {
+    font-family: var(--font-family);
+    font-size: 40px;
+    line-height: 110%;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    max-width: 443px;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -54,5 +90,23 @@
   .containerMainArea {
     flex-direction: row;
     column-gap: 40px;
+  }
+
+  .title {
+    font-family: var(--font-family);
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 110%;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    max-width: 443px;
   }
 }
