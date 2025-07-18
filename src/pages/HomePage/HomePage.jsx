@@ -26,17 +26,9 @@ export default function Home() {
     dispatch(fetchTestimonials());
   }, [dispatch]);
 
-  const handleAddRecipeClick = () => {
-    if (isAuth) {
-      navigate("/recipe/add");
-    } else {
-      alert("Log in to add a recipe");
-    }
-  };
-
   return (
     <div className={css.wrapper}>
-      <Hero onAddRecipeClick={handleAddRecipeClick} />
+      <Hero />
       {!selectedCategory && (
         <Categories error={error} onCategorySelect={setSelectedCategory} />
       )}

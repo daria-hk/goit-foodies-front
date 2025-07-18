@@ -1,3 +1,15 @@
-.recipePage {
-  color: black;
+.subtitle {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -2%;
+  font-weight: 500;
+  color: #bfbebe;
+}
+
+.maintitle {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: -2%;
+  font-weight: 800;
+  text-transform: uppercase;
 }
