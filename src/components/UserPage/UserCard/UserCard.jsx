@@ -19,7 +19,7 @@ const UserCard = ({
   const [following, setFollowing] = useState(isFollowing);
   const [removed, setRemoved] = useState(false);
 
-  if (tabType === "following" && removed) return null;
+  if (tabType === "following" && removed) return "";
 
   const handleFollow = async () => {
     await onFollow(userId);
@@ -83,7 +83,7 @@ const UserCard = ({
 };
 
 UserCard.propTypes = {
-  userId: PropTypes.string.isRequired,
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   avatarUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   recipesCount: PropTypes.number.isRequired,

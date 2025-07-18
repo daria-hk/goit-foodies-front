@@ -1,76 +1,156 @@
 .card {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  margin-bottom: 16px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--gray);
+  margin-top: 40px;
 }
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .avatarLink {
   display: block;
+  flex-shrink: 0;
 }
+
 .avatar {
-  width: 64px;
-  height: 64px;
+  width: 85px;
+  height: 85px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #eee;
 }
-.info {
-  flex: 1;
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
 .nameLink {
   text-decoration: none;
   color: #222;
 }
+
 .name {
-  margin: 0 0 4px 0;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--main);
 }
+
 .recipesCount {
-  margin: 0 0 8px 0;
-  color: #888;
-  font-size: 0.95rem;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.02em;
+  color: var(--gray);
 }
+
+.recipesSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .recipesList {
   display: none;
-  margin: 0 0 12px 0;
-  padding-left: 18px;
-  color: #444;
-  font-size: 0.98rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-@media (min-width: 768px) {
-  .recipesList {
-    display: block;
+
+.recipesList li {
+  flex-shrink: 0;
+}
+
+.recipeThumb {
+  border-radius: 15px;
+  width: 100px;
+  height: 100px;
+}
+
+.viewAllBtn {
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  padding: 12px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.viewAllBtnIcon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--main);
+  fill: none;
+}
+
+.viewAllBtn:hover {
+  background: var(--main);
+}
+
+.viewAllBtn:hover .viewAllBtnIcon {
+  stroke: var(--white);
+}
+
+@media (min-width: 1440px) {
+  .card {
+    gap: 75px;
   }
 }
-.followBtn {
-  background: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 18px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
+
+@media (min-width: 768px) {
+  .recipesList {
+    display: flex;
+  }
 }
-.followBtn:hover {
-  background: #388e3c;
+
+@media (max-width: 767px) {
+  .noRecipes,
+  .recipesList {
+    display: none;
+  }
 }
+
+.followBtn,
 .followingBtn {
-  background: #fff;
-  color: #4caf50;
-  border: 1.5px solid #4caf50;
-  border-radius: 6px;
-  padding: 6px 18px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  background: var(--white);
+  display: inline-flex;
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--main);
 }
+
+.followBtn:hover,
 .followingBtn:hover {
-  background: #e8f5e9;
-  color: #388e3c;
+  background: var(--main);
+  color: var(--white);
+  border-color: var(--main);
+}
+
+.noRecipes {
+  color: var(--gray);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
