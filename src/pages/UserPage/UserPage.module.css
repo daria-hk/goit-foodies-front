@@ -39,16 +39,6 @@
   background-color: var(--gray);
 }
 
-.container {
-  width: 100%;
-  max-width: 1400px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 32px;
-  padding-inline: 16px;
-  margin: 0 auto;
-}
-
 .containerMainArea {
   display: flex;
   flex-direction: column;
@@ -83,10 +73,6 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .container {
-    padding-inline: 80px;
-  }
-
   .containerMainArea {
     flex-direction: row;
     column-gap: 40px;

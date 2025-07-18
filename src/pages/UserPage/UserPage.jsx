@@ -48,7 +48,7 @@ const UserPage = () => {
   const totalPages = useSelector(selectRecipesTotalPages);
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <PathInfo currentPageName="User Profile" />
       <MainTitle className={styles.title}>Profile</MainTitle>
       <Subtitle className={styles.subtitle}>
