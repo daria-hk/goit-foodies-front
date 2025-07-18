@@ -1,5 +1,5 @@
 import MainTitle from "../../components/MainTitle/MainTitle";
-import PathInfo from "../../components/Recipes/components/PathInfo/PathInfo";
+import PathInfo from "../../components/Common/PathInfo/PathInfo";
 import { useEffect } from "react";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import css from "./AddRecipePage.module.css";

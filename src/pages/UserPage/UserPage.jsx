@@ -1,4 +1,4 @@
-import PathInfo from "../../components/UserPage/PathInfo/PathInfo";
+import PathInfo from "../../components/Common/PathInfo/PathInfo";
 import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
@@ -50,9 +50,11 @@ const UserPage = () => {
   return (
     <div className="container">
       <PathInfo currentPageName="User Profile" />
-      <MainTitle>User Profile</MainTitle>
-      <Subtitle>Manage your account and recipes</Subtitle>
-
+      <MainTitle className={styles.title}>Profile</MainTitle>
+      <Subtitle className={styles.subtitle}>
+        Reveal your culinary art, share your favorite recipe and create
+        gastronomic masterpieces with us.
+      </Subtitle>
       <div className={styles.containerMainArea}>
         <div className={styles.userInfoWrapper}>
           <UserInfo
