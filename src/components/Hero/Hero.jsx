@@ -21,9 +21,8 @@ const Hero = () => {
   // };
 
   return (
-    <>
-      {/* {showModal && <Modal onClose={toggleModal} />} */}
-      <section className={styles["hero-section"]}>
+    <section className={styles["hero-section"]}>
+      <div className={styles["hero-wrapper"]}>
         <h1 className={styles.title}>
           Improve Your
           <br />
@@ -61,8 +60,8 @@ const Hero = () => {
             />
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
