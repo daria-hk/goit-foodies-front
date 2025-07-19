@@ -79,7 +79,7 @@
             height: 18px;
         }
 
-        &.active, &:hover, &:focus {
+        &.active, &:hover {
             background-color: var(--main);
             border: 1px solid var(--main);
 
@@ -105,14 +105,14 @@
     .card {
         width: 342px;
     }
+
+    .image {
+        height: 275px;
+    }
 }
 
 @media only screen and (min-width: 1440px) {
     .card {
         width: 290px;
-    }
-
-    .image {
-        height: 275px;
     }
 }

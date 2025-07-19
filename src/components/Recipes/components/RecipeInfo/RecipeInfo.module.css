@@ -1,8 +1,7 @@
 .sectionWrapper {
     max-width: 1200px;
     padding: 40px 20px;
-    margin: 0 auto;
-    margin-bottom: 120px;
+    margin: 0 auto 64px;
 }
 
 .recipeWrapper {
@@ -39,10 +38,25 @@
 }
 
 @media screen and (min-width: 768px) {
+    .sectionWrapper {
+        margin-bottom: 100px;
+    }
+    .recipeImg {
+        max-height: 400px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .sectionWrapper {
+        margin-bottom: 120px;
+    }
     .recipeWrapper {
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
         gap: 80px;
+    }
+    .recipeImg {
+        max-height: unset;
     }
 }
