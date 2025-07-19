@@ -1,19 +1,18 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
 import SignInForm from "../Modal/SignInForm";
 import SignUpForm from "../Modal/SignUpForm";
-import { clearUsersError } from "../../redux/slices/usersSlice";
 import css from "./AuthBar.module.css";
+import { clearUsersError, closeSignInModal, openSignInModal, selectIsSignInOpen } from '../../redux/slices/usersSlice'
 
 const AuthBar = () => {
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const dispatch = useDispatch();
+  const isSignInOpen = useSelector(selectIsSignInOpen);
 
   const openSignIn = () => {
-    dispatch(clearUsersError());
-    setIsSignInOpen(true);
+    dispatch(openSignInModal());
   };
 
   const openSignUp = () => {
@@ -21,7 +20,7 @@ const AuthBar = () => {
     setIsSignUpOpen(true);
   };
 
-  const closeSignIn = () => setIsSignInOpen(false);
+  const closeSignIn = () => dispatch(closeSignInModal());
   const closeSignUp = () => setIsSignUpOpen(false);
 
   const switchToSignUp = () => {

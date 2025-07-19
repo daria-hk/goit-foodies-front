@@ -1,33 +1,33 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFavorites, selectPopularRecipes } from '@/redux/slices/recipesSlice'
-import { fetchRecipesPopular } from '@/redux/ops/recipesOps';
-
+import { selectPopularRecipes } from '@/redux/slices/recipesSlice'
+import { fetchRecipesPopular } from '@/redux/ops/recipesOps'
+import { useFavorites } from '@/hooks/useFavorites';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 import css from './PopularRecipes.module.css';
+import { openSignInModal, selectUser } from '@/redux/slices/usersSlice.js'
 
 const PopularRecipes = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const popularRecipes = useSelector(selectPopularRecipes);
-  const favorites = useSelector(selectFavorites);
+  const user = useSelector(selectUser);
+  const { isInFavorites, toggleFavorite } = useFavorites();
 
   useEffect(() => {
-    console.log('rrr');
     if (!popularRecipes?.length) {
       dispatch(fetchRecipesPopular());
     }
   }, [popularRecipes, dispatch]);
 
   const handleAuthorClick = (author) => {
-    // TODO: if not authorized — Modal, else navigate(`/user/${author.id}`)
-    alert(`Go to author profile: ${author.name}`);
-  };
-
-  const handleFavoriteToggle = (recipe) => {
-    // TODO: update favorites
+    if (user) {
+      navigate(`/user/${author.id}`);
+    } else {
+      dispatch(openSignInModal());
+    }
   };
 
   const handleDetailsClick = (recipe) => {
@@ -55,8 +55,8 @@ const PopularRecipes = () => {
               key={recipe.id}
               recipe={recipe}
               author={recipe.user}
-              isFavorite={favorites.includes(recipe.id)}
-              onFavoriteToggle={() => handleFavoriteToggle(recipe)}
+              isFavorite={isInFavorites(recipe)}
+              onFavoriteToggle={() => toggleFavorite(recipe)}
               onAuthorClick={() => handleAuthorClick(recipe.owner)}
               onDetailsClick={() => handleDetailsClick(recipe)}
             />

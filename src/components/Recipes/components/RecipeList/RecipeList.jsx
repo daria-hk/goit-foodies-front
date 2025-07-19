@@ -1,13 +1,13 @@
+import { useFavorites } from '@/hooks/useFavorites';
 import RecipeCard from "../RecipeCard/RecipeCard";
 import css from "./RecipeList.module.css";
 
 const RecipeList = ({
   recipes,
-  favorites,
   onAuthorClick,
-  onFavoriteToggle,
   onDetailsClick,
 }) => {
+  const { isInFavorites, toggleFavorite } = useFavorites();
   if (!recipes?.length)
     return <div className={css.empty}>No recipes found</div>;
   return (
@@ -17,9 +17,9 @@ const RecipeList = ({
           key={recipe.id}
           recipe={recipe}
           author={recipe.owner}
-          isFavorite={favorites.includes(recipe.id)}
+          isFavorite={isInFavorites(recipe)}
           onAuthorClick={() => onAuthorClick(recipe.author)}
-          onFavoriteToggle={() => onFavoriteToggle(recipe)}
+          onFavoriteToggle={() => toggleFavorite(recipe)}
           onDetailsClick={() => onDetailsClick(recipe)}
         />
       ))}
