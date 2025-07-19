@@ -10,10 +10,22 @@
   margin: 0;
 }
 
+.logoFooter {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 .logoFooter svg {
-  height: 24px;
   width: 69px;
+  height: 24px;
   fill: var(--main);
+}
+.logoFooter:active {
+  transform: scale(1.2);
+}
+.logoFooter:hover,
+.logoFooter:focus {
+  outline: none;
 }
 
 .divider {
@@ -30,30 +42,26 @@
   letter-spacing: -0.02em;
   text-align: center;
   color: #1a1a1a;
-  padding-top: 40px;
-  padding-bottom: 16px;
+  padding: 40px 0 16px;
 }
 
 .networkLinks {
-  list-style: none;
   display: flex;
+  list-style: none;
   gap: 16px;
   padding: 0 16px 0 0;
   margin: 0;
 }
-
 .networkLinks a {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--gray);
-  border-radius: 100px;
-
   width: 36px;
   height: 36px;
+  border: 1px solid var(--gray);
+  border-radius: 100px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 .networkLinks a:hover {
   background-color: #000;
   transform: scale(1.2);
@@ -61,49 +69,32 @@
 .networkLinks a:hover svg {
   fill: #fff;
 }
-
 .networkLinks svg {
-  fill: var(--main);
   width: 20px;
   height: 20px;
+  fill: var(--main);
   transition: fill 0.3s ease, transform 0.3s ease;
 }
 
-.logoFooter {
-  display: inline-block;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
 
-.logoFooter:active {
-  transform: scale(1.2);
-}
-
-.logoFooter:focus,
-.logoFooter:hover {
-  outline: none;
-}
-
-/* ТОЧКИ ПЕРЕЛОМУ */
-
-/* Tablet */
-@media (min-width: 768px) {
+/* Tablet (≥768px) */
+@media screen and (min-width: 768px) {
   .footer {
     padding-top: 100px;
   }
+
   .inner {
     padding: 0 0 46px 32px;
-    margin: 0;
   }
 
   .logoFooter svg {
     width: 83px;
     height: 28px;
   }
-  .networkLinks {
-    padding: 0 32px 0 0;
-  }
 
+  .networkLinks {
+    padding-right: 32px;
+  }
   .networkLinks a {
     width: 40px;
     height: 40px;
@@ -114,29 +105,21 @@
   }
 }
 
-/* Desktop */
-@media (min-width: 1440px) {
+
+/* Desktop (≥1024px) */
+@media screen and (min-width: 1024px) {
   .footer {
     padding-top: 120px;
   }
+
   .inner {
     padding: 0 0 40px 80px;
-    margin: 0;
-  }
-
-  .logoFooter svg {
-    width: 83px;
-    height: 28px;
   }
 
   .networkLinks {
-    padding: 0 80px 0 0;
+    padding-right: 80px;
   }
 
-  .networkLinks a {
-    width: 40px;
-    height: 40px;
-  }
   .copy {
     padding-bottom: 40px;
   }
