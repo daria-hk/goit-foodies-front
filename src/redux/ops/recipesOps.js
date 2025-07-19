@@ -44,14 +44,17 @@ export const fetchRecipeById = createAsyncThunk(
   }
 );
 
-export const fetchRecipesPopular = createAsyncThunk(async (_, thunkAPI) => {
-  try {
-    const response = await api.get("recipes/popular");
-    return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue(e.message);
+export const fetchRecipesPopular = createAsyncThunk(
+  "recipes/fetchPopular",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("recipes/popular");
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
   }
-});
+);
 
 export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",

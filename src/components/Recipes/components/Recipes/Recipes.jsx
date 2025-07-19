@@ -6,23 +6,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 import { selectIngredients } from '@/redux/slices/ingredientsSlice.js'
 import { selectAreas } from '@/redux/slices/areasSlice.js'
-import { fetchRecipes } from '@/redux/ops/recipesOps';
-import { selectRecipes, selectRecipesIsLoading, selectRecipesError } from '@/redux/slices/recipesSlice';
+import { fetchRecipes } from '@/redux/ops/recipesOps'
+import { selectRecipes } from '@/redux/slices/recipesSlice'
 import css from "./Recipes.module.css";
+import { openSignInModal, selectUser } from '@/redux/slices/usersSlice.js'
 
 const Recipes = ({ category, onBack }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ingredients = useSelector(selectIngredients);
   const regions = useSelector(selectAreas);
-
+  const user = useSelector(selectUser);
   const recipes = useSelector(selectRecipes);
-  const isLoading = useSelector(selectRecipesIsLoading);
-  const error = useSelector(selectRecipesError);
 
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [selectedRegion, setSelectedRegion] = useState(null);
-  const [favorites, setFavorites] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -42,21 +40,14 @@ const Recipes = ({ category, onBack }) => {
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAuthorClick = (author) => {
-    // TODO: if not authorized — Modal, else navigate(`/user/${author.id}`)
-    alert(`Go to author profile: ${author.name}`);
-  };
-
-  const handleFavoriteToggle = (recipe) => {
-    // TODO: Request to backend, update favorites
-    setFavorites((favs) =>
-      favs.includes(recipe.id)
-        ? favs.filter((id) => id !== recipe.id)
-        : [...favs, recipe.id]
-    );
+    if (user) {
+      navigate(`/user/${author.id}`);
+    } else {
+      dispatch(openSignInModal());
+    }
   };
 
   const handleDetailsClick = (recipe) => {
@@ -81,14 +72,10 @@ const Recipes = ({ category, onBack }) => {
           onChange={handleFiltersChange}
         />
         <div className={css.recipesListWrapper}>
-          {isLoading && <div className={css.loadingPlaceholder}>Loading...</div>}
-          {error && <div className={css.errorMessage}>{error}</div>}
-          {!isLoading && !error && (
+          {recipes && (
             <RecipeList
               recipes={recipes}
-              favorites={favorites}
               onAuthorClick={handleAuthorClick}
-              onFavoriteToggle={handleFavoriteToggle}
               onDetailsClick={handleDetailsClick}
             />
           )}
