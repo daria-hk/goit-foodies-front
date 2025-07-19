@@ -11,7 +11,7 @@ export default function AddRecipePage() {
   }, []);
 
   return (
-    <div className="container">
+    <div className={`${"container"} ${css.addRecipeContainer}`}>
       <PathInfo currentPageName={"Add Recipe"} />
       <MainTitle className={css.maintitle}>Add recipe</MainTitle>
       <Subtitle className={css.subtitle}>

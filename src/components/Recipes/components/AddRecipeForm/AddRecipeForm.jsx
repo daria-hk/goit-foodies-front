@@ -1,16 +1,18 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCategories } from "../../../../redux/slices/categoriesSlice";
 import { selectIngredients } from "../../../../redux/slices/ingredientsSlice";
 import { createRecipe } from "../../../../redux/ops/recipesOps";
 import css from "./AddRecipeForm.module.css";
 import { toast } from "react-toastify";
+import { fetchCategories } from "../../../../redux/ops/categoriesOps";
+import { fetchIngredients } from "../../../../redux/ops/ingredientsOps";
 
 const schema = yup.object({
-  image: yup.mixed().required("Image is required"),
+  thumb: yup.mixed().required("Image is required"),
   title: yup.string().required("Title is required"),
   description: yup
     .string()
@@ -28,12 +30,18 @@ const schema = yup.object({
 });
 
 const AddRecipeForm = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [cookingTime, setCookingTime] = useState(10);
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -88,7 +96,7 @@ const AddRecipeForm = () => {
     data.cookingTime = cookingTime;
     try {
       const formData = new FormData();
-      formData.append("thumb", data.image[0]);
+      formData.append("thumb", data.thumb[0]);
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("area", data.area || 4);
@@ -114,6 +122,7 @@ const AddRecipeForm = () => {
       setCookingTime(10);
       toast.success("Recipe successfully created!");
     } catch (error) {
+      console.log(error.message);
       toast.error("Error creating recipe: " + error.message);
     }
   };
