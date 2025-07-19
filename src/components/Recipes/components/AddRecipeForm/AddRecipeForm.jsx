@@ -2,6 +2,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategories } from "../../../../redux/slices/categoriesSlice";
+import { selectIngredients } from "../../../../redux/slices/ingredientsSlice";
+import { createRecipe } from "../../../../redux/ops/recipesOps";
+import css from "./AddRecipeForm.module.css";
 
 const schema = yup.object({
   image: yup.mixed().required("Image is required"),
@@ -26,6 +31,7 @@ const AddRecipeForm = () => {
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -40,18 +46,8 @@ const AddRecipeForm = () => {
   const description = watch("description", "");
   const instructions = watch("instructions", "");
 
-  // Mock data
-  const categories = [
-    { id: 1, name: "Salads" },
-    { id: 2, name: "Soups" },
-    { id: 3, name: "Desserts" },
-  ];
-
-  const availableIngredients = [
-    { id: 1, name: "Potato", image: "https://via.placeholder.com/40" },
-    { id: 2, name: "Carrot", image: "https://via.placeholder.com/40" },
-    { id: 3, name: "Chicken", image: "https://via.placeholder.com/40" },
-  ];
+  const categories = useSelector(selectCategories);
+  const availableIngredients = useSelector(selectIngredients);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -89,17 +85,23 @@ const AddRecipeForm = () => {
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
-      formData.append("image", data.image[0]);
+      formData.append("thumb", data.image[0]);
       formData.append("title", data.title);
       formData.append("description", data.description);
+      formData.append("area", data.area || 4);
       formData.append("category", data.category);
-      formData.append("cookingTime", data.cookingTime);
-      formData.append("ingredients", JSON.stringify(ingredients));
+      formData.append("time", data.cookingTime);
+      formData.append("ingredients", JSON.stringify(ingredients.map(
+        (itm) => ({
+          id: itm.id,
+          measure: itm.amount
+        })
+      )));
       formData.append("instructions", data.instructions);
 
-      // TODO: Send request to backend
-      console.log("Form data:", formData);
-      alert("Recipe created successfully!");
+      const result = await dispatch(createRecipe(formData)).unwrap();
+      console.log("Recepi created:", result);
+
       // TODO: Navigate to UserPage
     } catch (error) {
       alert("Error creating recipe: " + error.message);
@@ -107,17 +109,19 @@ const AddRecipeForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={css.formContainer} onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>Recipe Image:</label>
         <input
           type="file"
           accept="image/*"
+          name="test"
           {...register("image")}
           onChange={handleImageChange}
         />
         {imagePreview && (
           <img
+            className={css.imageUpload}
             src={imagePreview}
             alt="Preview"
             style={{ width: 100, height: 100 }}
@@ -129,23 +133,32 @@ const AddRecipeForm = () => {
       </div>
 
       <div>
-        <label>Title:</label>
-        <input type="text" {...register("title")} />
+        <input
+          className={css.nameOfRec}
+          placeholder="The name of the recipe"
+          type="text"
+          {...register("title")}
+        />
         {errors.title && (
           <span style={{ color: "red" }}>{errors.title.message}</span>
         )}
       </div>
 
-      <div>
-        <label>Description ({description.length}/200):</label>
-        <input type="text" {...register("description")} />
+      <div className={css.addDescrptn}>
+        <input
+          placeholder="Enter a description of the dish"
+          type="text"
+          {...register("description")}
+        />
+        <label>({description.length}/200)</label>
+
         {errors.description && (
           <span style={{ color: "red" }}>{errors.description.message}</span>
         )}
       </div>
 
-      <div>
-        <label>Category:</label>
+      <div className={css.subContainer}>
+        <label className={css.titleAddRecipePage}>Category</label>
         <select {...register("category")}>
           <option value="">Select category</option>
           {categories.map((cat) => (
@@ -159,16 +172,23 @@ const AddRecipeForm = () => {
         )}
       </div>
 
-      <div>
-        <label>Cooking Time (minutes):</label>
-        <input type="number" min="1" {...register("cookingTime")} />
+      <div className={css.subContainer}>
+        <label className={css.titleAddRecipePage}>
+          Cooking Time (minutes):
+        </label>
+        <input
+          className={css.cookingTime}
+          type="number"
+          min="1"
+          {...register("cookingTime")}
+        />
         {errors.cookingTime && (
           <span style={{ color: "red" }}>{errors.cookingTime.message}</span>
         )}
       </div>
 
-      <div>
-        <label>Add Ingredient:</label>
+      <div className={css.subContainer}>
+        <label className={css.titleAddRecipePage}>Ingredients:</label>
         <select
           value={selectedIngredient}
           onChange={(e) => setSelectedIngredient(e.target.value)}
@@ -181,18 +201,23 @@ const AddRecipeForm = () => {
           ))}
         </select>
         <input
+          className={css.addDescrptn}
           type="text"
-          placeholder="Amount"
+          placeholder="Enter quantity"
           value={ingredientAmount}
           onChange={(e) => setIngredientAmount(e.target.value)}
         />
-        <button type="button" onClick={handleAddIngredient}>
+        <button
+          className={css.formButton}
+          type="button"
+          onClick={handleAddIngredient}
+        >
           Add ingredient +
         </button>
       </div>
 
       <div>
-        <label>Ingredients List:</label>
+        <label className={css.titleAddRecipePage}>Ingredients List:</label>
         <ul>
           {ingredients.map((ing, index) => (
             <li key={index}>
@@ -203,6 +228,7 @@ const AddRecipeForm = () => {
               />
               {ing.name} - {ing.amount}
               <button
+                className={css.publisButton}
                 type="button"
                 onClick={() => handleRemoveIngredient(index)}
               >
@@ -214,18 +240,32 @@ const AddRecipeForm = () => {
       </div>
 
       <div>
-        <label>Instructions ({instructions.length}/200):</label>
-        <textarea {...register("instructions")} />
+        <label className={css.titleAddRecipePage}>Recipe Preparation</label>
+      </div>
+      <div className={css.addDescrptn}>
+        <input
+          placeholder="Enter recipe"
+          type="text"
+          {...register("instructions")}
+        />
+        <label>({instructions.length}/200)</label>
+
         {errors.instructions && (
           <span style={{ color: "red" }}>{errors.instructions.message}</span>
         )}
       </div>
 
-      <div>
-        <button type="button" onClick={handleClearForm}>
-          🗑️ Clear
+      <div className={css.buttonsContainer}>
+        <button
+          type="button"
+          className={css.clearButton}
+          onClick={handleClearForm}
+        >
+          🗑️
         </button>
-        <button type="submit">Publish</button>
+        <button className={css.publishButton} type="submit">
+          Publish
+        </button>
       </div>
     </form>
   );

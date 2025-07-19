@@ -1,12 +1,11 @@
-// import { useNavigate } from 'react-router-dom';
-
-import styles from './Hero.module.css';
-import img from '../../assets/img/hero';
+import { useNavigate } from "react-router-dom";
+import styles from "./Hero.module.css";
+import img from "../../assets/img/hero";
 
 // import { useState } from 'react';
 
 const Hero = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const isLoggedIn = true;
   // const [showModal, setShowModal] = useState(false);
   // const toggleModal = () => {
@@ -24,7 +23,7 @@ const Hero = () => {
   return (
     <>
       {/* {showModal && <Modal onClose={toggleModal} />} */}
-      <section className={styles['hero-section']}>
+      <section className={styles["hero-section"]}>
         <h1 className={styles.title}>
           Improve Your
           <br />
@@ -34,9 +33,14 @@ const Hero = () => {
           Amazing recipes for beginners in the world of cooking, enveloping you
           in the aromas and tastes of various cuisines.
         </p>
-        <button className={styles['hero-button']}>Add Recipe</button>
-        <div className={styles['hero-wrapper-img']}>
-          <div className={styles['hero-img-small']}>
+        <button
+          className={styles["hero-button"]}
+          onClick={() => navigate("/recipe/add")}
+        >
+          Add Recipe
+        </button>
+        <div className={styles["hero-wrapper-img"]}>
+          <div className={styles["hero-img-small"]}>
             <img
               width="128"
               src={img.imageSmall1x}
@@ -46,7 +50,7 @@ const Hero = () => {
               alt="food"
             />
           </div>
-          <div className={styles['hero-img-big']}>
+          <div className={styles["hero-img-big"]}>
             <img
               width="302"
               src={img.imageBig1x}

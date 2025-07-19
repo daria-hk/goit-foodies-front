@@ -24,19 +24,16 @@ export default function RecipePage() {
      dispatch(fetchFavoriteRecipes());
   }, [dispatch, id]);
 
-  //   useEffect(() => {
-  //   dispatch(fetchFavoriteRecipes());
-  // }, [dispatch,id]);
-
   const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
   return (
     !isLoading &&
     recipe && (
-      <>
+      <div className="container">
         <PathInfo currentPageName={recipe.title} />
         <RecipeInfo data={recipe} />
-        <PopularRecipes recipes={popularRecipes} />
-      </>
+        <PopularRecipes />
+      </div>
     )
   );
 }

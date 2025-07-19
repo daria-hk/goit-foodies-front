@@ -11,10 +11,13 @@ export default function AddRecipePage() {
   }, []);
 
   return (
-    <div className={css.recipePage}>
+    <div className="container">
       <PathInfo currentPageName={"Add Recipe"} />
-      <MainTitle>Add Recipe MainTitle</MainTitle>
-      <Subtitle>Add Recipe Subtitle</Subtitle>
+      <MainTitle className={css.maintitle}>Add recipe</MainTitle>
+      <Subtitle className={css.subtitle}>
+        Reveal your culinary art, share your favorite recipe and create
+        gastronomic masterpieces with us.
+      </Subtitle>
       <AddRecipeForm />
     </div>
   );

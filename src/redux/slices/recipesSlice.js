@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchRecipes,
   fetchRecipeById,
+  fetchRecipesPopular,
   addRecipeToFavorites,
   removeRecipeFromFavorites,
   fetchFavoriteRecipes,
@@ -19,6 +20,7 @@ const initialState = {
   selectedCategory: null,
   selectedArea: null,
   selectedIngredients: [],
+  popularRecipes: [],
 };
 
 const handlePending = (state) => {
@@ -79,16 +81,17 @@ export const recipesSlice = createSlice({
         // state.currentRecipe = action.payload; state.сurrenRecipe - зберігає дані одного рецепту з fetchRecipeById
       })
       .addCase(fetchRecipes.rejected, handleRejected)
-
       .addCase(fetchRecipeById.pending, handlePending)
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.currentRecipe = action.payload;
       })
       .addCase(fetchRecipeById.rejected, handleRejected)
-
       .addCase(addRecipeToFavorites.pending, handlePending)
-
+      .addCase(fetchRecipesPopular.fulfilled, (state, action) => {
+        console.log('pop fulfilled');
+        state.popularRecipes = action.payload;
+      })
       .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
         state.isLoading = false;
       })
@@ -130,6 +133,7 @@ export const selectFavorites = (state) => state.recipes.favorites;
 export const selectRecipesPage = (state) => state.recipes.page;
 export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
 export const selectRecipesLimit = (state) => state.recipes.limit;
+export const selectPopularRecipes = (state) => state.recipes.popularRecipes;
 export const selectSelectedCategory = (state) => state.recipes.selectedCategory;
 export const selectSelectedArea = (state) => state.recipes.selectedArea;
 export const selectSelectedIngredients = (state) =>

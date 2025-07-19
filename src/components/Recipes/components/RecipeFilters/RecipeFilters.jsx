@@ -16,7 +16,7 @@ const RecipeFilters = ({
           onChange({ ingredient: e.target.value, region: selectedRegion })
         }
       >
-        <option value="">All ingredients</option>
+        <option value="">Ingredients</option>
         {ingredients.map((ing) => (
           <option key={ing.id} value={ing.id}>
             {ing.name}
@@ -30,7 +30,7 @@ const RecipeFilters = ({
           onChange({ ingredient: selectedIngredient, region: e.target.value })
         }
       >
-        <option value="">All regions</option>
+        <option value="">Area</option>
         {regions.map((reg) => (
           <option key={reg.id} value={reg.id}>
             {reg.name}

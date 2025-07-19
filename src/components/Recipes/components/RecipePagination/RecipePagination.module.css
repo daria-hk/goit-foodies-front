@@ -1,19 +1,20 @@
 .pagination {
   display: flex;
-  gap: 8px;
-  margin-top: 24px;
+  gap: 6px;
+  justify-content: center;
+  margin: 0 auto;
 }
 .pageBtn {
-  padding: 4px 12px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background: #fff;
+  width: 40px;
+  height: 40px;
   color: var(--main);
-  font-weight: 400;
   cursor: pointer;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .pageBtnActive {
-  border: 2px solid #1976d2;
-  background: #e3f2fd;
-  font-weight: 700;
+  border: 1px solid var(--gray);
+  border-radius: 100%;
 }

@@ -1,0 +1,121 @@
+.formContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+.nameOfRec {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 800;
+  color: #bfbebe;
+  text-transform: uppercase;
+  border: none;
+}
+
+.addDescrptn {
+  border-bottom: 1px solid #bfbebe;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: #bfbebe;
+  padding: 16px 0;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -2%;
+}
+
+.addDescrptn input {
+  border: none;
+  width: 80%;
+}
+
+.addDescrptn label {
+  border: none;
+  width: 20%;
+}
+
+input.addDescrptn {
+  border: none;
+  border-bottom: 1px solid #bfbebe;
+}
+
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  width: 100%;
+}
+
+.titleAddRecipePage {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -2%;
+}
+
+.formContainer textarea,
+input,
+select {
+  background-color: white;
+  color: black;
+}
+
+.formButton,
+.publisButton,
+select,
+.cookingTime {
+  background-color: transparent;
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+select {
+  width: 100%;
+}
+
+.formButton,
+select,
+.cookingTime {
+  border: 1px solid #bfbebe;
+  color: #050505;
+}
+
+.clearButton {
+  background-color: white;
+  border: 1px solid #bfbebe;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.publishButton {
+  border: none;
+  background-color: #050505;
+  color: white;
+}
+
+.formButton:hover {
+  background-color: #050505;
+  color: white;
+}
+
+.buttonsContainer {
+  display: flex;
+  column-gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .formButton {
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+}

@@ -55,18 +55,9 @@ export const fetchRecipesPopular = createAsyncThunk(async (_, thunkAPI) => {
 
 export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
-  async (recipeData, thunkAPI) => {
+  async (recipeFormData, thunkAPI) => {
     try {
-      const formData = new FormData();
-      formData.append("title", recipeData.title);
-      formData.append("category", recipeData.category);
-      formData.append("area", recipeData.area);
-      formData.append("instructions", recipeData.instructions);
-      formData.append("description", recipeData.description);
-      formData.append("thumb", recipeData.thumb);
-      formData.append("time", recipeData.time);
-      formData.append("ingredients", JSON.stringify(recipeData.ingredients));
-      const response = await api.post("recipes", formData, {
+      const response = await api.post("recipes", recipeFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       return response.data;
