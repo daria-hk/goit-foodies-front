@@ -10,7 +10,12 @@ const RecipeCard = ({
   onDetailsClick,
 }) => (
   <div className={css.card}>
-    <img src={recipe.thumb} alt={recipe.title} className={css.image} />
+    <img
+      src={recipe.thumb}
+      alt={recipe.title}
+      loading="lazy"
+      className={css.image}
+    />
     <h4 className={css.title}>{recipe.title}</h4>
     <p className={css.description}>{recipe.description}</p>
     <div className={css.footer}>
@@ -19,6 +24,7 @@ const RecipeCard = ({
           src={author.avatar}
           alt={author.name}
           className={css.authorAvatar}
+          loading="lazy"
         />
         <span>{author.name}</span>
       </button>
