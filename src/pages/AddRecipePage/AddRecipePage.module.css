@@ -13,3 +13,17 @@
   font-weight: 800;
   text-transform: uppercase;
 }
+
+@media (min-width: 768px) {
+  .subtitle {
+    color: #1a1a1a;
+    line-height: 24px;
+    font-size: 16px;
+    max-width: 443px;
+  }
+
+  .maintitle {
+    font-size: 40px;
+    line-height: 44px;
+  }
+}

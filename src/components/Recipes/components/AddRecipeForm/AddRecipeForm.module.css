@@ -116,6 +116,7 @@ input.addDescrptn {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -2%;
+  text-wrap: nowrap;
 }
 
 .formContainer textarea,
@@ -197,9 +198,54 @@ select {
   column-gap: 8px;
 }
 
+.flexRowContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  width: 100%;
+}
+
 @media (min-width: 768px) {
-  .formButton {
+  .nameOfRec {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .addDescrptn {
     font-size: 16px;
+    color: #bfbebe;
+  }
+
+  .flexRowContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .flexRowContainer select {
+    margin-right: 20px;
+    max-width: 315px;
+  }
+
+  .addDescrptn {
+    padding: 0;
+  }
+  .formButton {
+    color: #1a1a1a;
+    font-size: 16px;
+    line-height: 24px;
+    width: 229px;
+  }
+
+  .publishButton,
+  .formButton,
+  .flexRowContainer select {
     padding: 16px 32px;
+  }
+
+  .clearButton,
+  .timeBtn {
+    width: 56px;
+    height: 56px;
   }
 }

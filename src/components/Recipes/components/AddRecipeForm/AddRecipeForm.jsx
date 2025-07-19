@@ -126,7 +126,7 @@ const AddRecipeForm = () => {
           className={css.imgInput}
           type="file"
           accept="image/*"
-          {...register("image")}
+          {...register("thumb")}
           onChange={handleImageChange}
           style={{ display: "none" }}
         />
@@ -166,76 +166,78 @@ const AddRecipeForm = () => {
           <span style={{ color: "red" }}>{errors.description.message}</span>
         )}
       </div>
-
-      <div className={css.subContainer}>
-        <label className={css.titleAddRecipePage}>Category</label>
-        <select {...register("category")}>
-          <option value="">Select category</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-        {errors.category && (
-          <span style={{ color: "red" }}>{errors.category.message}</span>
-        )}
-      </div>
-
-      <div className={css.subContainer}>
-        <label className={css.titleAddRecipePage}>
-          Cooking Time (minutes):
-        </label>
-        <div className={css.cookingTimeWrapper}>
-          <button
-            type="button"
-            className={css.timeBtn}
-            onClick={() => setCookingTime((prev) => Math.max(1, prev - 1))}
-          >
-            –
-          </button>
-          <input
-            className={css.cookingTime}
-            type="number"
-            min="1"
-            value={cookingTime}
-            onChange={(e) => setCookingTime(Number(e.target.value))}
-            {...register("cookingTime")}
-            style={{ textAlign: "center", width: "80px" }}
-          />
-          <button
-            type="button"
-            className={css.timeBtn}
-            onClick={() => setCookingTime((prev) => prev + 1)}
-          >
-            +
-          </button>
+      <div className={css.flexRowContainer}>
+        <div className={css.subContainer}>
+          <label className={css.titleAddRecipePage}>Category</label>
+          <select {...register("category")}>
+            <option value="">Select category</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          {errors.category && (
+            <span style={{ color: "red" }}>{errors.category.message}</span>
+          )}
         </div>
-        {errors.cookingTime && (
-          <span style={{ color: "red" }}>{errors.cookingTime.message}</span>
-        )}
-      </div>
 
+        <div className={css.subContainer}>
+          <label className={css.titleAddRecipePage}>
+            Cooking Time (minutes):
+          </label>
+          <div className={css.cookingTimeWrapper}>
+            <button
+              type="button"
+              className={css.timeBtn}
+              onClick={() => setCookingTime((prev) => Math.max(1, prev - 1))}
+            >
+              –
+            </button>
+            <input
+              className={css.cookingTime}
+              type="number"
+              min="1"
+              value={cookingTime}
+              onChange={(e) => setCookingTime(Number(e.target.value))}
+              {...register("cookingTime")}
+              style={{ textAlign: "center", width: "80px" }}
+            />
+            <button
+              type="button"
+              className={css.timeBtn}
+              onClick={() => setCookingTime((prev) => prev + 1)}
+            >
+              +
+            </button>
+          </div>
+          {errors.cookingTime && (
+            <span style={{ color: "red" }}>{errors.cookingTime.message}</span>
+          )}
+        </div>
+      </div>
       <div className={css.subContainer}>
         <label className={css.titleAddRecipePage}>Ingredients:</label>
-        <select
-          value={selectedIngredient}
-          onChange={(e) => setSelectedIngredient(e.target.value)}
-        >
-          <option value="">Select ingredient</option>
-          {availableIngredients.map((ing) => (
-            <option key={ing.id} value={ing.id}>
-              {ing.name}
-            </option>
-          ))}
-        </select>
-        <input
-          className={css.addDescrptn}
-          type="text"
-          placeholder="Enter quantity"
-          value={ingredientAmount}
-          onChange={(e) => setIngredientAmount(e.target.value)}
-        />
+        <div className={css.flexRowContainer}>
+          <select
+            value={selectedIngredient}
+            onChange={(e) => setSelectedIngredient(e.target.value)}
+          >
+            <option value="">Select ingredient</option>
+            {availableIngredients.map((ing) => (
+              <option key={ing.id} value={ing.id}>
+                {ing.name}
+              </option>
+            ))}
+          </select>
+          <input
+            className={css.addDescrptn}
+            type="text"
+            placeholder="Enter quantity"
+            value={ingredientAmount}
+            onChange={(e) => setIngredientAmount(e.target.value)}
+          />
+        </div>
         <button
           className={css.formButton}
           type="button"
