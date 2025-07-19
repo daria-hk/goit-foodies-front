@@ -7,16 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { fetchRecipeById,fetchFavoriteRecipes } from "../../redux/ops/recipesOps";
-import {
-  selectCurrentRecipe,
-  selectRecipesIsLoading,
-  // selectRecipesError
-} from "../../redux/slices/recipesSlice";
+import { selectCurrentRecipe } from "../../redux/slices/recipesSlice";
 
 export default function RecipePage() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectRecipesIsLoading);
   const recipe = useSelector(selectCurrentRecipe);
 
   useEffect(() => {
@@ -24,10 +19,7 @@ export default function RecipePage() {
      dispatch(fetchFavoriteRecipes());
   }, [dispatch, id]);
 
-  const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
-
   return (
-    !isLoading &&
     recipe && (
       <div className="container">
         <PathInfo currentPageName={recipe.title} />

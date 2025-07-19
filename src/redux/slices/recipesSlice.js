@@ -89,7 +89,6 @@ export const recipesSlice = createSlice({
       .addCase(fetchRecipeById.rejected, handleRejected)
       .addCase(addRecipeToFavorites.pending, handlePending)
       .addCase(fetchRecipesPopular.fulfilled, (state, action) => {
-        console.log('pop fulfilled');
         state.popularRecipes = action.payload;
       })
       .addCase(addRecipeToFavorites.fulfilled, (state, action) => {

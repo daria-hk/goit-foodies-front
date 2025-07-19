@@ -21,6 +21,7 @@ const initialState = {
   followees: [],
   isLoading: false,
   error: null,
+  isSignInOpen: false,
 };
 
 const handlePending = (state) => {
@@ -48,6 +49,13 @@ export const usersSlice = createSlice({
     },
     clearUsersError: (state) => {
       state.error = null;
+    },
+    openSignInModal: (state) => {
+      state.error = null;
+      state.isSignInOpen = true;
+    },
+    closeSignInModal: (state) => {
+      state.isSignInOpen = false;
     },
   },
   extraReducers: (builder) => {
@@ -136,7 +144,7 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { resetUsersState, clearUsersError } = usersSlice.actions;
+export const { resetUsersState, clearUsersError , openSignInModal, closeSignInModal} = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
 
 export const selectUser = (state) => state.users.user;
@@ -145,3 +153,4 @@ export const selectUserFollowers = (state) => state.users.followers;
 export const selectUserFollowees = (state) => state.users.followees;
 export const selectUsersIsLoading = (state) => state.users.isLoading;
 export const selectUsersError = (state) => state.users.error;
+export const selectIsSignInOpen = (state) => state.users.isSignInOpen;
