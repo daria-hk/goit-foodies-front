@@ -1,14 +1,17 @@
+import styles from "./TabsList.module.css";
+
 const TabsList = () => {
   const tabs = [
-    { id: "recipes", label: "Recipes" },
-    { id: "followers", label: "Followers" },
-    { id: "following", label: "Following" },
+    { id: "recipes", label: "My recipes" },
+    { id: "followers", label: "My followers" },
+    { id: "following", label: "My following" },
+    { id: "favorites", label: "My favorites" },
   ];
 
   return (
-    <div>
+    <div className={styles.tabsWrapper}>
       {tabs.map((tab) => (
-        <button key={tab.id} type="button">
+        <button className={styles.tabsList} key={tab.id} type="button">
           {tab.label}
         </button>
       ))}

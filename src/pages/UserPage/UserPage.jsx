@@ -48,13 +48,16 @@ const UserPage = () => {
   const totalPages = useSelector(selectRecipesTotalPages);
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <PathInfo currentPageName="User Profile" />
-      <MainTitle className={styles.title}>Profile</MainTitle>
-      <Subtitle className={styles.subtitle}>
-        Reveal your culinary art, share your favorite recipe and create
-        gastronomic masterpieces with us.
-      </Subtitle>
+      <div>
+        {" "}
+        <MainTitle className={styles.title}>Profile</MainTitle>
+        <Subtitle className={styles.subtitle}>
+          Reveal your culinary art, share your favorite recipe and create
+          gastronomic masterpieces with us.
+        </Subtitle>
+      </div>
       <div className={styles.containerMainArea}>
         <div className={styles.userInfoWrapper}>
           <UserInfo
@@ -83,7 +86,7 @@ const UserPage = () => {
         </div>
 
         <div>
-          <TabsList />
+          <TabsList />{" "}
           <ListItems variant={"Recipes"} items={recipes} />
           <ListPagination variant={"all"} />
         </div>
