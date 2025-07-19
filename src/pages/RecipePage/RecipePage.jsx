@@ -4,10 +4,9 @@ import PopularRecipes from "../../components/Recipes/components/PopularRecipes/P
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useParams, useLocation } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
-import { fetchRecipeById } from "../../redux/ops/recipesOps";
+import { fetchRecipeById,fetchFavoriteRecipes } from "../../redux/ops/recipesOps";
 import {
   selectCurrentRecipe,
   selectRecipesIsLoading,
@@ -22,7 +21,10 @@ export default function RecipePage() {
 
   useEffect(() => {
     dispatch(fetchRecipeById(id));
+     dispatch(fetchFavoriteRecipes());
   }, [dispatch, id]);
+
+  const popularRecipes = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
   return (
     !isLoading &&

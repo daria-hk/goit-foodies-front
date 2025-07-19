@@ -2,9 +2,9 @@ import css from './RecipeInfo.module.css';
 import RecipeMainInfo from "../RecipeMainInfo/RecipeMainInfo";
 import RecipeIngredients from "../RecipeIngredients/RecipeIngredients";
 import RecipePreparation from "../RecipePreparation/RecipePreparation";
-
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
 import { addRecipeToFavorites,removeRecipeFromFavorites, fetchFavoriteRecipes } from "../../../../redux/ops/recipesOps"
@@ -23,52 +23,71 @@ const RecipeInfo = ({ data }) => {
 
   const recipe = useSelector(selectCurrentRecipe);
   const favoritesList = useSelector(selectFavorites);
+  console.log(favoritesList)
   // const isLoading = useSelector(selectRecipesIsLoading);
-  const navigate = useNavigate();
-  const isFavoriteById = favoritesList?.some(item => String(item.id) === String(id)) === true;
- 
-  // потрібно створити в userSlice властивість isAuthenticated
-   // const isAuthenticated = useSelector(selectIsAuthenticated);
-  const isAuthenticated = true; 
+  const isFavoriteById = favoritesList?.some(item => String(item.id) === String(id));
+  console.log(isFavoriteById)
+
+
+//  const [isFavoriteById, setIsFavorite] = useState(
+//     favoritesList?.some((fav) => fav.id === recipe.id) || false,
+//   );
+
   
+  // const onToggleFavorites = () => {
+  //   if (!recipe) return;
+  //   console.log("Click",isFavoriteById)
+  //        if (!isFavoriteById){
+  //               dispatch(addRecipeToFavorites(id))
+  //                   .then(response => {
+  //                       if (response.error) {
+  //                           console.error('Failed to add to favorites:', response.error.message);
+  //                       } else {
+  //                           dispatch(fetchFavoriteRecipes());
+  //                       }
+  //                   })
+  //                   .catch(error => {
+  //                       console.error('Error adding to favorites:', error);
+  //                   });
+  //           } else {
+  //               dispatch(removeRecipeFromFavorites(id))
+  //                   .then(response => {
+  //                       if (response.error) {
+  //                           console.error('Failed to remove from favorites:', response.error.message);
+  //                       } else {
+  //                           dispatch(fetchFavoriteRecipes());
+  //                       }
+  //                   })
+  //                   .catch(error => {
+  //                       console.error('Error removing from favorites:', error);
+  //                   });
+  //           }
+  // };
+
   const onToggleFavorites = () => {
     if (!recipe) return;
-    console.log("Click",isFavoriteById)
-         if (!isFavoriteById){
-                dispatch(addRecipeToFavorites(id))
-                    .then(response => {
-                        if (response.error) {
-                            console.error('Failed to add to favorites:', response.error.message);
-                        } else {
-                            dispatch(fetchFavoriteRecipes());
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error adding to favorites:', error);
-                    });
-            } else {
-                dispatch(removeRecipeFromFavorites(id))
-                    .then(response => {
-                        if (response.error) {
-                            console.error('Failed to remove from favorites:', response.error.message);
-                        } else {
-                            dispatch(fetchFavoriteRecipes());
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error removing from favorites:', error);
-                    });
-            }
+    console.log(isFavoriteById)
+    if (!isFavoriteById) {
+      dispatch(addRecipeToFavorites(id))
+    } else {
+      dispatch(removeRecipeFromFavorites(id))
+    }
+    // dispatch(fetchFavoriteRecipes())
   };
-   const onAvatarClick = id => {
-        if (isAuthenticated) {
-            navigate(`/user/${id}`);
-        } else {
-          console.log("Open login modal")
-          
-          // dispatch(openModal())
-        }
-  };
+
+  //  const onToggleFavorites = async (e) => {
+  //   const btn = e.currentTarget;
+  //   btn.disabled = true;
+  //   if (data) {
+  //     if (isFavoriteById) {
+  //       await dispatch(removeRecipeFromFavorites(data.id));
+  //     } else {
+  //       await dispatch(addRecipeToFavorites(data.id));
+  //     }
+  //     setIsFavorite((prev) => !prev);
+  //   } 
+  //   btn.disabled = false;
+  // };
   
  return (
   <section className={css.sectionWrapper}>
@@ -82,7 +101,7 @@ const RecipeInfo = ({ data }) => {
     />
 
     <div className={css.recipeDetails}>
-      <RecipeMainInfo data={data} onUserClick={onAvatarClick} />
+      <RecipeMainInfo data={data} />
       <RecipeIngredients ingredients={data.ingredients} />
       <RecipePreparation
         preparation={data.instructions}
