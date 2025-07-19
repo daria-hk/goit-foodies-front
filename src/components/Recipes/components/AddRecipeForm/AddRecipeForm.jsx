@@ -12,7 +12,7 @@ import { fetchCategories } from "../../../../redux/ops/categoriesOps";
 import { fetchIngredients } from "../../../../redux/ops/ingredientsOps";
 
 const schema = yup.object({
-  thumb: yup.mixed().required("Image is required"),
+  image: yup.mixed().required("Image is required"),
   title: yup.string().required("Title is required"),
   description: yup
     .string()
@@ -96,7 +96,7 @@ const AddRecipeForm = () => {
     data.cookingTime = cookingTime;
     try {
       const formData = new FormData();
-      formData.append("thumb", data.thumb[0]);
+      formData.append("thumb", data.image[0]);
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("area", data.area || 4);
@@ -135,7 +135,7 @@ const AddRecipeForm = () => {
           className={css.imgInput}
           type="file"
           accept="image/*"
-          {...register("thumb")}
+          {...register("image")}
           onChange={handleImageChange}
           style={{ display: "none" }}
         />
