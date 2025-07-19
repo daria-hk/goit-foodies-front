@@ -1,13 +1,15 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCategories } from "../../../../redux/slices/categoriesSlice";
 import { selectIngredients } from "../../../../redux/slices/ingredientsSlice";
 import { createRecipe } from "../../../../redux/ops/recipesOps";
 import css from "./AddRecipeForm.module.css";
 import { toast } from "react-toastify";
+import { fetchCategories } from "../../../../redux/ops/categoriesOps";
+import { fetchIngredients } from "../../../../redux/ops/ingredientsOps";
 
 const schema = yup.object({
   image: yup.mixed().required("Image is required"),
@@ -28,12 +30,18 @@ const schema = yup.object({
 });
 
 const AddRecipeForm = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [cookingTime, setCookingTime] = useState(10);
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -114,6 +122,7 @@ const AddRecipeForm = () => {
       setCookingTime(10);
       toast.success("Recipe successfully created!");
     } catch (error) {
+      console.log(error.message);
       toast.error("Error creating recipe: " + error.message);
     }
   };
@@ -166,76 +175,78 @@ const AddRecipeForm = () => {
           <span style={{ color: "red" }}>{errors.description.message}</span>
         )}
       </div>
-
-      <div className={css.subContainer}>
-        <label className={css.titleAddRecipePage}>Category</label>
-        <select {...register("category")}>
-          <option value="">Select category</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-        {errors.category && (
-          <span style={{ color: "red" }}>{errors.category.message}</span>
-        )}
-      </div>
-
-      <div className={css.subContainer}>
-        <label className={css.titleAddRecipePage}>
-          Cooking Time (minutes):
-        </label>
-        <div className={css.cookingTimeWrapper}>
-          <button
-            type="button"
-            className={css.timeBtn}
-            onClick={() => setCookingTime((prev) => Math.max(1, prev - 1))}
-          >
-            –
-          </button>
-          <input
-            className={css.cookingTime}
-            type="number"
-            min="1"
-            value={cookingTime}
-            onChange={(e) => setCookingTime(Number(e.target.value))}
-            {...register("cookingTime")}
-            style={{ textAlign: "center", width: "80px" }}
-          />
-          <button
-            type="button"
-            className={css.timeBtn}
-            onClick={() => setCookingTime((prev) => prev + 1)}
-          >
-            +
-          </button>
+      <div className={css.flexRowContainer}>
+        <div className={css.subContainer}>
+          <label className={css.titleAddRecipePage}>Category</label>
+          <select {...register("category")}>
+            <option value="">Select category</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          {errors.category && (
+            <span style={{ color: "red" }}>{errors.category.message}</span>
+          )}
         </div>
-        {errors.cookingTime && (
-          <span style={{ color: "red" }}>{errors.cookingTime.message}</span>
-        )}
-      </div>
 
+        <div className={css.subContainer}>
+          <label className={css.titleAddRecipePage}>
+            Cooking Time (minutes):
+          </label>
+          <div className={css.cookingTimeWrapper}>
+            <button
+              type="button"
+              className={css.timeBtn}
+              onClick={() => setCookingTime((prev) => Math.max(1, prev - 1))}
+            >
+              –
+            </button>
+            <input
+              className={css.cookingTime}
+              type="number"
+              min="1"
+              value={cookingTime}
+              onChange={(e) => setCookingTime(Number(e.target.value))}
+              {...register("cookingTime")}
+              style={{ textAlign: "center", width: "80px" }}
+            />
+            <button
+              type="button"
+              className={css.timeBtn}
+              onClick={() => setCookingTime((prev) => prev + 1)}
+            >
+              +
+            </button>
+          </div>
+          {errors.cookingTime && (
+            <span style={{ color: "red" }}>{errors.cookingTime.message}</span>
+          )}
+        </div>
+      </div>
       <div className={css.subContainer}>
         <label className={css.titleAddRecipePage}>Ingredients:</label>
-        <select
-          value={selectedIngredient}
-          onChange={(e) => setSelectedIngredient(e.target.value)}
-        >
-          <option value="">Select ingredient</option>
-          {availableIngredients.map((ing) => (
-            <option key={ing.id} value={ing.id}>
-              {ing.name}
-            </option>
-          ))}
-        </select>
-        <input
-          className={css.addDescrptn}
-          type="text"
-          placeholder="Enter quantity"
-          value={ingredientAmount}
-          onChange={(e) => setIngredientAmount(e.target.value)}
-        />
+        <div className={css.flexRowContainer}>
+          <select
+            value={selectedIngredient}
+            onChange={(e) => setSelectedIngredient(e.target.value)}
+          >
+            <option value="">Select ingredient</option>
+            {availableIngredients.map((ing) => (
+              <option key={ing.id} value={ing.id}>
+                {ing.name}
+              </option>
+            ))}
+          </select>
+          <input
+            className={css.addDescrptn}
+            type="text"
+            placeholder="Enter quantity"
+            value={ingredientAmount}
+            onChange={(e) => setIngredientAmount(e.target.value)}
+          />
+        </div>
         <button
           className={css.formButton}
           type="button"
