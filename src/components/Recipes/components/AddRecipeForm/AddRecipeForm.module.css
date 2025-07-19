@@ -5,6 +5,19 @@
   margin-top: 32px;
 }
 
+.ingridientsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ingridientsWrapper ul li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
 .nameOfRec {
   font-size: 18px;
   line-height: 24px;
@@ -19,21 +32,70 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  color: #bfbebe;
   padding: 16px 0;
+}
+
+.cookingTime,
+.addDescrptn {
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -2%;
+  color: #bfbebe;
 }
 
 .addDescrptn input {
-  border: none;
   width: 80%;
 }
 
-.addDescrptn label {
+.cookingTime,
+.addDescrptn input,
+.addDescrptn labe {
   border: none;
+}
+
+.addDescrptn label {
   width: 20%;
+}
+
+.imageUploadWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.customFileLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 318px;
+  border: 1px dashed #bfbebe;
+  border-radius: 24px;
+  cursor: pointer;
+  background: #fafafa;
+  color: #bfbebe;
+  font-size: 18px;
+  font-weight: 500;
+  width: 100%;
+  transition: border 0.2s;
+}
+
+.customFileLabel span {
+  text-decoration: underline;
+  line-height: 20px;
+  letter-spacing: -2%;
+  font-size: 14px;
+  color: #050505;
+  font-weight: 500;
+}
+
+.customFileLabel:hover {
+  border-color: #6c63ff;
+  color: #6c63ff;
+}
+
+img.imageUpload {
+  object-fit: cover;
+  height: 318px;
+  border-radius: 24px;
 }
 
 input.addDescrptn {
@@ -75,18 +137,34 @@ select,
   cursor: pointer;
 }
 
+.formButton {
+  margin-top: 24px;
+  width: 186px;
+}
+.cookingTimeWrapper {
+  display: flex;
+}
+.cookingTime::-webkit-outer-spin-button,
+.cookingTime::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cookingTime[type="number"] {
+  -moz-appearance: textfield;
+}
 select {
   width: 100%;
 }
 
 .formButton,
-select,
-.cookingTime {
+select {
   border: 1px solid #bfbebe;
   color: #050505;
 }
 
-.clearButton {
+.clearButton,
+.timeBtn {
   background-color: white;
   border: 1px solid #bfbebe;
   border-radius: 50%;
@@ -95,12 +173,18 @@ select,
   display: flex;
   justify-content: center;
   align-items: center;
+  color: black;
 }
 
 .publishButton {
   border: none;
   background-color: #050505;
   color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .formButton:hover {

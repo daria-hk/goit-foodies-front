@@ -7,6 +7,7 @@ import { selectCategories } from "../../../../redux/slices/categoriesSlice";
 import { selectIngredients } from "../../../../redux/slices/ingredientsSlice";
 import { createRecipe } from "../../../../redux/ops/recipesOps";
 import css from "./AddRecipeForm.module.css";
+import { toast } from "react-toastify";
 
 const schema = yup.object({
   image: yup.mixed().required("Image is required"),
@@ -31,6 +32,7 @@ const AddRecipeForm = () => {
   const [selectedIngredient, setSelectedIngredient] = useState("");
   const [ingredientAmount, setIngredientAmount] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+  const [cookingTime, setCookingTime] = useState(10);
   const dispatch = useDispatch();
 
   const {
@@ -83,6 +85,7 @@ const AddRecipeForm = () => {
   };
 
   const onSubmit = async (data) => {
+    data.cookingTime = cookingTime;
     try {
       const formData = new FormData();
       formData.append("thumb", data.image[0]);
@@ -91,42 +94,49 @@ const AddRecipeForm = () => {
       formData.append("area", data.area || 4);
       formData.append("category", data.category);
       formData.append("time", data.cookingTime);
-      formData.append("ingredients", JSON.stringify(ingredients.map(
-        (itm) => ({
-          id: itm.id,
-          measure: itm.amount
-        })
-      )));
+      formData.append(
+        "ingredients",
+        JSON.stringify(
+          ingredients.map((itm) => ({
+            id: itm.id,
+            measure: itm.amount,
+          }))
+        )
+      );
       formData.append("instructions", data.instructions);
 
       const result = await dispatch(createRecipe(formData)).unwrap();
       console.log("Recepi created:", result);
 
-      // TODO: Navigate to UserPage
+      reset();
+      setIngredients([]);
+      setImagePreview("");
+      setCookingTime(10);
+      toast.success("Recipe successfully created!");
     } catch (error) {
-      alert("Error creating recipe: " + error.message);
+      toast.error("Error creating recipe: " + error.message);
     }
   };
 
   return (
     <form className={css.formContainer} onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Recipe Image:</label>
+      <div className={css.imageUploadWrapper}>
         <input
+          id="recipe-image"
+          className={css.imgInput}
           type="file"
           accept="image/*"
-          name="test"
           {...register("image")}
           onChange={handleImageChange}
+          style={{ display: "none" }}
         />
-        {imagePreview && (
-          <img
-            className={css.imageUpload}
-            src={imagePreview}
-            alt="Preview"
-            style={{ width: 100, height: 100 }}
-          />
-        )}
+        <label htmlFor="recipe-image" className={css.customFileLabel}>
+          {imagePreview ? (
+            <img className={css.imageUpload} src={imagePreview} alt="Preview" />
+          ) : (
+            <span>Upload a photo</span>
+          )}
+        </label>
         {errors.image && (
           <span style={{ color: "red" }}>{errors.image.message}</span>
         )}
@@ -176,12 +186,31 @@ const AddRecipeForm = () => {
         <label className={css.titleAddRecipePage}>
           Cooking Time (minutes):
         </label>
-        <input
-          className={css.cookingTime}
-          type="number"
-          min="1"
-          {...register("cookingTime")}
-        />
+        <div className={css.cookingTimeWrapper}>
+          <button
+            type="button"
+            className={css.timeBtn}
+            onClick={() => setCookingTime((prev) => Math.max(1, prev - 1))}
+          >
+            –
+          </button>
+          <input
+            className={css.cookingTime}
+            type="number"
+            min="1"
+            value={cookingTime}
+            onChange={(e) => setCookingTime(Number(e.target.value))}
+            {...register("cookingTime")}
+            style={{ textAlign: "center", width: "80px" }}
+          />
+          <button
+            type="button"
+            className={css.timeBtn}
+            onClick={() => setCookingTime((prev) => prev + 1)}
+          >
+            +
+          </button>
+        </div>
         {errors.cookingTime && (
           <span style={{ color: "red" }}>{errors.cookingTime.message}</span>
         )}
@@ -216,28 +245,30 @@ const AddRecipeForm = () => {
         </button>
       </div>
 
-      <div>
-        <label className={css.titleAddRecipePage}>Ingredients List:</label>
-        <ul>
-          {ingredients.map((ing, index) => (
-            <li key={index}>
-              <img
-                src={ing.image}
-                alt={ing.name}
-                style={{ width: 20, height: 20 }}
-              />
-              {ing.name} - {ing.amount}
-              <button
-                className={css.publisButton}
-                type="button"
-                onClick={() => handleRemoveIngredient(index)}
-              >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {ingredients.length > 0 && (
+        <div className={css.ingridientsWrapper}>
+          <label className={css.titleAddRecipePage}>Ingredients List</label>
+          <ul>
+            {ingredients.map((ing, index) => (
+              <li key={index}>
+                <img
+                  src={ing.image}
+                  alt={ing.name}
+                  style={{ width: 20, height: 20 }}
+                />
+                {ing.name} - {ing.amount}
+                <button
+                  className={css.timeBtn}
+                  type="button"
+                  onClick={() => handleRemoveIngredient(index)}
+                >
+                  -
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div>
         <label className={css.titleAddRecipePage}>Recipe Preparation</label>
