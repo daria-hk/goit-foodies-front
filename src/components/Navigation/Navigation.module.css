@@ -1,28 +1,27 @@
-nav {
-  display: flex;
-  gap: 32px;
-  padding: 24px 0;
-  font-size: 24px;
-  position: sticky;
-  top: 0;
-  justify-content: center;
-  z-index: 99;
+.nav {
+  display: none;
+  align-items: center;
+  gap: 55px;
 }
 
-nav a {
-  color: black;
-  font-size: 16px;
-  line-height: 150%;
+.link {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--white);
 }
 
-nav a:hover {
-  color: #d84343;
+.link.active {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 14px;
 }
 
-.link:hover {
-  text-decoration: underline;
-}
-
-.active {
-  color: #d84343;
+@media (min-width: 1440px) {
+  .nav {
+    display: flex;
+    margin-left: 110px;
+  }
 }

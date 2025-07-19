@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
 import SignInForm from "../Modal/SignInForm";
 import SignUpForm from "../Modal/SignUpForm";
+import css from "./AuthBar.module.css";
 import { clearUsersError, closeSignInModal, openSignInModal, selectIsSignInOpen } from '../../redux/slices/usersSlice'
 
 const AuthBar = () => {
@@ -34,8 +35,14 @@ const AuthBar = () => {
 
   return (
     <div>
-      <button onClick={openSignIn}>Sign in</button>
-      <button onClick={openSignUp}>Sign up</button>
+      <div className={css.authBar}>
+        <button onClick={openSignIn} className={css.signInButton}>
+          Sign in
+        </button>
+        <button onClick={openSignUp} className={css.signUpButton}>
+          Sign up
+        </button>
+      </div>
 
       <Modal isOpen={isSignInOpen} onClose={closeSignIn}>
         <SignInForm onClose={closeSignIn} onSwitchToSignUp={switchToSignUp} />

@@ -11,7 +11,7 @@ const Header = () => {
   const isAuthenticated = Boolean(user);
 
   return (
-    <header className={css.headerWrapper}>
+    <header className={`${css.headerWrapper} container`}>
       <Logo />
       <Navigation isAuth={isAuthenticated} />
       {isAuthenticated ? <UserBar /> : <AuthBar />}

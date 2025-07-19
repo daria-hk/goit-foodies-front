@@ -1,6 +1,25 @@
 .headerWrapper {
+  position: absolute;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  top: 23px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  padding: 0 23px;
 }
 
-/* Перевикористай логотип зі спрайту (я свторювала для футера)  */
+@media (min-width: 768px) {
+  .headerWrapper {
+    top: 27px;
+    padding: 0 46px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .headerWrapper {
+    padding: 0 80px;
+  }
+}
