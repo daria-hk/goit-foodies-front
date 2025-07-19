@@ -6,7 +6,6 @@ const RecipeIngredients = ({ ingredients }) => (
     <ul className={css.ingredientsList}>
       {ingredients.map((item, idx) => (
         <li className={css.ingredientsItem} key={idx}>
-          {/* <div className={css.ingredientsItem}> */}
             <img
               src={item.ingredient.img}
               alt={item.ingredient.name}
@@ -18,7 +17,6 @@ const RecipeIngredients = ({ ingredients }) => (
                 {item.measure}
               </p>
             </div>
-          {/* </div> */}
         </li>
       ))}
     </ul>

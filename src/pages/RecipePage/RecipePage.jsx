@@ -6,20 +6,25 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { fetchRecipeById,fetchFavoriteRecipes } from "../../redux/ops/recipesOps";
-import { selectCurrentRecipe } from "../../redux/slices/recipesSlice";
+import { fetchRecipeById } from "../../redux/ops/recipesOps";
+import {
+  selectCurrentRecipe,
+  selectRecipesIsLoading,
+  // selectRecipesError
+} from "../../redux/slices/recipesSlice";
 
 export default function RecipePage() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectRecipesIsLoading);
   const recipe = useSelector(selectCurrentRecipe);
 
   useEffect(() => {
     dispatch(fetchRecipeById(id));
-     dispatch(fetchFavoriteRecipes());
   }, [dispatch, id]);
 
   return (
+    !isLoading &&
     recipe && (
       <div className="container">
         <PathInfo currentPageName={recipe.title} />

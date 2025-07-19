@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchRecipes,
   fetchRecipeById,
-  fetchRecipesPopular,
   addRecipeToFavorites,
   removeRecipeFromFavorites,
   fetchFavoriteRecipes,
@@ -68,6 +67,9 @@ export const recipesSlice = createSlice({
     setSelectedIngredients: (state, action) => {
       state.selectedIngredients = action.payload;
     },
+    clearFavorites: (state) => {
+      state.favorites = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -87,23 +89,28 @@ export const recipesSlice = createSlice({
         state.currentRecipe = action.payload;
       })
       .addCase(fetchRecipeById.rejected, handleRejected)
-      .addCase(addRecipeToFavorites.pending, handlePending)
-      .addCase(fetchRecipesPopular.fulfilled, (state, action) => {
-        state.popularRecipes = action.payload;
+
+      .addCase(addRecipeToFavorites.pending, (state) => {
+        state.error = null;
       })
-      .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
+
+      .addCase(addRecipeToFavorites.fulfilled, (state) => {
         state.isLoading = false;
       })
       .addCase(addRecipeToFavorites.rejected, handleRejected)
-      .addCase(removeRecipeFromFavorites.pending, handlePending)
+      .addCase(removeRecipeFromFavorites.pending, (state) => {
+        state.error = null;
+      })
       .addCase(removeRecipeFromFavorites.fulfilled, (state, action) => {
         state.isLoading = false;
         state.favorites = state.favorites.filter(
-          (recipe) => recipe.id !== action.payload
+          (recipe) => recipe.id !== action.meta.arg
         );
       })
       .addCase(removeRecipeFromFavorites.rejected, handleRejected)
-      .addCase(fetchFavoriteRecipes.pending, handlePending)
+      .addCase(fetchFavoriteRecipes.pending, (state) => {
+        state.error = null;
+      })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
         state.isLoading = false;
         state.favorites = action.payload.items;
@@ -119,6 +126,7 @@ export const {
   setSelectedCategory,
   setSelectedArea,
   setSelectedIngredients,
+  clearFavorites,
 } = recipesSlice.actions;
 
 export const recipesReducer = recipesSlice.reducer;
