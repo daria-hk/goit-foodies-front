@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchRecipes,
   fetchRecipeById,
+  fetchRecipesPopular,
   addRecipeToFavorites,
   removeRecipeFromFavorites,
   fetchFavoriteRecipes,
@@ -88,7 +89,9 @@ export const recipesSlice = createSlice({
         state.currentRecipe = action.payload;
       })
       .addCase(fetchRecipeById.rejected, handleRejected)
-
+      .addCase(fetchRecipesPopular.fulfilled, (state, action) => {
+        state.popularRecipes = action.payload;
+      })
       .addCase(addRecipeToFavorites.pending, (state) => {
         state.error = null;
       })
