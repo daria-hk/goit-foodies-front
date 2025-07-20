@@ -5,6 +5,20 @@
   margin-top: 32px;
 }
 
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+.flexRightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
 .ingridientsWrapper {
   display: flex;
   flex-direction: column;
@@ -16,6 +30,55 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 8px;
+}
+
+.ingredientItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background-color: #f9f9f9;
+}
+
+.ingredientInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.ingredientImage {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.ingredientName {
+  font-weight: 500;
+  color: #333;
+}
+
+.ingredientAmount {
+  color: #666;
+  font-size: 14px;
+}
+
+.removeIngredientBtn {
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
 }
 
 .nameOfRec {
@@ -247,5 +310,28 @@ select {
   .timeBtn {
     width: 56px;
     height: 56px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .formContent {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 60px;
+  }
+
+  .imageUploadWrapper {
+    flex: 0 0 400px;
+    position: sticky;
+    top: 20px;
+  }
+
+  .flexRightColumn {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .subContainer:first-child {
+    margin-right: 20px;
   }
 }
