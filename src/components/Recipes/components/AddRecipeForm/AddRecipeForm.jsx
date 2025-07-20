@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { fetchCategories } from "../../../../redux/ops/categoriesOps";
 import { fetchIngredients } from "../../../../redux/ops/ingredientsOps";
 import sprite from "../../../../assets/img/sprite.svg";
+import { selectUser } from "../../../../redux/slices/usersSlice";
 
 const schema = yup.object({
   image: yup.mixed().required("Image is required"),
@@ -32,6 +33,7 @@ const schema = yup.object({
 });
 
 const AddRecipeForm = () => {
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -61,6 +63,21 @@ const AddRecipeForm = () => {
 
   const categories = useSelector(selectCategories);
   const availableIngredients = useSelector(selectIngredients);
+
+  if (!user) {
+    return (
+      <div
+        style={{
+          padding: "2rem",
+          textAlign: "center",
+          color: "red",
+          fontWeight: "bold",
+        }}
+      >
+        You must be logged in to create a recipe.
+      </div>
+    );
+  }
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -143,7 +160,6 @@ const AddRecipeForm = () => {
     }
   };
 
-  console.log(ingredients);
   return (
     <form className={css.formContainer} onSubmit={handleSubmit(onSubmit)}>
       <div className={css.formContent}>
