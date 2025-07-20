@@ -33,7 +33,7 @@ const schema = yup.object({
     .required("Instructions is required"),
   ingredients: yup
     .string()
-    .test("has-ingredients", "Ingredient is required", (value) => {
+    .test("has-ingredients", "Ingredients is required", (value) => {
       try {
         const arr = JSON.parse(value || "[]");
         return Array.isArray(arr) && arr.length > 0;
@@ -66,9 +66,14 @@ const AddRecipeForm = () => {
     formState: { errors },
     reset,
     watch,
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    setValue("ingredients", JSON.stringify(ingredients));
+  }, [ingredients, setValue]);
 
   const description = watch("description", "");
   const instructions = watch("instructions", "");
