@@ -48,7 +48,7 @@ const SignInForm = ({ onClose, onSwitchToSignUp }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.authorizationModal}>
-      <h2>Sign In</h2>
+      <h2>SIGN IN</h2>
       <div className={styles.inputWrapper}>
         <input {...register("email")} placeholder="Email*" />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
@@ -62,7 +62,7 @@ const SignInForm = ({ onClose, onSwitchToSignUp }) => {
         {error && <p className={styles.error}>{error}</p>}
       </div>
       <button type="submit" disabled={loading}>
-        {loading ? "Signing in..." : "Login"}
+        {loading ? "Signing in..." : "SIGN IN"}
       </button>
       <div className={styles.switchAuth}>
         Don't have an account?
