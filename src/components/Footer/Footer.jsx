@@ -20,9 +20,9 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <Link to="/" className={styles.logoFooter} onClick={handleLogoClick}>
+        <div className={styles.logoFooter} onClick={handleLogoClick}>
           <Logo />
-        </Link>
+        </div>
         <NetworkLinks className={styles.networkLinks} />
       </div>
 
