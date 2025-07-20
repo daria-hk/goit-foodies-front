@@ -40,7 +40,7 @@ const SignUpForm = ({ onClose, onSwitchToSignIn }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.authorizationModal}>
-      <h2>Sign Up</h2>
+      <h2>SIGN UP</h2>
       <div className={styles.inputWrapper}>
         <input {...register("name")} placeholder="Username*" />
         {errors.name && <p className={styles.error}>{errors.name.message}</p>}
@@ -55,11 +55,11 @@ const SignUpForm = ({ onClose, onSwitchToSignIn }) => {
       </div>
 
       <button type="submit" disabled={loading}>
-        {loading ? "Registering..." : "Sign up"}
+        {loading ? "Creating..." : "CREATE"}
       </button>
 
       <div className={styles.switchAuth}>
-        Already have an account?{" "}
+        I already have an account?{" "}
         <button type="button" onClick={onSwitchToSignIn} className={styles.linkButton}>
           Sign in
         </button>

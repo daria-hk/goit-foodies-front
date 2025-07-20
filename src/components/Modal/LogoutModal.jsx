@@ -19,7 +19,8 @@ const LogoutModal = ({ isOpen, onClose }) => {
           &times;
         </button>
         <div className={styles.logoutText}>
-          <h2 className={styles.title}>Log out</h2>
+          <h2 className={styles.title}>ARE YOU LOGGING OUT?</h2>
+          <h2 className={styles.titleMobile}>LOG OUT</h2>
           <p className={styles.text}>You can always log back in at any time.</p>
         </div>
         <button className={styles.logoutBtn} onClick={handleLogout}>
