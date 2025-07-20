@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import PathInfo from "../../components/Common/PathInfo/PathInfo";
 import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
@@ -5,53 +9,60 @@ import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
 import TabsList from "../../components/UserPage/TabsList/TabsList";
 import ListItems from "../../components/UserPage/ListItems/ListItems";
 import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
-import { useSelector } from "react-redux";
+
 import {
   selectRecipes,
   selectRecipesTotalPages,
 } from "@/redux/slices/recipesSlice.js";
+
+import {
+  selectUser,
+  selectProfileUser,
+} from "../../redux/slices/usersSlice";
+import { fetchUserById } from "../../redux/ops/usersOps";
+
 import styles from "./UserPage.module.css";
 
 const UserPage = () => {
-  const userData = {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    avatar: "",
-    isCurrentUser: true,
-    isFollowing: false,
-    recipesCount: 5,
-    favoritesCount: 12,
-    followersCount: 20,
-    followingCount: 10,
-  };
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  const currentUser = useSelector(selectUser);
+  const profileUser = useSelector(selectProfileUser);
+  const recipes = useSelector(selectRecipes);
+  const totalPages = useSelector(selectRecipesTotalPages);
+
+  const isOwnProfile = currentUser && String(currentUser.id) === id;
+  const user = isOwnProfile ? currentUser : profileUser;
+
+  useEffect(() => {
+    if (!isOwnProfile && id) {
+      dispatch(fetchUserById(id));
+    }
+  }, [dispatch, id, isOwnProfile]);
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // TODO: реалізувати завантаження на сервер
       console.log("Avatar selected:", file);
+      // TODO: реалізувати завантаження на сервер
     }
   };
 
   const handleLogOut = () => {
-    // TODO: Open Modal with LogOutModal
     alert("Log out clicked");
+    // TODO: Open Modal with LogOutModal
   };
 
   const handleFollowToggle = () => {
-    // TODO: Send request to backend
     alert("Follow/Unfollow clicked");
+    // TODO: Send request to backend
   };
-
-  const recipes = useSelector(selectRecipes); // Отримуємо список рецептів з Redux
-  const totalPages = useSelector(selectRecipesTotalPages);
 
   return (
     <div className={styles.container}>
       <PathInfo currentPageName="User Profile" />
       <div>
-        {" "}
         <MainTitle className={styles.title}>Profile</MainTitle>
         <Subtitle className={styles.subtitle}>
           Reveal your culinary art, share your favorite recipe and create
@@ -61,12 +72,12 @@ const UserPage = () => {
       <div className={styles.containerMainArea}>
         <div className={styles.userInfoWrapper}>
           <UserInfo
-            user={userData}
-            isOwnProfile={userData.isCurrentUser}
+            user={{ ...user, isCurrentUser: isOwnProfile }}
+            isOwnProfile={isOwnProfile}
             onAvatarChange={handleAvatarChange}
           />
 
-          {userData.isCurrentUser ? (
+          {isOwnProfile ? (
             <button
               type="button"
               onClick={handleLogOut}
@@ -80,13 +91,13 @@ const UserPage = () => {
               onClick={handleFollowToggle}
               className={`${styles.btn} ${styles.btnPrimary}`}
             >
-              {userData.isFollowing ? "Following" : "Follow"}
+              {user?.isFollowing ? "Following" : "Follow"}
             </button>
           )}
         </div>
 
         <div>
-          <TabsList />{" "}
+          <TabsList />
           <ListItems variant={"Recipes"} items={recipes} />
           <ListPagination variant={"all"} />
         </div>

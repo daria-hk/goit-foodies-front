@@ -13,55 +13,52 @@ export default function UserInfo({ user, isOwnProfile, onAvatarChange }) {
 
   return (
     <div className={styles.wrapper}>
-      <div>
-        <div className={styles.avatarWrapper}>
-          <img
-            src={user.avatar || defaultAvatar}
-            alt="User avatar"
-            className={styles.avatar}
-          />
-          {isOwnProfile && (
-            <>
-              <button
-                type="button"
-                className={styles.uploadButton}
-                onClick={handleClick}
-                aria-label="Upload avatar"
-              >
-                <svg className={styles.plusIcon}>
-                  <use href={`${sprite}#icon-plus`} />
-                </svg>
-              </button>
-              <input
-                type="file"
-                ref={fileInputRef}
-                className={styles.avatarInput}
-                onChange={onAvatarChange}
-              />
-            </>
-          )}
-        </div>
-
-        <h3 className={styles.userName}>{user.name || "User"}</h3>
+      <div className={styles.avatarWrapper}>
+        <img
+          src={user.avatarURL || defaultAvatar}
+          alt="User avatar"
+          className={styles.avatar}
+        />
+        {isOwnProfile && (
+          <>
+            <button
+              type="button"
+              className={styles.uploadButton}
+              onClick={handleClick}
+              aria-label="Upload avatar"
+            >
+              <svg className={styles.plusIcon}>
+                <use href={`${sprite}#icon-plus`} />
+              </svg>
+            </button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              className={styles.avatarInput}
+              onChange={onAvatarChange}
+            />
+          </>
+        )}
       </div>
+
+      <h3 className={styles.userName}>{user.name || "User"}</h3>
 
       <dl className={styles.info}>
         <dt>Email:</dt>
-        <dd>{user.email}</dd>
+        <dd>{user.email || "—"}</dd>
 
         <dt>Added recipes:</dt>
-        <dd>{user.recipesCount}</dd>
+        <dd>{user.recipesCount ?? 0}</dd>
 
         <dt>Favorites:</dt>
-        <dd>{user.favoritesCount}</dd>
+        <dd>{user.favoritesCount ?? 0}</dd>
 
         <dt>Followers:</dt>
-        <dd>{user.followersCount}</dd>
+        <dd>{user.followersCount ?? 0}</dd>
 
         <dt>Following:</dt>
-        <dd>{user.followingCount}</dd>
+        <dd>{user.followingCount ?? 0}</dd>
       </dl>
-
     </div>
   );
 }
