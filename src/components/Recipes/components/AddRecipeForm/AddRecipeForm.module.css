@@ -79,17 +79,21 @@ input:not(:placeholder-shown) {
 }
 
 .removeIngredientBtn {
-  color: white;
+  color: #050505;
+  background-color: white;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
   transition: background-color 0.2s;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .nameOfRec {

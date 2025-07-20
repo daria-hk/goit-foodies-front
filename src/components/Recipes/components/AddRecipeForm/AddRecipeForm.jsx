@@ -13,6 +13,7 @@ import { fetchCategories } from "../../../../redux/ops/categoriesOps";
 import { fetchIngredients } from "../../../../redux/ops/ingredientsOps";
 import sprite from "../../../../assets/img/sprite.svg";
 import { selectUser } from "../../../../redux/slices/usersSlice";
+import style from "../RecipeIngredients/RecipeIngredients.module.css";
 
 const schema = yup.object({
   image: yup.mixed().required("Image is required"),
@@ -30,6 +31,17 @@ const schema = yup.object({
     .string()
     .max(200, "Instructions must be less than 200 characters")
     .required("Instructions is required"),
+  ingredients: yup
+    .string()
+    .test("has-ingredients", "Ingredient is required", (value) => {
+      try {
+        const arr = JSON.parse(value || "[]");
+        return Array.isArray(arr) && arr.length > 0;
+      } catch {
+        return false;
+      }
+    })
+    .required("Ingredients is required"),
 });
 
 const AddRecipeForm = () => {
@@ -270,7 +282,7 @@ const AddRecipeForm = () => {
             </div>
           </div>
           <div className={css.subContainer}>
-            <label className={css.titleAddRecipePage}>Ingredients:</label>
+            <label className={css.titleAddRecipePage}>Ingredients</label>
             <div className={css.flexRowContainer}>
               <div className={css.customSelectWrapper}>
                 <select
@@ -300,38 +312,45 @@ const AddRecipeForm = () => {
             >
               Add ingredient +
             </button>
+            <input
+              type="hidden"
+              value={JSON.stringify(ingredients)}
+              {...register("ingredients")}
+            />
+            {errors.ingredients && (
+              <span style={{ color: "red" }}>{errors.ingredients.message}</span>
+            )}
           </div>
 
-          {ingredients.length > 0 && (
-            <div className={css.ingridientsWrapper}>
-              <label className={css.titleAddRecipePage}>Ingredients List</label>
-              <ul>
-                {ingredients.map((ing, index) => (
-                  <li key={index} className={css.ingredientItem}>
-                    <div className={css.ingredientInfo}>
-                      <img
-                        src={ing.img}
-                        alt={ing.name}
-                        className={css.ingredientImage}
-                      />
-                      <span className={css.ingredientName}>{ing.name}</span>
-                      <span className={css.ingredientAmount}>
-                        - {ing.amount}
-                      </span>
-                    </div>
-                    <button
-                      className={css.removeIngredientBtn}
-                      type="button"
-                      onClick={() => handleRemoveIngredient(index)}
-                      title="Remove ingredient"
-                    >
-                      ✕
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div className={style.ingridientsWrapper}>
+            <ul className={style.ingredientsList}>
+              {ingredients.map((item, idx) => (
+                <li
+                  className={style.ingredientsItem}
+                  key={idx}
+                  style={{ position: "relative" }}
+                >
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className={style.ingredientsImg}
+                  />
+                  <div className={style.ingredientsInfo}>
+                    <p className={style.ingredientsName}>{item.name}</p>
+                    <p className={style.ingredientsMeasure}>{item.amount}</p>
+                  </div>
+                  <button
+                    className={css.removeIngredientBtn}
+                    type="button"
+                    onClick={() => handleRemoveIngredient(idx)}
+                    title="Remove ingredient"
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div>
             <label className={css.titleAddRecipePage}>Recipe Preparation</label>
