@@ -13,15 +13,28 @@
   color: var(--white);
 }
 
+:global(.header-light) .link {
+  color: var(--main);
+}
+
 .link.active {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   padding: 14px;
 }
 
-@media (min-width: 1440px) {
+:global(.header-light) .link.active {
+  border: 1px solid var(--gray);
+}
+
+@media (min-width: 768px) {
   .nav {
     display: flex;
+  }
+}
+
+@media (min-width: 1440px) {
+  .nav {
     margin-left: 110px;
   }
 }

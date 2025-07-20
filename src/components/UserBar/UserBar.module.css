@@ -21,6 +21,17 @@
   border-radius: 50%;
 }
 
+@media (min-width: 768px) {
+  .userAvatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .userBar {
+    padding: 1px 16px 0 0;
+  }
+}
+
 .userName {
   font-weight: 700;
   font-size: 12px;
@@ -47,6 +58,10 @@
   stroke: var(--white);
 }
 
+.profileIcon.active {
+  transform: rotate(180deg);
+}
+
 .profileMenu {
   position: absolute;
   top: calc(100% + 8px);
@@ -65,9 +80,17 @@
   text-transform: uppercase;
 }
 
+:global(.header-light) .profileMenu {
+  border: 1px solid var(--gray);
+}
+
 .profileMenuItem {
   color: var(--white);
   text-transform: uppercase;
+}
+
+:global(.header-light) .profileMenuItem {
+  color: var(--main);
 }
 
 .logoutIcon {
@@ -75,6 +98,10 @@
   height: 18px;
   stroke: var(--white);
   fill: none;
+}
+
+:global(.header-light) .logoutIcon {
+  stroke: var(--main);
 }
 
 .logoutButton {
@@ -109,6 +136,10 @@
   width: 28px;
   height: 28px;
   stroke: var(--white);
+}
+
+:global(.header-light) .mobileMenuIcon {
+  stroke: var(--main);
 }
 
 .mobileMenu {
