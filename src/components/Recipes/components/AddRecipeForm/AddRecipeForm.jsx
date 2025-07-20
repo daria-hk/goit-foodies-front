@@ -97,7 +97,6 @@ const AddRecipeForm = () => {
   const onSubmit = async (data) => {
     data.cookingTime = cookingTime;
 
-    // Додаткова валідація для інгредієнтів
     if (ingredients.length === 0) {
       toast.error("Please add at least one ingredient");
       return;
@@ -105,7 +104,14 @@ const AddRecipeForm = () => {
 
     try {
       const formData = new FormData();
-      formData.append("thumb", data.image[0]);
+
+      if (data.image && data.image[0]) {
+        formData.append("thumb", data.image[0]);
+      } else {
+        const emptyFile = new File([""], "empty.jpg", { type: "image/jpeg" });
+        formData.append("thumb", emptyFile);
+      }
+
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("area", data.area || 4);
@@ -121,7 +127,6 @@ const AddRecipeForm = () => {
         )
       );
       formData.append("instructions", data.instructions);
-
       const result = await dispatch(createRecipe(formData)).unwrap();
       console.log("Recepi created:", result);
 
@@ -130,9 +135,7 @@ const AddRecipeForm = () => {
       setImagePreview("");
       setCookingTime(10);
       toast.success("Recipe successfully created!");
-
-      // Перенаправлення на UserPage після успішного створення рецепту
-      navigate("/user");
+      navigate("/user/me");
     } catch (error) {
       console.log(error.message);
       toast.error("Error creating recipe: " + error.message);
