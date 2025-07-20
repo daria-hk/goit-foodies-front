@@ -42,14 +42,13 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   "users/logout",
-  async (_, thunkAPI) => {
+  async (_, _thunkAPI) => {
     try {
-      const response = await api.post("/users/logout");
-      return response.data;
-    } catch (e) {
-      const message = e.response?.data?.message || e.message;
-      return thunkAPI.rejectWithValue(message);
+      await api.post("/users/logout");
+    } catch {
+      // logout user in all cases
     }
+    return;
   }
 );
 
