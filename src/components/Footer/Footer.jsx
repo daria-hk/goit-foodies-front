@@ -1,17 +1,20 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import NetworkLinks from "../NetworkLinks/NetworkLinks";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogoClick = (e) => {
-    if (location.pathname === "/") {
-      // якщо ми вже на головній — гасимо перехід
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    e.preventDefault();
+
+    if (location.pathname !== "/") {
+      navigate("/");
     }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
