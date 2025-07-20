@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import NetworkLinks from "../NetworkLinks/NetworkLinks";
 import styles from "./Footer.module.css";
@@ -18,14 +18,15 @@ const Footer = () => {
   };
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <div className={styles.logoFooter} onClick={handleLogoClick}>
-          <Logo />
+    <footer>
+      <div className="container">
+        <div className={styles.inner}>
+          <div className={styles.logoFooter} onClick={handleLogoClick}>
+            <Logo />
+          </div>
+          <NetworkLinks className={styles.networkLinks} />
         </div>
-        <NetworkLinks className={styles.networkLinks} />
       </div>
-
       <hr className={styles.divider} />
 
       <p className={styles.copy}>
