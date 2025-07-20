@@ -1,6 +1,5 @@
 import css from "./HomePage.module.css";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Hero from "../../components/Hero/Hero";
 import Categories from "../../components/Categories/components/Categories/Categories";
 import Recipes from "../../components/Recipes/components/Recipes/Recipes";
@@ -11,10 +10,7 @@ import { fetchIngredients } from "../../redux/ops/ingredientsOps";
 import { fetchTestimonials } from "../../redux/ops/testimonialsOps";
 import Testimonials from "../../components/Testimonials/Testimonials";
 
-
 export default function Home() {
-  const isAuth = useSelector((state) => state.auth?.isAuth);
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
 
