@@ -23,12 +23,17 @@
 
 .ingredientsItem {
   display: flex;
-  max-width: 152px;
   /* flex: 0 0 calc(50% - 16px); */
   align-items: center;
   font-size: 14px;
   line-height: 143%;
   gap: 10px;
+}
+
+.ingredientsInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .ingredientsImg {
@@ -71,7 +76,6 @@
     height: 90px;
   }
   .ingredientsItem {
-    max-width: 178px;
     /* flex: 0 0 calc(50% - 16px); */
 
     gap: 14px;
