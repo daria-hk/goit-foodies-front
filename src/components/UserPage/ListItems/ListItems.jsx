@@ -7,12 +7,12 @@ export const USER_LIST_ITEMS_VARIANTS = {
   recipes: "recipes",
   favorites: "favorites",
   followers: "followers",
-  following: "following"
-}
+  following: "following",
+};
 
 const USER_LIST_RECIPE_VARIANTS = new Set([
   USER_LIST_ITEMS_VARIANTS.recipes,
-  USER_LIST_ITEMS_VARIANTS.favorites
+  USER_LIST_ITEMS_VARIANTS.favorites,
 ]);
 
 const ListItems = ({ variant, items = [] }) => {
@@ -47,6 +47,8 @@ const ListItems = ({ variant, items = [] }) => {
     return <div className={css.empty}>No items found</div>;
   }
 
+  console.log("items", items);
+
   return (
     <div>
       <ul className={css.list}>
@@ -57,11 +59,11 @@ const ListItems = ({ variant, items = [] }) => {
             ) : isUserList ? (
               <UserCard
                 userId={item.id}
-                avatarUrl={item.avatarUrl}
+                avatarUrl={item.avatar}
                 name={item.name}
-                recipesCount={item.recipesCount}
-                recipesList={item.recipesList}
-                userPageUrl={`/users/${item.id}`}
+                recipesCount={item.recipeCount}
+                recipesList={item.recipes}
+                userPageUrl={`/user/${item.id}`}
                 isFollowing={item.isFollowing}
                 tabType={tabType}
                 onFollow={handleFollow}
