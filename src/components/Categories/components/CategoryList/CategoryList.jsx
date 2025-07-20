@@ -12,8 +12,9 @@ const CategoryList = ({ onCategorySelect }) => {
   const categories = useSelector(selectCategories);
 
   const mappedCategories = categories
-    .filter((cat) => { // skeep categories without images
-      return allCategoriesImages[cat.lowerName]
+    .filter((cat) => {
+      // skeep categories without images
+      return allCategoriesImages[cat.lowerName];
     })
     .map((cat) => {
       return {
@@ -29,7 +30,7 @@ const CategoryList = ({ onCategorySelect }) => {
     useState(NUMBER_CAT_ELEMENTS);
 
   const renderCategoryList = mappedCategories
-    .filter((cat) => !!cat.imgUrl) //додала фільтр на те якщо немає зображення, то категорія не відображається
+    .filter((cat) => !!cat.imgUrl) //added a filter so that if there is no image, the category is not displayed.
     .slice(0, numberCatElements);
 
   const isExpanded = numberCatElements >= categories.length;
