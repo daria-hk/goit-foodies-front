@@ -5,7 +5,7 @@
 .categories-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 22px;
   max-width: 343px;
 }
 
