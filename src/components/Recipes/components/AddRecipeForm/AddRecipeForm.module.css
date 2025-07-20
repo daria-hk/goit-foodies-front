@@ -38,7 +38,6 @@
   margin-top: 8px;
 }
 
-/* Wenn der Benutzer tippt */
 input:not(:placeholder-shown) {
   background-color: #ffffff;
   color: #050505;
