@@ -29,7 +29,7 @@ const UserBar = () => {
 
         {isProfileMenuOpen && (
           <div className={css.profileMenu}>
-            <a className={css.profileMenuItem} href="/users/me">
+            <a className={css.profileMenuItem} href="/user/:id">
               Profile
             </a>
             <button

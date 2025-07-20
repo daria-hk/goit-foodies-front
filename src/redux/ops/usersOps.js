@@ -57,7 +57,7 @@ export const fetchMe = createAsyncThunk(
   "users/fetchMe",
   async (_, thunkAPI) => {
     try {
-      const response = await api.get("/users/me");
+      const response = await api.get("/user/:id");
       return response.data;
     } catch (e) {
       const message = e.response?.data?.message || e.message;

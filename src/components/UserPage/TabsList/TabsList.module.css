@@ -1,17 +1,12 @@
-.container {
-  display: flex;
-  gap: 8px;
-  margin: 20px 0;
+.tabsWrapper {
 }
-.tab {
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.tabActive {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
+
+.tabsList {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 133%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--main);
 }
