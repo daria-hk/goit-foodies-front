@@ -75,7 +75,6 @@ export const recipesSlice = createSlice({
     builder
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        console.log();
         state.isLoading = false;
         state.items = action.payload.items || action.payload;
         state.page = action.payload.page || 1;
