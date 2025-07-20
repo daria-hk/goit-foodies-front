@@ -99,6 +99,7 @@ input:not(:placeholder-shown) {
   color: #bfbebe;
   text-transform: uppercase;
   border: none;
+  width: 100%;
 }
 
 .addDescrptn {
@@ -200,6 +201,34 @@ select {
   color: black;
 }
 
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  -moz-padding-start: calc(10px - 3px);
+}
+
+.customSelectWrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.customSelectWrapper select {
+  width: 100%;
+  padding-right: 32px;
+}
+.customSelectWrapper::after {
+  content: "▼";
+  font-size: 16px;
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bfbebe;
+  pointer-events: none;
+}
+
 .formButton,
 .publisButton,
 select,
@@ -252,6 +281,10 @@ select {
   color: black;
 }
 
+.timeBtn:active {
+  background-color: lightgray;
+}
+
 .clearButton {
   display: flex;
   align-items: center;
@@ -293,6 +326,11 @@ select {
   width: 100%;
 }
 
+.publishButton:hover {
+  color: #050505;
+  background-color: white;
+  border: 1px solid #bfbebe;
+}
 @media (min-width: 768px) {
   .nameOfRec {
     font-size: 24px;
