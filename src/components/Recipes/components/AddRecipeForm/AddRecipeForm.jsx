@@ -11,6 +11,7 @@ import css from "./AddRecipeForm.module.css";
 import { toast } from "react-toastify";
 import { fetchCategories } from "../../../../redux/ops/categoriesOps";
 import { fetchIngredients } from "../../../../redux/ops/ingredientsOps";
+import sprite from "../../../../assets/img/sprite.svg";
 
 const schema = yup.object({
   image: yup.mixed().required("Image is required"),
@@ -142,6 +143,7 @@ const AddRecipeForm = () => {
     }
   };
 
+  console.log(ingredients);
   return (
     <form className={css.formContainer} onSubmit={handleSubmit(onSubmit)}>
       <div className={css.formContent}>
@@ -288,7 +290,7 @@ const AddRecipeForm = () => {
                   <li key={index} className={css.ingredientItem}>
                     <div className={css.ingredientInfo}>
                       <img
-                        src={ing.image}
+                        src={ing.img}
                         alt={ing.name}
                         className={css.ingredientImage}
                       />
@@ -335,7 +337,9 @@ const AddRecipeForm = () => {
               className={css.clearButton}
               onClick={handleClearForm}
             >
-              🗑️
+              <svg aria-hidden="true">
+                <use href={`${sprite}#icon-trash`} />
+              </svg>
             </button>
             <button className={css.publishButton} type="submit">
               Publish
