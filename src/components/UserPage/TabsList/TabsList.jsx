@@ -2,11 +2,14 @@ import styles from "./TabsList.module.css";
 import ListItems, { USER_LIST_ITEMS_VARIANTS } from "../ListItems/ListItems";
 import ListPagination from "../ListPagination/ListPagination";
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserRecipes } from "../../../redux/ops/userRecipesOps";
 import { fetchFavoriteRecipes } from "../../../redux/ops/recipesOps";
-import { fetchUserFollowers, fetchUserFollowees } from "../../../redux/ops/usersOps";
+import {
+  fetchUserFollowers,
+  fetchUserFollowees,
+} from "../../../redux/ops/usersOps";
 import Loader from "../../Loader/Loader";
 import {
   selectFavorites,
@@ -34,6 +37,7 @@ import {
   selectUserFollowersPage,
   selectUserFolloweesPage,
 } from "../../../redux/slices/usersSlice";
+import cn from "classnames";
 
 function selectSelectors(variant, userId, page = 1) {
   switch (variant) {
@@ -87,16 +91,20 @@ const EMPTY_MESSAGES = {
     "Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.",
 };
 
-const TabsList = ({ userId, isCurrent = false }) => {
+const TabsList = ({ userId, isCurrent }) => {
   const tabs = [
     { id: USER_LIST_ITEMS_VARIANTS.recipes, label: "My recipes" },
     { id: USER_LIST_ITEMS_VARIANTS.followers, label: "My followers" },
   ];
   if (isCurrent) {
-    tabs.push({ id: USER_LIST_ITEMS_VARIANTS.following, label: "My following" });
-    tabs.push({ id: USER_LIST_ITEMS_VARIANTS.favorites, label: "My favorites" });
+    tabs.push(
+      { id: USER_LIST_ITEMS_VARIANTS.following, label: "My following" },
+      { id: USER_LIST_ITEMS_VARIANTS.favorites, label: "My favorites" }
+    );
   }
 
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+  const tabsRef = useRef([]);
   const dispatch = useDispatch();
   const defaultTab = isCurrent ? USER_LIST_ITEMS_VARIANTS.favorites : USER_LIST_ITEMS_VARIANTS.recipes;
   const [activeTab, setActiveTab] = useState(defaultTab);
@@ -112,38 +120,55 @@ const TabsList = ({ userId, isCurrent = false }) => {
     }
   }, [dispatch, userId, activeTab, isCurrent]);
 
+  useEffect(() => {
+    const idx = tabs.findIndex((t) => t.id === activeTab);
+    const el = tabsRef.current[idx];
+    if (el) {
+      setIndicator({ left: el.offsetLeft, width: el.offsetWidth });
+    }
+  }, [activeTab, tabs]);
 
   const items = useSelector(selectors.items);
-  const itemsIsLoading = useSelector(selectors.isLoading);
-  const itemsError = useSelector(selectors.error);
+  const isLoading = useSelector(selectors.isLoading);
+  const error = useSelector(selectors.error);
   const totalPages = useSelector(selectors.totalPages);
   const page = useSelector(selectors.page);
-
-  const emptyMessage = EMPTY_MESSAGES[activeTab] || "No items found.";
+  const emptyMessage = EMPTY_MESSAGES[activeTab];
 
   return (
     <div>
       <div className={styles.tabsWrapper}>
-        {tabs.map((tab) => (
+        {tabs.map((tab, i) => (
           <button
-            className={styles.tabsList}
             key={tab.id}
+            ref={(el) => (tabsRef.current[i] = el)}
             type="button"
+            className={cn(styles.tab, {
+              [styles.active]: tab.id === activeTab,
+            })}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
           </button>
         ))}
+        <div
+          className={styles.indicator}
+          style={{ left: indicator.left, width: indicator.width }}
+        />
       </div>
 
-      {itemsIsLoading && <Loader />}
+      {isLoading && <Loader />}
 
-      {!itemsIsLoading && !itemsError && (
+      {!isLoading && !error && (
         <>
           {items.length > 0 ? (
             <>
               <ListItems variant={activeTab} items={items} />
-              <ListPagination variant={"all"} totalPages={totalPages} page={page} />
+              <ListPagination
+                variant="all"
+                totalPages={totalPages}
+                page={page}
+              />
             </>
           ) : (
             <p className={styles.emptyMessage}>{emptyMessage}</p>

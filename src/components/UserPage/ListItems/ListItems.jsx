@@ -47,8 +47,6 @@ const ListItems = ({ variant, items = [] }) => {
     return <div className={css.empty}>No items found</div>;
   }
 
-  console.log("items", items);
-
   return (
     <div>
       <ul className={css.list}>

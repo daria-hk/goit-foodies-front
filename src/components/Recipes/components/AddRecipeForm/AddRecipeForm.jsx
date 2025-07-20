@@ -69,7 +69,14 @@ const AddRecipeForm = () => {
     setValue,
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      image: null,
+    },
   });
+
+  useEffect(() => {
+    register("image", { required: "Image is required" });
+  }, [register]);
 
   useEffect(() => {
     setValue("ingredients", JSON.stringify(ingredients));
@@ -100,6 +107,9 @@ const AddRecipeForm = () => {
     const file = e.target.files[0];
     if (file) {
       setImagePreview(URL.createObjectURL(file));
+      setValue("image", e.target.files, { shouldValidate: true });
+    } else {
+      setValue("image", null, { shouldValidate: true });
     }
   };
 
@@ -139,14 +149,7 @@ const AddRecipeForm = () => {
 
     try {
       const formData = new FormData();
-
-      if (data.image && data.image[0]) {
-        formData.append("thumb", data.image[0]);
-      } else {
-        const emptyFile = new File([""], "empty.jpg", { type: "image/jpeg" });
-        formData.append("thumb", emptyFile);
-      }
-
+      formData.append("thumb", data.image[0]);
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("area", data.area || 4);
@@ -186,10 +189,10 @@ const AddRecipeForm = () => {
             className={css.imgInput}
             type="file"
             accept="image/*"
-            {...register("image")}
             onChange={handleImageChange}
             style={{ display: "none" }}
           />
+
           <label htmlFor="recipe-image" className={css.customFileLabel}>
             {imagePreview ? (
               <img

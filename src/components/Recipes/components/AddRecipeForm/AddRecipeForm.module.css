@@ -224,9 +224,9 @@ select {
 }
 .customSelectWrapper::after {
   content: "▼";
-  font-size: 16px;
+  font-size: 10px;
   position: absolute;
-  right: 48px;
+  right: 40px;
   top: 50%;
   transform: translateY(-50%);
   color: #bfbebe;
@@ -397,5 +397,9 @@ select {
   .flexRightColumn {
     flex: 1;
     max-width: 600px;
+  }
+
+  .flexRowContainer select {
+    padding: 16px 18px;
   }
 }

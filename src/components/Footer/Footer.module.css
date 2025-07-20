@@ -1,13 +1,9 @@
-.footer {
-  padding-top: 64px;
-}
-
 .inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 40px 16px;
   margin: 0;
+  padding: 40px 0;
 }
 
 .logoFooter {
@@ -15,14 +11,18 @@
   cursor: pointer;
   transition: transform 0.2s ease;
 }
+
 .logoFooter svg {
   width: 69px;
   height: 24px;
   fill: var(--main);
+  transition: fill 0.3s ease, transform 0.3s ease;
 }
+
 .logoFooter:active {
   transform: scale(1.2);
 }
+
 .logoFooter:hover,
 .logoFooter:focus {
   outline: none;
@@ -49,9 +49,9 @@
   display: flex;
   list-style: none;
   gap: 16px;
-  padding: 0 16px 0 0;
   margin: 0;
 }
+
 .networkLinks a {
   display: flex;
   align-items: center;
@@ -62,29 +62,25 @@
   border-radius: 100px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .networkLinks a:hover {
   background-color: #000;
   transform: scale(1.2);
 }
+
 .networkLinks a:hover svg {
   fill: #fff;
 }
+
 .networkLinks svg {
   width: 20px;
   height: 20px;
   fill: var(--main);
-  transition: fill 0.3s ease, transform 0.3s ease;
 }
 
-
-/* Tablet (≥768px) */
 @media screen and (min-width: 768px) {
-  .footer {
-    padding-top: 100px;
-  }
-
   .inner {
-    padding: 0 0 46px 32px;
+    padding: 100px 0 40px;
   }
 
   .logoFooter svg {
@@ -92,32 +88,21 @@
     height: 28px;
   }
 
-  .networkLinks {
-    padding-right: 32px;
-  }
   .networkLinks a {
     width: 40px;
     height: 40px;
   }
 
   .copy {
-    padding-bottom: 32px;
+    font-size: 16px;
+    line-height: 150%;
+    padding-bottom: 40px;
   }
 }
 
-
-/* Desktop (≥1024px) */
 @media screen and (min-width: 1024px) {
-  .footer {
-    padding-top: 120px;
-  }
-
   .inner {
-    padding: 0 0 40px 80px;
-  }
-
-  .networkLinks {
-    padding-right: 80px;
+    padding: 120px 0 40px;
   }
 
   .copy {
