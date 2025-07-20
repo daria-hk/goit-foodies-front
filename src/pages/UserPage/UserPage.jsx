@@ -7,6 +7,7 @@ import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
 import TabsList from "../../components/UserPage/TabsList/TabsList";
+import { logoutUser } from "../../redux/ops/usersOps";
 
 import {
   selectUser,
@@ -41,8 +42,7 @@ const UserPage = () => {
   };
 
   const handleLogOut = () => {
-    alert("Log out clicked");
-    // TODO: Open Modal with LogOutModal
+    dispatch(logoutUser());
   };
 
   const handleFollowToggle = () => {
