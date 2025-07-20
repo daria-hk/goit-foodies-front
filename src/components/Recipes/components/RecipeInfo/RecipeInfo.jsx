@@ -32,7 +32,7 @@ const RecipeInfo = ({ data }) => {
   }, [isAuthenticated, dispatch]);
 
   return (
-    <section className={css.sectionWrapper}>
+    <section className={css.recipeSection}>
       <div className={css.recipeWrapper}>
         <img
           src={data.thumb}

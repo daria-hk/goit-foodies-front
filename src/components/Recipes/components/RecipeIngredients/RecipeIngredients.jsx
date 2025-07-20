@@ -2,7 +2,7 @@ import css from "./RecipeIngredients.module.css";
 
 const RecipeIngredients = ({ ingredients }) => (
   <div>
-    <h3 className={css.ingredientsTitle}>Ingredients:</h3>
+    <h3 className={css.ingredientsTitle}>Ingredients</h3>
     <ul className={css.ingredientsList}>
       {ingredients.map((item, idx) => (
         <li className={css.ingredientsItem} key={idx}>
