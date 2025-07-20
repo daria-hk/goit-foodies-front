@@ -2,7 +2,7 @@ import styles from "./TabsList.module.css";
 import ListItems, { USER_LIST_ITEMS_VARIANTS } from "../ListItems/ListItems";
 import ListPagination from "../ListPagination/ListPagination";
 import PropTypes from "prop-types";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserRecipes } from "../../../redux/ops/userRecipesOps";
 import { fetchFavoriteRecipes } from "../../../redux/ops/recipesOps";
