@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader/Loader.jsx";
 import SharedLayout from "./components/SharedLayout/SharedLayout.jsx";
+import UserRouteRedirector from "./components/UserRouteRedirector";
 
 const Home = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const RecipePage = lazy(() => import("./pages/RecipePage/RecipePage.jsx"));
@@ -15,6 +16,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 export function App() {
   return (
     <Suspense fallback={<Loader />}>
+      <UserRouteRedirector />
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/ops/usersOps";
-import { selectUsersIsLoading, selectUsersError } from "../../redux/slices/usersSlice";
+import {
+  selectUsersIsLoading,
+  selectUsersError,
+  selectUser,
+} from "../../redux/slices/usersSlice";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import styles from "./Modal.module.css";
 import PasswordInput from "../PasswordInput/PasswordInput.jsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ додано
 
 const schema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -14,6 +20,8 @@ const schema = Yup.object().shape({
 
 const SignInForm = ({ onClose, onSwitchToSignUp }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // ✅ додано
+  const user = useSelector(selectUser); // ✅ додано
   const loading = useSelector(selectUsersIsLoading);
   const error = useSelector(selectUsersError);
 
@@ -31,6 +39,12 @@ const SignInForm = ({ onClose, onSwitchToSignUp }) => {
       onClose();
     }
   };
+
+  useEffect(() => {
+    if (user?.id) {
+      navigate(`/user/${user.id}`);
+    }
+  }, [user, navigate]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.authorizationModal}>
@@ -51,15 +65,15 @@ const SignInForm = ({ onClose, onSwitchToSignUp }) => {
         {loading ? "Signing in..." : "Login"}
       </button>
       <div className={styles.switchAuth}>
-          Don't have an account?
-          <button
-            type="button"
-            onClick={onSwitchToSignUp}
-            className={styles.switchButton}
-          >
-            Create an account
-          </button>
-        </div>
+        Don't have an account?
+        <button
+          type="button"
+          onClick={onSwitchToSignUp}
+          className={styles.switchButton}
+        >
+          Create an account
+        </button>
+      </div>
     </form>
   );
 };
