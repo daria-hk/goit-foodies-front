@@ -5,13 +5,20 @@ import UserBar from "../UserBar/UserBar";
 import css from "./Header.module.css";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/slices/usersSlice";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const user = useSelector(selectUser);
   const isAuthenticated = Boolean(user);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   return (
-    <header className={`${css.headerWrapper} container`}>
+    <header
+      className={`${css.headerWrapper} container ${
+        isHomePage ? "header-dark" : "header-light"
+      }`}
+    >
       <Logo />
       <Navigation isAuth={isAuthenticated} />
       {isAuthenticated ? <UserBar /> : <AuthBar />}

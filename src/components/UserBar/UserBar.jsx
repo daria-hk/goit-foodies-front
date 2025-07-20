@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/slices/usersSlice";
 import LogoutModal from "../Modal/LogoutModal";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import sprite from "../../assets/img/sprite.svg";
 import css from "./UserBar.module.css";
 import { X } from "lucide-react";
@@ -13,17 +13,42 @@ const UserBar = () => {
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    if (isProfileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfileMenuOpen]);
 
   return (
     <div className={css.userBarWrapper}>
       <div
         className={css.userBar}
         onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+        ref={profileMenuRef}
       >
         <img src={user?.avatar} alt="user avatar" className={css.userAvatar} />
         <span className={css.userName}>{user?.name || "User"}</span>
 
-        <svg className={css.profileIcon}>
+        <svg
+          className={`${css.profileIcon} ${
+            isProfileMenuOpen ? css.active : ""
+          }`}
+        >
           <use href={`${sprite}#icon-chevron-down`}></use>
         </svg>
 
