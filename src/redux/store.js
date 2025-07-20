@@ -5,6 +5,7 @@ import { categoriesReducer } from "./slices/categoriesSlice";
 import { areasReducer } from "./slices/areasSlice";
 import { ingredientsReducer } from "./slices/ingredientsSlice";
 import { testimonialsReducer } from "./slices/testimonialsSlice";
+import { userRecipesReducer } from "./slices/userResipesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     ingredients: ingredientsReducer,
     testimonials: testimonialsReducer,
     users: usersReducer,
+    userRecipes: userRecipesReducer,
   },
 });

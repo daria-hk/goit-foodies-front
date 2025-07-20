@@ -19,6 +19,7 @@ export function App() {
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="/recipe/:id" element={<RecipePage />} />
+          <Route path="/user/:id/recipe/:id" element={<RecipePage />} />
           <Route path="/recipe/add" element={<AddRecipePage />} />
           <Route path="/user/:id" element={<UserPage />} />
           <Route path="*" element={<NotFoundPage />} />
