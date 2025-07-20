@@ -10,3 +10,10 @@
   text-transform: uppercase;
   color: var(--main);
 }
+
+.emptyMessage {
+  padding: 20px;
+  font-size: 16px;
+  color: #1A1A1A;
+  text-align: center;
+}

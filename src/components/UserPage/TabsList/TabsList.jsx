@@ -64,8 +64,6 @@ function selectSelectors(variant, userId, page = 1) {
         isLoading: selectUserFolloweesIsLoading,
         error: selectUserFolloweesError,
       };
-
-    // USER_LIST_ITEMS_VARIANTS.recipes:
     default:
       return {
         load: () => fetchUserRecipes({ userId, page }),
@@ -78,6 +76,17 @@ function selectSelectors(variant, userId, page = 1) {
   }
 }
 
+const EMPTY_MESSAGES = {
+  [USER_LIST_ITEMS_VARIANTS.recipes]:
+    "Nothing has been added to your recipes list yet. Please browse our recipes and add your favorites for easy access in the future.",
+  [USER_LIST_ITEMS_VARIANTS.favorites]:
+    "Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future.",
+  [USER_LIST_ITEMS_VARIANTS.followers]:
+    "There are currently no followers on your account. Please engage our visitors with interesting content and draw their attention to your profile.",
+  [USER_LIST_ITEMS_VARIANTS.following]:
+    "Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.",
+};
+
 const TabsList = ({ userId, isCurrent = false }) => {
   const tabs = [
     { id: USER_LIST_ITEMS_VARIANTS.recipes, label: "My recipes" },
@@ -87,7 +96,6 @@ const TabsList = ({ userId, isCurrent = false }) => {
     tabs.push({ id: USER_LIST_ITEMS_VARIANTS.following, label: "My following" });
     tabs.push({ id: USER_LIST_ITEMS_VARIANTS.favorites, label: "My favorites" });
   }
-
 
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(USER_LIST_ITEMS_VARIANTS.favorites);
@@ -106,31 +114,40 @@ const TabsList = ({ userId, isCurrent = false }) => {
   const totalPages = useSelector(selectors.totalPages);
   const page = useSelector(selectors.page);
 
+  const emptyMessage = EMPTY_MESSAGES[activeTab] || "No items found.";
+
   return (
     <div>
       <div className={styles.tabsWrapper}>
         {tabs.map((tab) => (
-          <button className={styles.tabsList} key={tab.id} type="button" onClick={() => setActiveTab(tab.id)}>
+          <button
+            className={styles.tabsList}
+            key={tab.id}
+            type="button"
+            onClick={() => setActiveTab(tab.id)}
+          >
             {tab.label}
           </button>
         ))}
       </div>
 
-      {
-        itemsIsLoading && <Loader />
-      }
+      {itemsIsLoading && <Loader />}
 
-      {!itemsIsLoading && !itemsError &&
+      {!itemsIsLoading && !itemsError && (
         <>
-          <ListItems variant={activeTab} items={items} />
-          <ListPagination variant={"all"} totalPages={totalPages} page={page} />
+          {items.length > 0 ? (
+            <>
+              <ListItems variant={activeTab} items={items} />
+              <ListPagination variant={"all"} totalPages={totalPages} page={page} />
+            </>
+          ) : (
+            <p className={styles.emptyMessage}>{emptyMessage}</p>
+          )}
         </>
-      }
-
+      )}
     </div>
   );
 };
-
 
 TabsList.propTypes = {
   userId: PropTypes.string.isRequired,
