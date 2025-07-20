@@ -9,7 +9,6 @@ import TabsList from "../../components/UserPage/TabsList/TabsList";
 import { selectUser, selectProfileUser } from "../../redux/slices/usersSlice";
 import { fetchUserById } from "../../redux/ops/usersOps";
 import styles from "./UserPage.module.css";
-import "../../index.css";
 
 const UserPage = () => {
   const dispatch = useDispatch();
