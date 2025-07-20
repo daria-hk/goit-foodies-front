@@ -22,6 +22,7 @@ const initialState = {
   isLoading: false,
   error: null,
   isSignInOpen: false,
+  profileUser: null, 
 };
 
 const handlePending = (state) => {
@@ -63,7 +64,7 @@ export const usersSlice = createSlice({
       .addCase(fetchUserById.pending, handlePending)
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        state.profileUser = action.payload; 
       })
       .addCase(fetchUserById.rejected, handleRejected)
 
@@ -144,10 +145,17 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { resetUsersState, clearUsersError , openSignInModal, closeSignInModal} = usersSlice.actions;
+export const {
+  resetUsersState,
+  clearUsersError,
+  openSignInModal,
+  closeSignInModal,
+} = usersSlice.actions;
+
 export const usersReducer = usersSlice.reducer;
 
 export const selectUser = (state) => state.users.user;
+export const selectProfileUser = (state) => state.users.profileUser; 
 export const selectUserToken = (state) => state.users.token;
 export const selectUserFollowers = (state) => state.users.followers;
 export const selectUserFollowees = (state) => state.users.followees;
