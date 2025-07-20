@@ -39,7 +39,7 @@ img {
 @media (min-width: 768px) {
   .hero-wrapper {
     border-radius: 30px;
-    padding: 218px 16px 140px;
+    padding: 149px 16px 140px;
     gap: 40px;
   }
 }
