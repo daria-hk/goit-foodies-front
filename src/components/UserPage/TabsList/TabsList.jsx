@@ -98,15 +98,20 @@ const TabsList = ({ userId, isCurrent = false }) => {
   }
 
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState(USER_LIST_ITEMS_VARIANTS.favorites);
+  const defaultTab = isCurrent ? USER_LIST_ITEMS_VARIANTS.favorites : USER_LIST_ITEMS_VARIANTS.recipes;
+  const [activeTab, setActiveTab] = useState(defaultTab);
 
-  const selectors = selectSelectors(activeTab, userId);
+  const selectors = useMemo(() => selectSelectors(activeTab, userId), [activeTab, userId]);
 
   useEffect(() => {
-    if (selectors.load) {
+    const shouldLoad =
+      isCurrent || activeTab === USER_LIST_ITEMS_VARIANTS.recipes;
+
+    if (selectors.load && shouldLoad) {
       dispatch(selectors.load());
     }
-  }, [dispatch, userId, activeTab]);
+  }, [dispatch, userId, activeTab, isCurrent]);
+
 
   const items = useSelector(selectors.items);
   const itemsIsLoading = useSelector(selectors.isLoading);

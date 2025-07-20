@@ -88,7 +88,9 @@ const UserPage = () => {
         </div>
 
         {/* <div> */}
-        {userId && <TabsList userId={`${userId}`} isCurrent={isOwnProfile} />}
+        {userId && (
+          <TabsList userId={`${userId}`} isCurrent={!!isOwnProfile} />
+        )}
         {/* <ListItems variant={"Recipes"} items={recipes} />
           <ListPagination variant={"all"} /> */}
         {/* </div> */}
