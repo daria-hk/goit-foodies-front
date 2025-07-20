@@ -216,14 +216,16 @@ const AddRecipeForm = () => {
           <div className={css.flexRowContainer}>
             <div className={css.subContainer}>
               <label className={css.titleAddRecipePage}>Category</label>
-              <select {...register("category")}>
-                <option value="">Select category</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
+              <div className={css.customSelectWrapper}>
+                <select {...register("category")}>
+                  <option value="">Select category</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               {errors.category && (
                 <span style={{ color: "red" }}>{errors.category.message}</span>
               )}
@@ -270,17 +272,19 @@ const AddRecipeForm = () => {
           <div className={css.subContainer}>
             <label className={css.titleAddRecipePage}>Ingredients:</label>
             <div className={css.flexRowContainer}>
-              <select
-                value={selectedIngredient}
-                onChange={(e) => setSelectedIngredient(e.target.value)}
-              >
-                <option value="">Select ingredient</option>
-                {availableIngredients.map((ing) => (
-                  <option key={ing.id} value={ing.id}>
-                    {ing.name}
-                  </option>
-                ))}
-              </select>
+              <div className={css.customSelectWrapper}>
+                <select
+                  value={selectedIngredient}
+                  onChange={(e) => setSelectedIngredient(e.target.value)}
+                >
+                  <option value="">Select ingredient</option>
+                  {availableIngredients.map((ing) => (
+                    <option key={ing.id} value={ing.id}>
+                      {ing.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <input
                 className={css.addDescrptn}
                 type="text"
