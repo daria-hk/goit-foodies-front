@@ -35,8 +35,6 @@ import {
   selectUserFolloweesPage,
 } from "../../../redux/slices/usersSlice";
 
-
-
 function selectSelectors(variant, userId, page = 1) {
   switch (variant) {
     case USER_LIST_ITEMS_VARIANTS.favorites:
@@ -80,7 +78,7 @@ function selectSelectors(variant, userId, page = 1) {
   }
 }
 
-const TabsList = ({ userId, isCurrent }) => {
+const TabsList = ({ userId, isCurrent = false }) => {
   const tabs = [
     { id: USER_LIST_ITEMS_VARIANTS.recipes, label: "My recipes" },
     { id: USER_LIST_ITEMS_VARIANTS.followers, label: "My followers" },
@@ -136,7 +134,7 @@ const TabsList = ({ userId, isCurrent }) => {
 
 TabsList.propTypes = {
   userId: PropTypes.string.isRequired,
-
+  isCurrent: PropTypes.bool.isRequired,
 };
 
 export default TabsList;
