@@ -3,11 +3,21 @@ import RecipePreview from "../../Recipes/components/RecipePreview/RecipePreview.
 import UserCard from "../UserCard/UserCard.jsx";
 import css from "./ListItems.module.css";
 
+export const USER_LIST_ITEMS_VARIANTS = {
+  recipes: "recipes",
+  favorites: "favorites",
+  followers: "followers",
+  following: "following"
+}
+
+const USER_LIST_RECIPE_VARIANTS = new Set([
+  USER_LIST_ITEMS_VARIANTS.recipes,
+  USER_LIST_ITEMS_VARIANTS.favorites
+]);
+
 const ListItems = ({ variant, items = [] }) => {
-  const isRecipeList = ["My recipes", "My favorites", "Recipes"].includes(
-    variant
-  );
-  const isUserList = ["Followers", "Following"].includes(variant);
+  const isRecipeList = USER_LIST_RECIPE_VARIANTS.has(variant);
+  const isUserList = !isRecipeList;
 
   const tabType = variant.toLowerCase(); // 'followers' or 'following'
 
@@ -69,13 +79,7 @@ const ListItems = ({ variant, items = [] }) => {
 };
 
 ListItems.propTypes = {
-  variant: PropTypes.oneOf([
-    "My recipes",
-    "My favorites",
-    "Recipes",
-    "Followers",
-    "Following",
-  ]).isRequired,
+  variant: PropTypes.oneOf(Object.keys(USER_LIST_ITEMS_VARIANTS)).isRequired,
   items: PropTypes.array.isRequired,
 };
 

@@ -15,15 +15,15 @@ import { fetchRecipes } from '@/redux/ops/recipesOps';
 import css from './ListPagination.module.css';
 
 const ListPagination = ({
-                            variant = 'all', // 'all', 'owner', 'user', 'favorites'
-                            page: propPage,
-                            totalPages: propTotalPages,
-                            selectedArea: propArea,
-                            selectedCategory: propCategory,
-                            selectedIngredients: propIngredients,
-                            userId,
-                            onPageChange,
-                        }) => {
+    variant = 'all', // 'all', 'owner', 'user', 'favorites'
+    page: propPage,
+    totalPages: propTotalPages,
+    selectedArea: propArea,
+    selectedCategory: propCategory,
+    selectedIngredients: propIngredients,
+    userId,
+    onPageChange,
+}) => {
     const dispatch = useDispatch();
 
     const reduxPage = useSelector(selectPage);
