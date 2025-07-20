@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,21 +7,12 @@ import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
 import TabsList from "../../components/UserPage/TabsList/TabsList";
-import ListItems from "../../components/UserPage/ListItems/ListItems";
-import ListPagination from "../../components/UserPage/ListPagination/ListPagination";
 
 import {
   selectUser,
   selectProfileUser,
 } from "../../redux/slices/usersSlice";
 import { fetchUserById } from "../../redux/ops/usersOps";
-import { fetchUserRecipes } from "../../redux/ops/userRecipesOps";
-import {
-  selectUserRecipes,
-  selectUserRecipesTotalPages,
-  selectUserRecipesIsLoading,
-  selectUserRecipesError,
-} from "../../redux/slices/userResipesSlice";
 import styles from "./UserPage.module.css";
 
 const UserPage = () => {
@@ -35,21 +26,11 @@ const UserPage = () => {
   const user = isOwnProfile ? currentUser : profileUser;
   const userId = user?.id ?? id;
 
-  const recipes = useSelector(selectUserRecipes(userId));
-  const recipesIsLoading = useSelector(selectUserRecipesIsLoading(userId));
-  const recipesError = useSelector(selectUserRecipesError(userId));
-  const totalPages = useSelector(selectUserRecipesTotalPages(userId));
-
   useEffect(() => {
     if (!isOwnProfile && id) {
       dispatch(fetchUserById(id));
     }
   }, [dispatch, id, isOwnProfile]);
-
-  useEffect(() => {
-    if (!user) return;
-    dispatch(fetchUserRecipes({ userId: user.id }));
-  }, [dispatch, user]);
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
@@ -106,11 +87,11 @@ const UserPage = () => {
           )}
         </div>
 
-        <div>
-          <TabsList />
-          <ListItems variant={"Recipes"} items={recipes} />
-          <ListPagination variant={"all"} />
-        </div>
+        {/* <div> */}
+        {userId && <TabsList userId={`${userId}`} isCurrent={isOwnProfile} />}
+        {/* <ListItems variant={"Recipes"} items={recipes} />
+          <ListPagination variant={"all"} /> */}
+        {/* </div> */}
       </div>
     </div>
   );

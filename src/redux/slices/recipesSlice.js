@@ -136,6 +136,11 @@ export const selectCurrentRecipe = (state) => state.recipes.currentRecipe;
 export const selectRecipesIsLoading = (state) => state.recipes.isLoading;
 export const selectRecipesError = (state) => state.recipes.error;
 export const selectFavorites = (state) => state.recipes.favorites;
+export const selectFavoritesTotalPages = (state) => 1;
+export const selectFavoritesPage = (state) => state.recipes.page;
+export const selectFavoritesIsLoading = (state) => false;
+export const selectFavoritesError = (state) => null;
+
 export const selectRecipesPage = (state) => state.recipes.page;
 export const selectRecipesTotalPages = (state) => state.recipes.totalPages;
 export const selectRecipesLimit = (state) => state.recipes.limit;
