@@ -57,7 +57,7 @@ const PopularRecipes = () => {
               author={recipe.user}
               isFavorite={isInFavorites(recipe)}
               onFavoriteToggle={() => toggleFavorite(recipe)}
-              onAuthorClick={() => handleAuthorClick(recipe.owner)}
+              onAuthorClick={() => handleAuthorClick(recipe.user)}
               onDetailsClick={() => handleDetailsClick(recipe)}
             />
           );
