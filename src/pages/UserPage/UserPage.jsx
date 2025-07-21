@@ -6,6 +6,7 @@ import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
 import TabsList from "../../components/UserPage/TabsList/TabsList";
+import { logoutUser } from "../../redux/ops/usersOps";
 import { selectUser, selectProfileUser } from "../../redux/slices/usersSlice";
 import { fetchUserById } from "../../redux/ops/usersOps";
 import styles from "./UserPage.module.css";
@@ -33,7 +34,7 @@ const UserPage = () => {
   };
 
   const handleLogOut = () => {
-    alert("Log out clicked");
+    dispatch(logoutUser());
   };
 
   const handleFollowToggle = () => {
@@ -51,7 +52,6 @@ const UserPage = () => {
             gastronomic masterpieces with us.
           </Subtitle>
         </div>
-
         <div className={styles.containerMainArea}>
           <div className={styles.userInfoWrapper}>
             <UserInfo

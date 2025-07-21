@@ -2,7 +2,7 @@ import styles from "./TabsList.module.css";
 import ListItems, { USER_LIST_ITEMS_VARIANTS } from "../ListItems/ListItems";
 import ListPagination from "../ListPagination/ListPagination";
 import PropTypes from "prop-types";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserRecipes } from "../../../redux/ops/userRecipesOps";
 import { fetchFavoriteRecipes } from "../../../redux/ops/recipesOps";
@@ -103,15 +103,22 @@ const TabsList = ({ userId, isCurrent }) => {
     );
   }
 
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
   const tabsRef = useRef([]);
   const dispatch = useDispatch();
-  const selectors = selectSelectors(activeTab, userId);
+  const defaultTab = isCurrent ? USER_LIST_ITEMS_VARIANTS.favorites : USER_LIST_ITEMS_VARIANTS.recipes;
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  const selectors = useMemo(() => selectSelectors(activeTab, userId), [activeTab, userId]);
 
   useEffect(() => {
-    if (selectors.load) dispatch(selectors.load());
-  }, [dispatch, userId, activeTab]);
+    const shouldLoad =
+      isCurrent || activeTab === USER_LIST_ITEMS_VARIANTS.recipes;
+
+    if (selectors.load && shouldLoad) {
+      dispatch(selectors.load());
+    }
+  }, [dispatch, userId, activeTab, isCurrent]);
 
   useEffect(() => {
     const idx = tabs.findIndex((t) => t.id === activeTab);
