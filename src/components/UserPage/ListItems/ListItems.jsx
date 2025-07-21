@@ -5,7 +5,6 @@ import RecipePreview from "../../Recipes/components/RecipePreview/RecipePreview.
 import UserCard from "../UserCard/UserCard.jsx";
 import css from "./ListItems.module.css";
 import { removeRecipe, fetchMyRecipes } from "../../../redux/ops/recipesOps.js";
-import { followUser, unfollowUser } from "../../../redux/ops/usersOps.js";
 import { toast } from "react-toastify";
 
 export const USER_LIST_ITEMS_VARIANTS = {
@@ -56,13 +55,13 @@ const ListItems = ({ variant, items = [] }) => {
         )
       );
       toast.success("Successfully followed user!");
-    } catch (err) {
+    } catch (error) {
       setLocalItems((prevItems) =>
         prevItems.map((item) =>
           item.id === userId ? { ...item, isFollowing: false } : item
         )
       );
-      toast.error("Failed to follow user");
+      toast.error("Failed to follow user: " + error.message);
     }
   };
 
@@ -74,13 +73,13 @@ const ListItems = ({ variant, items = [] }) => {
         )
       );
       toast.success("Successfully unfollowed user!");
-    } catch (err) {
+    } catch (error) {
       setLocalItems((prevItems) =>
         prevItems.map((item) =>
           item.id === userId ? { ...item, isFollowing: true } : item
         )
       );
-      toast.error("Failed to unfollow user");
+      toast.error("Failed to unfollow user: " + error.message);
     }
   };
 
@@ -106,7 +105,7 @@ const ListItems = ({ variant, items = [] }) => {
                 userId={item.id}
                 avatarUrl={item.avatar}
                 name={item.name}
-                recipesCount={item.recipeCount}
+                recipesCount={Number(item.recipeCount)}
                 recipesList={item.recipes}
                 userPageUrl={`/user/${item.id}`}
                 isFollowing={item.isFollowing}
