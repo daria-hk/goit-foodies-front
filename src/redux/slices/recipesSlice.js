@@ -6,6 +6,7 @@ import {
   addRecipeToFavorites,
   removeRecipeFromFavorites,
   fetchFavoriteRecipes,
+  removeRecipe,
 } from "../ops/recipesOps";
 
 const initialState = {

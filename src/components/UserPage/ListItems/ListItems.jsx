@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import RecipePreview from "../../Recipes/components/RecipePreview/RecipePreview.jsx";
 import UserCard from "../UserCard/UserCard.jsx";
 import css from "./ListItems.module.css";
+import { removeRecipe, fetchMyRecipes } from "../../../redux/ops/recipesOps.js";
+import { toast } from "react-toastify";
 
 export const USER_LIST_ITEMS_VARIANTS = {
   recipes: "recipes",
@@ -16,14 +20,31 @@ const USER_LIST_RECIPE_VARIANTS = new Set([
 ]);
 
 const ListItems = ({ variant, items = [] }) => {
+  const dispatch = useDispatch();
+  const [localItems, setLocalItems] = useState(items);
+
+  useEffect(() => {
+    setLocalItems(items);
+  }, [items]);
+
   const isRecipeList = USER_LIST_RECIPE_VARIANTS.has(variant);
   const isUserList = !isRecipeList;
 
-  const tabType = variant.toLowerCase(); // 'followers' or 'following'
+  const tabType = variant.toLowerCase();
 
-  const handleDelete = (recipeId) => {
-    console.log(`Delete recipe with ID: ${recipeId}`);
-    // TODO: dispatch(deleteRecipe(recipeId)) або show confirm dialog
+  const handleDelete = async (recipeId) => {
+    try {
+      setLocalItems((prevItems) =>
+        prevItems.filter((item) => item.id !== recipeId)
+      );
+
+      await dispatch(removeRecipe(recipeId)).unwrap();
+      await dispatch(fetchMyRecipes());
+      toast.success("Recipe successfully removed!");
+    } catch (err) {
+      setLocalItems(items);
+      toast.error("Failed to remove recipe: " + err);
+    }
   };
 
   const handleFollow = async (userId) => {
@@ -43,14 +64,14 @@ const ListItems = ({ variant, items = [] }) => {
 
   // =======================================
 
-  if (!items.length) {
+  if (!localItems.length) {
     return <div className={css.empty}>No items found</div>;
   }
 
   return (
     <div>
       <ul className={css.list}>
-        {items.map((item) => (
+        {localItems.map((item) => (
           <li key={item.id} className={css.item}>
             {isRecipeList ? (
               <RecipePreview recipe={item} onDelete={handleDelete} />
