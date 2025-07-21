@@ -11,11 +11,13 @@ export default function UserInfo({ user, isOwnProfile, onAvatarChange }) {
     fileInputRef.current?.click();
   };
 
+  console.log(user);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.avatarWrapper}>
         <img
-          src={user.avatarURL || defaultAvatar}
+          src={user.avatar || defaultAvatar}
           alt="User avatar"
           className={styles.avatar}
         />
@@ -36,6 +38,7 @@ export default function UserInfo({ user, isOwnProfile, onAvatarChange }) {
               ref={fileInputRef}
               className={styles.avatarInput}
               onChange={onAvatarChange}
+              accept="image/*"
             />
           </>
         )}

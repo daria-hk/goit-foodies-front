@@ -12,6 +12,7 @@ import {
   unfollowUser,
   fetchUserById,
   fetchUserFollowees,
+  updateUserAvatar,
 } from "../../redux/ops/usersOps";
 import { selectUser, selectProfileUser } from "../../redux/slices/usersSlice";
 import { toast } from "react-toastify";
@@ -36,18 +37,30 @@ const UserPage = () => {
           setIsFollowing(
             followees.some((followee) => followee.id === Number(id))
           );
-        })
-        .catch((error) => {
-          console.error("Failed to fetch followees:", error);
-          setIsFollowing(false);
         });
     }
   }, [dispatch, id, isOwnProfile]);
 
-  const handleAvatarChange = (e) => {
+  useEffect(() => {
+    if (isOwnProfile) {
+      dispatch(fetchUserById(currentUser.id));
+    }
+  }, [dispatch, isOwnProfile, currentUser?.id]);
+
+  const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log("Avatar selected:", file);
+      try {
+        const formData = new FormData();
+        formData.append("avatar", file);
+        await dispatch(updateUserAvatar(formData)).unwrap();
+        if (currentUser?.id) {
+          dispatch(fetchUserById(currentUser.id));
+        }
+        toast.success("Avatar updated successfully!");
+      } catch (error) {
+        toast.error(`Failed to update avatar: ${error.message}`);
+      }
     }
   };
 
@@ -92,7 +105,7 @@ const UserPage = () => {
         <div className={styles.containerMainArea}>
           <div className={styles.userInfoWrapper}>
             <UserInfo
-              user={{ ...profileUser, isCurrentUser: isOwnProfile }}
+              user={isOwnProfile ? currentUser : profileUser}
               isOwnProfile={isOwnProfile}
               onAvatarChange={handleAvatarChange}
             />

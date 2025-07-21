@@ -123,19 +123,27 @@ export const usersSlice = createSlice({
       })
       .addCase(updateUserAvatar.rejected, handleRejected)
 
-      .addCase(fetchUserFollowers.pending, (state, action) => handlePending(state.followers, action))
+      .addCase(fetchUserFollowers.pending, (state, action) =>
+        handlePending(state.followers, action)
+      )
       .addCase(fetchUserFollowers.fulfilled, (state, action) => {
         state.followers = action.payload;
         state.followers.isLoading = false;
       })
-      .addCase(fetchUserFollowers.rejected, (state, action) => handleRejected(state.followers, action))
+      .addCase(fetchUserFollowers.rejected, (state, action) =>
+        handleRejected(state.followers, action)
+      )
 
-      .addCase(fetchUserFollowees.pending, (state, action) => handlePending(state.followees, action))
+      .addCase(fetchUserFollowees.pending, (state, action) =>
+        handlePending(state.followees, action)
+      )
       .addCase(fetchUserFollowees.fulfilled, (state, action) => {
         state.followees = action.payload;
         state.followees.isLoading = false;
       })
-      .addCase(fetchUserFollowees.rejected, (state, action) => handleRejected(state.followees, action))
+      .addCase(fetchUserFollowees.rejected, (state, action) =>
+        handleRejected(state.followees, action)
+      )
 
       .addCase(followUser.pending, handlePending)
       .addCase(followUser.fulfilled, (state, action) => {
@@ -165,17 +173,27 @@ export const usersReducer = usersSlice.reducer;
 export const selectUser = (state) => state.users.user;
 export const selectProfileUser = (state) => state.users.profileUser;
 export const selectUserToken = (state) => state.users.token;
-export const selectUserFollowers = (state) => state.users?.followers?.items ?? [];
-export const selectUserFollowersTotalPages = (state) => state.users?.followers?.totalPages ?? 1;
-export const selectUserFollowersPage = (state) => state.users?.followees?.page ?? 1;
-export const selectUserFollowersIsLoading = (state) => state.users?.followers?.isLoading ?? false;
-export const selectUserFollowersError = (state) => state.users?.followers?.error ?? null;
+export const selectUserFollowers = (state) =>
+  state.users?.followers?.items ?? [];
+export const selectUserFollowersTotalPages = (state) =>
+  state.users?.followers?.totalPages ?? 1;
+export const selectUserFollowersPage = (state) =>
+  state.users?.followees?.page ?? 1;
+export const selectUserFollowersIsLoading = (state) =>
+  state.users?.followers?.isLoading ?? false;
+export const selectUserFollowersError = (state) =>
+  state.users?.followers?.error ?? null;
 
-export const selectUserFollowees = (state) => state.users?.followees?.items ?? [];
-export const selectUserFolloweesTotalPages = (state) => state.users?.followees?.totalPages ?? 1;
-export const selectUserFolloweesPage = (state) => state.users?.followees?.page ?? 1;
-export const selectUserFolloweesIsLoading = (state) => state.users?.followees?.isLoading ?? false;
-export const selectUserFolloweesError = (state) => state.users?.followees?.error ?? null;
+export const selectUserFollowees = (state) =>
+  state.users?.followees?.items ?? [];
+export const selectUserFolloweesTotalPages = (state) =>
+  state.users?.followees?.totalPages ?? 1;
+export const selectUserFolloweesPage = (state) =>
+  state.users?.followees?.page ?? 1;
+export const selectUserFolloweesIsLoading = (state) =>
+  state.users?.followees?.isLoading ?? false;
+export const selectUserFolloweesError = (state) =>
+  state.users?.followees?.error ?? null;
 
 export const selectUsersIsLoading = (state) => state.users.isLoading;
 export const selectUsersError = (state) => state.users.error;

@@ -6,6 +6,7 @@ import UserCard from "../UserCard/UserCard.jsx";
 import css from "./ListItems.module.css";
 import { removeRecipe, fetchMyRecipes } from "../../../redux/ops/recipesOps.js";
 import { toast } from "react-toastify";
+import defaultAvatar from "../../../assets/img/user/default-avatar.png";
 
 export const USER_LIST_ITEMS_VARIANTS = {
   recipes: "recipes",
@@ -103,12 +104,12 @@ const ListItems = ({ variant, items = [] }) => {
             ) : isUserList ? (
               <UserCard
                 userId={item.id}
-                avatarUrl={item.avatar}
-                name={item.name}
-                recipesCount={Number(item.recipeCount)}
-                recipesList={item.recipes}
+                avatarUrl={item.avatar || defaultAvatar}
+                name={item.name || "User"}
+                recipesCount={item.recipesCount || 0}
+                recipesList={item.recipes || []}
                 userPageUrl={`/user/${item.id}`}
-                isFollowing={item.isFollowing}
+                isFollowing={item.isFollowing || false}
                 tabType={tabType}
                 onFollow={handleFollow}
                 onUnfollow={handleUnfollow}
