@@ -45,7 +45,7 @@ const schema = yup.object({
 });
 
 const AddRecipeForm = () => {
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -88,7 +88,7 @@ const AddRecipeForm = () => {
   const categories = useSelector(selectCategories);
   const availableIngredients = useSelector(selectIngredients);
 
-  if (!user) {
+  if (!currentUser) {
     return (
       <div
         style={{
@@ -173,7 +173,7 @@ const AddRecipeForm = () => {
       setImagePreview("");
       setCookingTime(10);
       toast.success("Recipe successfully created!");
-      navigate("/user/me");
+      navigate(`/user/${currentUser.id}`);
     } catch (error) {
       console.log(error.message);
       toast.error("Error creating recipe: " + error.message);
