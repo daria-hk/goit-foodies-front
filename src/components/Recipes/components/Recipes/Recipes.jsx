@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 import { selectIngredients } from '@/redux/slices/ingredientsSlice.js'
 import { selectAreas } from '@/redux/slices/areasSlice.js'
-import { fetchRecipes, fetchRecipesPopular } from '@/redux/ops/recipesOps'
+import { fetchFavoriteRecipes, fetchRecipes } from '@/redux/ops/recipesOps'
 import { selectFavorites, selectRecipes } from '@/redux/slices/recipesSlice'
 import css from "./Recipes.module.css";
 import { openSignInModal, selectUser } from '@/redux/slices/usersSlice.js'
@@ -26,7 +26,7 @@ const Recipes = ({ category, onBack }) => {
 
   useEffect(() => {
     if (user && (!favorites || favorites.length === 0)) {
-      dispatch(fetchRecipesPopular());
+      dispatch(fetchFavoriteRecipes());
     }
   }, [user, favorites, dispatch])
 
