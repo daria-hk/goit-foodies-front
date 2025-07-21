@@ -2,7 +2,7 @@ import styles from "./TabsList.module.css";
 import ListItems, { USER_LIST_ITEMS_VARIANTS } from "../ListItems/ListItems";
 import ListPagination from "../ListPagination/ListPagination";
 import PropTypes from "prop-types";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserRecipes } from "../../../redux/ops/userRecipesOps";
 import { fetchFavoriteRecipes } from "../../../redux/ops/recipesOps";
@@ -92,33 +92,46 @@ const EMPTY_MESSAGES = {
 };
 
 const TabsList = ({ userId, isCurrent }) => {
-  const tabs = [
-    { id: USER_LIST_ITEMS_VARIANTS.recipes, label: "My recipes" },
-    { id: USER_LIST_ITEMS_VARIANTS.followers, label: "My followers" },
-  ];
-  if (isCurrent) {
-    tabs.push(
-      { id: USER_LIST_ITEMS_VARIANTS.following, label: "My following" },
-      { id: USER_LIST_ITEMS_VARIANTS.favorites, label: "My favorites" }
-    );
-  }
+  const tabs = useMemo(() => {
+    const baseTabs = [
+      { id: USER_LIST_ITEMS_VARIANTS.recipes, label: "My recipes" },
+      { id: USER_LIST_ITEMS_VARIANTS.followers, label: "My followers" },
+    ];
+
+    if (isCurrent) {
+      return [
+        ...baseTabs,
+        { id: USER_LIST_ITEMS_VARIANTS.following, label: "My following" },
+        { id: USER_LIST_ITEMS_VARIANTS.favorites, label: "My favorites" },
+      ];
+    }
+    return baseTabs;
+  }, [isCurrent]);
 
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
   const tabsRef = useRef([]);
   const dispatch = useDispatch();
-  const defaultTab = isCurrent ? USER_LIST_ITEMS_VARIANTS.favorites : USER_LIST_ITEMS_VARIANTS.recipes;
+  const defaultTab = isCurrent
+    ? USER_LIST_ITEMS_VARIANTS.favorites
+    : USER_LIST_ITEMS_VARIANTS.recipes;
   const [activeTab, setActiveTab] = useState(defaultTab);
 
-  const selectors = useMemo(() => selectSelectors(activeTab, userId), [activeTab, userId]);
+  const selectors = useMemo(
+    () => selectSelectors(activeTab, userId),
+    [activeTab, userId]
+  );
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     const shouldLoad =
       isCurrent || activeTab === USER_LIST_ITEMS_VARIANTS.recipes;
-
     if (selectors.load && shouldLoad) {
       dispatch(selectors.load());
     }
-  }, [dispatch, userId, activeTab, isCurrent]);
+  }, [dispatch, isCurrent, activeTab, selectors]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   useEffect(() => {
     const idx = tabs.findIndex((t) => t.id === activeTab);
