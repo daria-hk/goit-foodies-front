@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PathInfo from "../../components/Common/PathInfo/PathInfo";
@@ -6,9 +6,15 @@ import MainTitle from "../../components/MainTitle/MainTitle";
 import Subtitle from "../../components/Subtitle/Subtitle";
 import UserInfo from "../../components/UserPage/UserInfo/UserInfo";
 import TabsList from "../../components/UserPage/TabsList/TabsList";
-import { logoutUser } from "../../redux/ops/usersOps";
+import {
+  logoutUser,
+  followUser,
+  unfollowUser,
+  fetchUserById,
+  fetchUserFollowees,
+} from "../../redux/ops/usersOps";
 import { selectUser, selectProfileUser } from "../../redux/slices/usersSlice";
-import { fetchUserById } from "../../redux/ops/usersOps";
+import { toast } from "react-toastify";
 import styles from "./UserPage.module.css";
 
 const UserPage = () => {
@@ -17,12 +23,20 @@ const UserPage = () => {
   const currentUser = useSelector(selectUser);
   const profileUser = useSelector(selectProfileUser);
   const isOwnProfile = currentUser && String(currentUser.id) === id;
-  const user = isOwnProfile ? currentUser : profileUser;
-  const userId = user?.id ?? id;
+  const [isFollowing, setIsFollowing] = useState(false);
+  const userId = profileUser?.id ?? id;
 
   useEffect(() => {
     if (!isOwnProfile && id) {
       dispatch(fetchUserById(id));
+      dispatch(fetchUserFollowees())
+        .unwrap()
+        .then((result) => {
+          const followees = result.payload.items || [];
+          setIsFollowing(
+            followees.some((followee) => followee.id === Number(id))
+          );
+        });
     }
   }, [dispatch, id, isOwnProfile]);
 
@@ -37,8 +51,29 @@ const UserPage = () => {
     dispatch(logoutUser());
   };
 
-  const handleFollowToggle = () => {
-    alert("Follow/Unfollow clicked");
+  const handleFollowToggle = async () => {
+    try {
+      const result = await dispatch(fetchUserFollowees()).unwrap();
+      const followees = result.items || [];
+      const currentlyFollowing = followees.some(
+        (followee) => followee.id === Number(userId)
+      );
+
+      if (currentlyFollowing) {
+        await dispatch(unfollowUser(userId)).unwrap();
+        setIsFollowing(false);
+        toast.success("Successfully unfollowed user!");
+      } else {
+        await dispatch(followUser(userId)).unwrap();
+        setIsFollowing(true);
+        toast.success("Successfully followed user!");
+      }
+
+      dispatch(fetchUserFollowees());
+      dispatch(fetchUserById(userId));
+    } catch (error) {
+      toast.error("Failed to update follow status: " + error.message);
+    }
   };
 
   return (
@@ -55,7 +90,7 @@ const UserPage = () => {
         <div className={styles.containerMainArea}>
           <div className={styles.userInfoWrapper}>
             <UserInfo
-              user={{ ...user, isCurrentUser: isOwnProfile }}
+              user={{ ...profileUser, isCurrentUser: isOwnProfile }}
               isOwnProfile={isOwnProfile}
               onAvatarChange={handleAvatarChange}
             />
@@ -73,7 +108,7 @@ const UserPage = () => {
                 onClick={handleFollowToggle}
                 className={`${styles.btn} ${styles.btnPrimary}`}
               >
-                {user?.isFollowing ? "Following" : "Follow"}
+                {isFollowing ? "Unfollow" : "Follow"}
               </button>
             )}
           </div>

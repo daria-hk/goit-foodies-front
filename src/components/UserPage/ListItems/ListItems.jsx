@@ -5,6 +5,7 @@ import RecipePreview from "../../Recipes/components/RecipePreview/RecipePreview.
 import UserCard from "../UserCard/UserCard.jsx";
 import css from "./ListItems.module.css";
 import { removeRecipe, fetchMyRecipes } from "../../../redux/ops/recipesOps.js";
+import { followUser, unfollowUser } from "../../../redux/ops/usersOps.js";
 import { toast } from "react-toastify";
 
 export const USER_LIST_ITEMS_VARIANTS = {
@@ -48,21 +49,46 @@ const ListItems = ({ variant, items = [] }) => {
   };
 
   const handleFollow = async (userId) => {
-    console.log(`Follow user with ID: ${userId}`);
-    // TODO: dispatch(followUser(userId))
+    try {
+      setLocalItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === userId ? { ...item, isFollowing: true } : item
+        )
+      );
+      toast.success("Successfully followed user!");
+    } catch (err) {
+      setLocalItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === userId ? { ...item, isFollowing: false } : item
+        )
+      );
+      toast.error("Failed to follow user");
+    }
   };
 
   const handleUnfollow = async (userId) => {
-    console.log(`Unfollow user with ID: ${userId}`);
-    // TODO: dispatch(unfollowUser(userId))
+    try {
+      setLocalItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === userId ? { ...item, isFollowing: false } : item
+        )
+      );
+      toast.success("Successfully unfollowed user!");
+    } catch (err) {
+      setLocalItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === userId ? { ...item, isFollowing: true } : item
+        )
+      );
+      toast.error("Failed to unfollow user");
+    }
   };
 
   const handleRemoveFromFollowingList = (userId) => {
-    console.log(`Removed user ${userId} from following list UI`);
-    // TODO: оновити локальний стан або store, якщо потрібно
+    setLocalItems((prevItems) =>
+      prevItems.filter((item) => item.id !== userId)
+    );
   };
-
-  // =======================================
 
   if (!localItems.length) {
     return <div className={css.empty}>No items found</div>;
