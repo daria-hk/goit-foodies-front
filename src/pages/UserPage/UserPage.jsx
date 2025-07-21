@@ -32,10 +32,14 @@ const UserPage = () => {
       dispatch(fetchUserFollowees())
         .unwrap()
         .then((result) => {
-          const followees = result.payload.items || [];
+          const followees = result?.payload?.items || [];
           setIsFollowing(
             followees.some((followee) => followee.id === Number(id))
           );
+        })
+        .catch((error) => {
+          console.error("Failed to fetch followees:", error);
+          setIsFollowing(false);
         });
     }
   }, [dispatch, id, isOwnProfile]);
@@ -54,7 +58,7 @@ const UserPage = () => {
   const handleFollowToggle = async () => {
     try {
       const result = await dispatch(fetchUserFollowees()).unwrap();
-      const followees = result.items || [];
+      const followees = result?.items || [];
       const currentlyFollowing = followees.some(
         (followee) => followee.id === Number(userId)
       );
@@ -68,8 +72,6 @@ const UserPage = () => {
         setIsFollowing(true);
         toast.success("Successfully followed user!");
       }
-
-      dispatch(fetchUserFollowees());
       dispatch(fetchUserById(userId));
     } catch (error) {
       toast.error("Failed to update follow status: " + error.message);

@@ -95,14 +95,14 @@ const TabsList = ({ userId, isCurrent }) => {
   const tabs = useMemo(() => {
     const baseTabs = [
       { id: USER_LIST_ITEMS_VARIANTS.recipes, label: "My recipes" },
-      { id: USER_LIST_ITEMS_VARIANTS.followers, label: "My followers" },
+      { id: USER_LIST_ITEMS_VARIANTS.followers, label: "Followers" },
     ];
 
     if (isCurrent) {
       return [
         ...baseTabs,
-        { id: USER_LIST_ITEMS_VARIANTS.following, label: "My following" },
-        { id: USER_LIST_ITEMS_VARIANTS.favorites, label: "My favorites" },
+        { id: USER_LIST_ITEMS_VARIANTS.following, label: "Following" },
+        { id: USER_LIST_ITEMS_VARIANTS.favorites, label: "Favorites" },
       ];
     }
     return baseTabs;
@@ -123,15 +123,30 @@ const TabsList = ({ userId, isCurrent }) => {
 
   const loadData = useCallback(() => {
     const shouldLoad =
-      isCurrent || activeTab === USER_LIST_ITEMS_VARIANTS.recipes;
+      activeTab === USER_LIST_ITEMS_VARIANTS.recipes ||
+      activeTab === USER_LIST_ITEMS_VARIANTS.followers ||
+      (isCurrent &&
+        (activeTab === USER_LIST_ITEMS_VARIANTS.following ||
+          activeTab === USER_LIST_ITEMS_VARIANTS.favorites));
+
     if (selectors.load && shouldLoad) {
       dispatch(selectors.load());
     }
-  }, [dispatch, isCurrent, activeTab, selectors]);
+  }, [dispatch, userId, activeTab, isCurrent, selectors]);
 
   useEffect(() => {
     loadData();
   }, [loadData]);
+
+  useEffect(() => {
+    if (
+      !isCurrent &&
+      (activeTab === USER_LIST_ITEMS_VARIANTS.following ||
+        activeTab === USER_LIST_ITEMS_VARIANTS.favorites)
+    ) {
+      setActiveTab(USER_LIST_ITEMS_VARIANTS.recipes);
+    }
+  }, [isCurrent, activeTab]);
 
   useEffect(() => {
     const idx = tabs.findIndex((t) => t.id === activeTab);

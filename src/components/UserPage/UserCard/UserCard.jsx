@@ -78,8 +78,8 @@ const UserCard = ({
       <div className={styles.recipesSection}>
         {recipesList.length > 0 ? (
           <ul className={styles.recipesList}>
-            {(window.innerWidth >= 768 && window.innerWidth < 1440 
-              ? recipesList.slice(0, 3) 
+            {(window.innerWidth >= 768 && window.innerWidth < 1440
+              ? recipesList.slice(0, 3)
               : recipesList
             ).map((recipe) => (
               <li key={recipe.id}>
@@ -97,7 +97,7 @@ const UserCard = ({
         )}
       </div>
 
-      <Link to={userPageUrl} className={styles.viewAllBtn}>
+      <Link to={`/user/${userId}`} className={styles.viewAllBtn}>
         <svg className={styles.viewAllBtnIcon}>
           <use href={`${sprite}#icon-arrow`} />
         </svg>
